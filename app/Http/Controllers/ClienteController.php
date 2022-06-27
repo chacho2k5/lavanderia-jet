@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreClienteRequest;
+use App\Http\Requests\UpdateClienteRequest;
 use App\Models\Cliente;
-use Illuminate\Http\Request;
+use App\Models\Iva;
+use Yajra\Datatables\Datatables;
 
 class ClienteController extends Controller
 {
@@ -12,8 +15,12 @@ class ClienteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+     public function index()
     {
+        // $clientes = Cliente::select('id');
+        // $clientes = Cliente::all();
+        // return view('cliente.index')->with('clientes', $clientes);
+
         return view('cliente.index');
     }
 
@@ -24,18 +31,26 @@ class ClienteController extends Controller
      */
     public function create()
     {
-        //
+        $ivas = Iva::all();
+        return view('cliente.create',['ivas'=>$ivas]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\StoreClienteRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreClienteRequest $request)
     {
-        //
+        Cliente::create($request->validated());
+                                // ->withInput());
+
+        // return redirect()->route('clientes.index');
+        // return $request;
+        // return to_route('clientes.index');
+        return to_route('clientes.index')
+                    ->with('success','Post created successfully.');
     }
 
     /**
@@ -46,7 +61,9 @@ class ClienteController extends Controller
      */
     public function show(Cliente $cliente)
     {
-        //
+        $ivas = Iva::all();
+        return view('cliente.show', compact('cliente', 'ivas'));
+
     }
 
     /**
@@ -56,20 +73,28 @@ class ClienteController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit(Cliente $cliente)
+    // public function edit($id)
     {
-        //
+        // $cliente = Cliente::find($id);
+        // return view('cliente.edit')->with('cliente', $cliente);
+        $ivas = Iva::all();
+        // return view('cliente.edit', compact('cliente'), ['ivas'=>$ivas]);
+        return view('cliente.edit', compact('cliente', 'ivas'));
     }
+
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\UpdateClienteRequest  $request
      * @param  \App\Models\Cliente  $cliente
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Cliente $cliente)
+    public function update(UpdateClienteRequest $request, Cliente $cliente)
     {
-        //
+        $cliente->update($request->validated());
+        return to_route('clientes.index')->with('success','Cliente modificado exitosamente');
+
     }
 
     /**
@@ -80,6 +105,14 @@ class ClienteController extends Controller
      */
     public function destroy(Cliente $cliente)
     {
-        //
+        $cliente->delete();
+        return to_route('clientes.index')->with('success','Cliente eliminado');
+        // return view ('cliente.index');
+    }
+
+    public function zzzzzzzzzzzzdatatable() {
+        $clientes = Cliente::select('razonsocial', 'cuil', 'telefono1', 'iva_id');
+        // $clientes = Cliente::with('Iva')->select('clientes.*');
+        return DataTables::of($clientes)->toJson();
     }
 }
