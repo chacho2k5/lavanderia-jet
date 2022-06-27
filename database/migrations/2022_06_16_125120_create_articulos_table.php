@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('nombre',100)->nullable();
             $table->unsignedSmallInteger('categoria_id')->nullable(); // SABANAS / FUNDAS
-            $table->double('pesoespecifico')->nullable();
+            // $table->double('pesoespecifico')->nullable();
             $table->boolean('delicado')->nullable()->default(false);
             // $table->enum('categoria',['FUNDAS', 'SABANAS']);
             $table->timestamps();
