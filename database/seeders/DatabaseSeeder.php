@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Articulo;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -26,7 +27,10 @@ class DatabaseSeeder extends Seeder
             BarrioSeeder::class,
             CalleSeeder::class,
             LocalidadSeeder::class,
-            ProvinciaSeeder::class
+            ProvinciaSeeder::class,
+            ArticuloSeeder::class,
+            CategoriaSeeder::class,
+            EstadoSeeder::class
         ]);
     }
 }

@@ -13,12 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('articulos', function (Blueprint $table) {
+        Schema::create('categorias', function (Blueprint $table) {
             $table->id();
-            $table->string('descripcion',100)->nullable();
-            $table->unsignedSmallInteger('categoria_id')->nullable(); // SABANAS / FUNDAS
-            $table->boolean('delicado')->nullable()->default(false);
-            $table->timestamps();
+            $table->string('descripcion',100)->unique();
+            $table->double('pesoespecifico')->nullable(); // SABANAS / FUNDAS
         });
     }
 
@@ -29,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('articulos');
+        Schema::dropIfExists('categorias');
     }
 };
