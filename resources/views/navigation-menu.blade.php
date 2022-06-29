@@ -17,8 +17,12 @@
                     Home
                 </x-jet-nav-link>
 
-                <x-jet-nav-link href="{{ route('clientes.index' ) }}" :active="request()->routeIs('clientes.index')">
+                <x-jet-nav-link href="{{ route('clientes.index') }}" :active="request()->routeIs('clientes.index')">
                     Clientes
+                </x-jet-nav-link>
+
+                <x-jet-nav-link href="{{ route('categorias') }}" :active="request()->routeIs('categorias')">
+                    Cagegorias
                 </x-jet-nav-link>
             </ul>
 

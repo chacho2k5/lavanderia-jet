@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\DatatableController;
+use App\Http\Livewire\Categorias;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,3 +34,5 @@ Route::resource('clientes',ClienteController::class);
 
 // Esta ruta en realidad podria ser un metodo del ArticuloController
 Route::get('dt/clientes',[DatatableController::class,'clientes'])->name('dt.clientes');
+
+Route::get('categorias',Categorias::class)->name('categorias');
