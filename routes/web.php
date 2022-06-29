@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\ArticuloController;
 use App\Http\Controllers\DatatableController;
 use Illuminate\Support\Facades\Route;
 
@@ -30,6 +31,8 @@ Route::middleware([
 });
 
 Route::resource('clientes',ClienteController::class);
+Route::resource('articulos',ArticuloController::class);
 
 // Esta ruta en realidad podria ser un metodo del ArticuloController
 Route::get('dt/clientes',[DatatableController::class,'clientes'])->name('dt.clientes');
+Route::get('dt/articulos',[DatatableController::class,'articulos'])->name('dt.articulos');

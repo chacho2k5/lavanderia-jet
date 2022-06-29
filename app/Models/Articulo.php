@@ -6,14 +6,22 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Articulo extends Model
+
+
 {
     use HasFactory;
 
     protected $fillable = [
-        'nombre',
+        'descripcion',
         'categoria_id',
-        'pesoespecifico',
         'delicado'
     ];
 
+
+
+public function categoria() {
+    return $this->belongsTo(Categoria::class)->withDefault();
 }
+
+
+};
