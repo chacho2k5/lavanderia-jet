@@ -199,13 +199,13 @@
                     //     style: 'bar',
                     //     text: ''
                     // },
-                    {
+                    //{
                         // name: 'btnPrint',
-                        extend: 'print',
-                        text:   '<i class="fa fa-print"></i>&nbsp;&nbsp;Imprimir',
-                        titleAttr: 'Imprimir',
-                        className: 'btn btn-warning btn-sm rounded opacity-75'
-                    }
+                    //    extend: 'print',
+                     //   text:   '<i class="fa fa-print"></i>&nbsp;&nbsp;Imprimir',
+                     //   titleAttr: 'Imprimir',
+                     //   className: 'btn btn-warning btn-sm rounded opacity-75'
+                   // }
                 ],
 
                 // "dataType": json,
@@ -215,7 +215,27 @@
                     {data: 'descripcion', name: 'descripcion'},
                     {data: 'categoria.descripcion', name: 'categoria.descripcion'},
                     {data: 'categoria.pesoespecifico', name: 'categoria.pesoespecifico'},
-                    {data: 'delicado', name: 'delicado'},
+                    {data: 'delicado', name: 'delicado',
+                     'render': function(data,type){
+                       
+                       if (type === 'display') {
+                           var delicado = '';
+
+                           switch (data){
+
+                                   case 1: 
+                                    delicado = 'SI'; 
+                                    break;
+                                   case 0: 
+                                    delicado = 'NO'; 
+                                    break;
+                               //    default : status_name = 'Desconocido'; break;
+                           }
+                        return delicado;
+                       }
+                     }
+                    },
+
                     {data: 'actions', name: 'actions', searchable: false, orderable: false, className: ''},
                     // {data: null, render: function(data, type, row) {
                     //         return "<center>"+
