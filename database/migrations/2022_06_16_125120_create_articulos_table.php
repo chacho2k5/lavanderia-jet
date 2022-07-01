@@ -15,9 +15,10 @@ return new class extends Migration
     {
         Schema::create('articulos', function (Blueprint $table) {
             $table->id();
-            $table->string('descripcion',100)->nullable();
-            $table->unsignedSmallInteger('categoria_id')->nullable(); // SABANAS / FUNDAS
-            $table->boolean('delicado')->nullable()->default(false);
+            $table->string('descripcion',100)->unique();
+            $table->unsignedSmallInteger('categoria_id'); // SABANAS / FUNDAS
+            // $table->boolean('delicado')->nullable()->default(false);
+            $table->enum('delicado',['SI', 'NO'])->default('NO');
             $table->timestamps();
         });
     }

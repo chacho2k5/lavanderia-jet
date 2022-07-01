@@ -30,7 +30,8 @@ class DatabaseSeeder extends Seeder
             ProvinciaSeeder::class,
             ArticuloSeeder::class,
             CategoriaSeeder::class,
-            EstadoSeeder::class
+            EstadoSeeder::class,
+            EmpleadoSeeder::class
         ]);
     }
 }

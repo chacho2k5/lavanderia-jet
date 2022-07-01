@@ -21,9 +21,9 @@
                     Clientes
                 </x-jet-nav-link>
 
-                <x-jet-nav-link href="{{ route('categorias') }}" :active="request()->routeIs('categorias')">
+                {{-- <x-jet-nav-link href="{{ route('categorias') }}" :active="request()->routeIs('categorias')">
                     Cagegorias
-                </x-jet-nav-link>
+                </x-jet-nav-link> --}}
             </ul>
 
             <!-- Right Side Of Navbar -->

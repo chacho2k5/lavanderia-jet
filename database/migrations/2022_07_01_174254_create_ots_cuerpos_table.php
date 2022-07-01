@@ -13,11 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('categorias', function (Blueprint $table) {
+        Schema::create('ots_cuerpos', function (Blueprint $table) {
             $table->id();
-            $table->string('descripcion',100)->unique(); // SABANAS / FUNDAS
-            $table->decimal('factor',8,2)->nullable()->default(1);
-
+            $table->unsignedInteger('ot_id');
+            $table->unsignedInteger('articulo_id');
+            $table->unsignedInteger('retira');
+            $table->unsignedInteger('entrega');
+            $table->timestamps();
         });
     }
 
@@ -28,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('categorias');
+        Schema::dropIfExists('ots_cuerpos');
     }
 };
