@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\DatatableController;
 use App\Http\Livewire\CategoriaShow;
@@ -31,13 +32,16 @@ Route::middleware([
 });
 
 Route::resource('clientes',ClienteController::class);
+Route::resource('categorias',CategoriaController::class);
 
 // Esta ruta en realidad podria ser un metodo del ArticuloController
 Route::get('dt/clientes',[DatatableController::class,'clientes'])->name('dt.clientes');
+Route::get('dt/categorias',[DatatableController::class,'categorias'])->name('dt.categorias');
+
+
 
 // Route::get('categorias',Categorias::class)->name('categorias');
-
 // Route::get('categorias/create',CategoriaShow::class)->name('categorias.create');
 // Route::get('categorias/edit',CategoriaShow::class)->name('categorias.edit');
-Route::get('categorias',CategoriaShow::class)->name('categorias');
+// Route::get('categorias',CategoriaShow::class)->name('categorias');
 

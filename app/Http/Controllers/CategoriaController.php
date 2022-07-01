@@ -14,7 +14,7 @@ class CategoriaController extends Controller
      */
     public function index()
     {
-        //
+        return view('categoria.index');
     }
 
     /**
@@ -24,7 +24,7 @@ class CategoriaController extends Controller
      */
     public function create()
     {
-        //
+        return view('categoria.create');
     }
 
     /**
@@ -35,7 +35,11 @@ class CategoriaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            // 'descripcion' => 'required|unique:categorias,descripcion|max:100',
+            'descripcion' => 'required|min:2|max:100',
+            'factor' => 'numeric'
+        ]);
     }
 
     /**
@@ -46,7 +50,7 @@ class CategoriaController extends Controller
      */
     public function show(Categoria $categoria)
     {
-        //
+
     }
 
     /**
