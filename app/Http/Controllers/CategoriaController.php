@@ -41,20 +41,10 @@ class CategoriaController extends Controller
             'factor' => 'numeric'
         ]);
 
-        // $post = Categoria::Create($request);
-        Categoria::create([
-           'descripcion' => $request->descripcion,
-           'factor' => $request->factor,
-        ]);
+        Categoria::create($request->all());
+
         return to_route('categorias.index')
-                    ->with('success','Categoria creada correctamente.');
-
-       //  $this->validate();
-
-        // Categoria::create([
-        //    'descripcion' => $this->descripcion,
-        //    'factor' => $this->factor,
-        // ]);
+                            ->with('success','Categoria agregada exitosamente.');
 
     }
 
@@ -66,7 +56,7 @@ class CategoriaController extends Controller
      */
     public function show(Categoria $categoria)
     {
-
+        return view('categoria.show', compact('categoria'));
     }
 
     /**
@@ -77,7 +67,7 @@ class CategoriaController extends Controller
      */
     public function edit(Categoria $categoria)
     {
-        //
+        return view('categoria.edit', compact('categoria'));
     }
 
     /**
@@ -89,7 +79,17 @@ class CategoriaController extends Controller
      */
     public function update(Request $request, Categoria $categoria)
     {
-        //
+        $request->validate([
+            // 'descripcion' => 'required|unique:categorias,descripcion|max:100',
+            'descripcion' => 'required|min:2|max:100',
+            'factor' => 'numeric'
+        ]);
+
+        $categoria->update($request->all());
+
+        return to_route('categorias.index')
+                            ->with('success','Categoria modificada exitosamente.');
+
     }
 
     /**
@@ -100,6 +100,7 @@ class CategoriaController extends Controller
      */
     public function destroy(Categoria $categoria)
     {
-        //
+        $categoria->delete();
+        return to_route('categorias.index')->with('success','Categoria borrada.');
     }
 }

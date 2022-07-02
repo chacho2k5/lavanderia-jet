@@ -5,7 +5,7 @@
         <div class="mb-2 row">
             <div class="col-sm-6">
                 <h3 class="m-0">
-                    Modificar de Cliente
+                    Modificar de Categoria
                 </h3>
             </div>
         </div>
@@ -17,17 +17,17 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                        <form action="{{ route('clientes.update', $cliente->id) }}" method="post" class="needs-validation" autocomplete="off">
+                        <form action="{{ route('categorias.update', $categoria->id) }}" method="post" class="needs-validation" autocomplete="off">
                             @csrf
                             @method('PUT')
 
-                            @php $data = $cliente; @endphp
+                            @php $data = $categoria; @endphp
 
-                            @include('cliente.form.controls')
+                            @include('categoria.form.controls')
 
                             <div class="mt-4 row d-print-none">
                                 <div class="text-right col-12">
-                                    <a href="{{ route('clientes.index') }}" class="btn btn-secondary" tabindex="0">
+                                    <a href="{{ route('categorias.index') }}" class="btn btn-secondary" tabindex="0">
                                         <i class="fa fa-fw fa-lg fa-arrow-left"></i>
                                         Cancelar
                                     </a>
@@ -39,7 +39,7 @@
                             </div>
                         </form>
 
-                        @if (count($errors) > 0)
+                        {{-- @if (count($errors) > 0)
                         <div class="alert alert-danger">
                             <ul>
                                 @foreach ($errors->all() as $error)
@@ -47,17 +47,12 @@
                                 @endforeach
                             </ul>
                         </div>
-                    @endif
+                    @endif --}}
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-{{-- @endsection
-
-@section('js')
-@stop --}}
 
 </x-app-layout>

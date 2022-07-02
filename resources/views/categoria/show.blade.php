@@ -5,7 +5,7 @@
         <div class="mb-2 row">
             <div class="col-sm-6">
                 <h3 class="m-0">
-                    Datos del Cliente
+                    Datos del Categoria
                 </h3>
             </div>
         </div>
@@ -17,16 +17,16 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                        <form action="{{ route('clientes.show', $cliente->id) }}" method="post" class="readonly">
+                        <form action="{{ route('categorias.show', $categoria->id) }}" method="post" class="readonly">
                             @csrf
                             <fieldset disabled="disabled">
-                                @php $data = $cliente; @endphp
-                                @include('cliente.form.controls')
+                                @php $data = $categoria; @endphp
+                                @include('categoria.form.controls')
                             </fieldset>
 
                             <div class="mt-4 row d-print-none">
                                 <div class="text-center col-12">
-                                    <a href="{{ route('clientes.index') }}" class="btn btn-primary" tabindex="0">
+                                    <a href="{{ route('categorias.index') }}" class="btn btn-primary" tabindex="0">
                                         <i class="fa fa-fw fa-lg fa-arrow-left"></i>
                                         Volver
                                     </a>
@@ -34,7 +34,7 @@
                             </div>
                         </form>
 
-                        @if (count($errors) > 0)
+                        {{-- @if (count($errors) > 0)
                         <div class="alert alert-danger">
                             <ul>
                                 @foreach ($errors->all() as $error)
@@ -42,7 +42,7 @@
                                 @endforeach
                             </ul>
                         </div>
-                    @endif
+                    @endif --}}
                     </div>
                 </div>
             </div>
