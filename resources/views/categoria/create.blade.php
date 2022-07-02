@@ -17,7 +17,7 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                        <form action="{{ route('clientes.store') }}" method="post" class="needs-validation" autocomplete="off">
+                        <form action="{{ route('categorias.store') }}" method="post" class="needs-validation" autocomplete="off">
                             @csrf
                             @php $data = ''; @endphp
 

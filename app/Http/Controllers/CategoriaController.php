@@ -35,11 +35,27 @@ class CategoriaController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $request->validate([
             // 'descripcion' => 'required|unique:categorias,descripcion|max:100',
             'descripcion' => 'required|min:2|max:100',
             'factor' => 'numeric'
         ]);
+
+        // $post = Categoria::Create($request);
+        Categoria::create([
+           'descripcion' => $request->descripcion,
+           'factor' => $request->factor,
+        ]);
+        return to_route('categorias.index')
+                    ->with('success','Categoria creada correctamente.');
+
+       //  $this->validate();
+
+        // Categoria::create([
+        //    'descripcion' => $this->descripcion,
+        //    'factor' => $this->factor,
+        // ]);
+
     }
 
     /**
