@@ -4,6 +4,7 @@ use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\DatatableController;
 use App\Http\Livewire\CategoriaShow;
+use App\Http\Livewire\Ot;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -38,6 +39,7 @@ Route::resource('categorias',CategoriaController::class);
 Route::get('dt/clientes',[DatatableController::class,'clientes'])->name('dt.clientes');
 Route::get('dt/categorias',[DatatableController::class,'categorias'])->name('dt.categorias');
 
+Route::get('ots',Ot::class)->name('ots');
 
 
 // Route::get('categorias',Categorias::class)->name('categorias');

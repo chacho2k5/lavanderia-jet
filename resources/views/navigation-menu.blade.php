@@ -24,6 +24,11 @@
                 <x-jet-nav-link href="{{ route('categorias.index') }}" :active="request()->routeIs('categorias.index')">
                     Cagegorias
                 </x-jet-nav-link>
+
+                <x-jet-nav-link href="{{ route('ots') }}" :active="request()->routeIs('ots')">
+                    Ordenes de Trabajo
+                </x-jet-nav-link>
+
             </ul>
 
             <!-- Right Side Of Navbar -->
