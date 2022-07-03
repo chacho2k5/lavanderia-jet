@@ -4,7 +4,8 @@ use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\DatatableController;
 use App\Http\Livewire\CategoriaShow;
-use App\Http\Livewire\Ot;
+use App\Http\Livewire\Ots\OtCreate;
+use App\Http\Livewire\Ots\OtIndex;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -35,12 +36,12 @@ Route::middleware([
 Route::resource('clientes',ClienteController::class);
 Route::resource('categorias',CategoriaController::class);
 
+Route::get('/ots/index',OtIndex::class)->name('ots.index');
+Route::get('/ots/create',OtCreate::class)->name('ots.create');
+
 // Esta ruta en realidad podria ser un metodo del ArticuloController
 Route::get('dt/clientes',[DatatableController::class,'clientes'])->name('dt.clientes');
 Route::get('dt/categorias',[DatatableController::class,'categorias'])->name('dt.categorias');
-
-Route::get('ots',Ot::class)->name('ots');
-
 
 // Route::get('categorias',Categorias::class)->name('categorias');
 // Route::get('categorias/create',CategoriaShow::class)->name('categorias.create');

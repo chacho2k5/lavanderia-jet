@@ -22,7 +22,8 @@
             <div class="card-header">
                 {{-- <button wire:click="$set('openCreate','true')" class="btn btn-primary btn-sm">Agregar</button> --}}
                 {{-- @livewire('categoria-create') --}}
-                @livewire('categoria-create')
+                {{-- @livewire('categoria-create') --}}
+                <a href="{{ route('ots.create') }}" class="btn btn-primary btn-sm">Nueva OT</a>
             </div>
             <div class="card-body">
                 <table id="table" class="table w-full pt-1 table-hover table-striped">
