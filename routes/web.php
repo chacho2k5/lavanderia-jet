@@ -3,7 +3,6 @@
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\DatatableController;
-use App\Http\Livewire\CategoriaShow;
 use App\Http\Livewire\Ots\OtCreate;
 use App\Http\Livewire\Ots\OtIndex;
 use Illuminate\Support\Facades\Route;

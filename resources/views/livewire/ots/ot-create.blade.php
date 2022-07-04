@@ -47,7 +47,7 @@
                 <div class="form-group col-md-4">
                     <label for="">Clientes</label>
                     {{-- <div wire:ignore> --}}
-                    <select wire:model="selectedCliente" class="form-select">
+                    <select wire:model="selCliente" class="form-select">
                         <option value="0">Seleccione un cliente</option>
                         @foreach($clientes as $cliente)
                             <option value="{{ $cliente->id }}">
@@ -57,8 +57,12 @@
                     </select>
                 </div>
                 <div class="form-group col-md-8">
-                    <label for="">Dirección del Cliente</label>
-                    <input type="text" class="form-control" value="{{ $clientes[2]['calle_nombre'] }}" placeholder="Dirección del cliente" disabled>
+                    {{-- @json($dirCliente) --}}
+                    @if ($dirCliente !== null)
+                        <label for="">Dirección del Cliente</label>
+                        {{-- <input type="text" class="form-control" value="{{ $dirCliente[0]->razonsocial }}" placeholder="Dirección del cliente" disabled> --}}
+                        <input wire:model='dirCliente' type="text" class="form-control" placeholder="Dirección del cliente" disabled>
+                    @endif
                 </div>
             </div>
 

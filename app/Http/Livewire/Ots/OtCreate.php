@@ -8,7 +8,9 @@ use Livewire\Component;
 
 class OtCreate extends Component
 {
-    public $clientes, $selectedCliente;
+    public $clientes, $selCliente, $cliente;
+    public $dirCliente;
+
     public $prendas, $selectedPrenda;
 
     public $numero, $fecha_alta, $cliente_id, $estado_id, $entrega_hotel, $recibe_hotel;
@@ -19,7 +21,21 @@ class OtCreate extends Component
     public function mount() {
         $this->clientes = Cliente::all();
         $this->prendas = Articulo::all();
+    }
 
+    public function updatedselCliente($value)
+    {
+        $cliente = Cliente::where('id', $value)->first();
+        $this->dirCliente = $cliente->calle_nombre . ' Nº ' . $cliente->calle_numero;
+
+
+        // $this->clientes = Cliente::where('id', $value)->get();
+        // $this->dirCliente = $this->clientes->first()->id ?? null;
+
+        // $cliente = Cliente::where('id', $value)->first('razonsocial');
+
+        // $this->dirCliente = json_encode($this->dirCliente);
+        // $this->dirCliente = 'puta direccion';
     }
 
     public function render()
