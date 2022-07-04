@@ -2,11 +2,19 @@
     {{-- A good traveler has no fixed plans and is not intent upon arriving. --}}
     <div class="content-header">
         <div class="container-fluid">
-            <div class="mb-2 row">
-                <div class="col-sm-6">
-                    <h3 class="m-0">
-                        Nueva Orden de Trabajo
-                    </h3>
+            <div class="mb-2 row position-sticky">
+                <div class="col-md-8 justify-md-start">
+                    Nueva Orden de Trabajo
+                </div>
+                <div class="col-md-4 justify-md-end">
+                    <a href="{{ route('ots.index') }}" class="btn btn-secondary btn-sm" tabindex="0">
+                        <i class="fa fa-fw fa-lg fa-arrow-left"></i>
+                        Cancelar
+                    </a>
+                    <button type="submit" class="btn btn-success btn-sm" tabindex="0">
+                        <i class="fa fa-fw fa-lg fa-check-circle"></i>
+                        Grabar
+                    </button>
                 </div>
             </div>
         </div>
@@ -20,7 +28,7 @@
         </div>
 
         <div class="card-body">
-            <form wire:submit.prevent="submit">
+            <form wire:submit.prevent="grabar">
             <div class="row gx-4 gy-1">
                 <div class="form-group col-md-2">
                     <label for="fecha_alta" class="form-label">Fecha OT</label>
@@ -108,6 +116,34 @@
                         @enderror
                     </div>
                 </div>
+
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label for="">Prendas</label>
+                        {{-- <div wire:ignore> --}}
+                        <select wire:model="selectedPrenda" class="form-select">
+                            <option value="0">Seleccione una prenda</option>
+                            @foreach($prendas as $prenda)
+                                <option value="{{ $prenda->id }}">
+                                    {{ $prenda->descripcion }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group col-md-1">
+                        <label for="">Recibe</label>
+                        <input wire:model="recibe" type="text" class="form-control">
+                    </div>
+                    <div class="form-group col-md-1">
+                        <label for="">Entrega</label>
+                        <input wire:model="entrega" type="text" class="form-control">
+                    </div>
+                    <div class="form-group col-md-2 mt-4">
+                        <button class="btn btn-success">Agregar prenda</button>
+                    </div>
+                </div>
+
+
 
                 <div class="row">
                     <div class="form-group col-md-4">

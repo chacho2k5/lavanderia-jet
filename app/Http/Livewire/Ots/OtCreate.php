@@ -42,4 +42,9 @@ class OtCreate extends Component
     {
         return view('livewire.ots.ot-create');
     }
+
+    public function grabar()
+    {
+
+    }
 }
