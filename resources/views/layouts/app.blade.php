@@ -34,11 +34,13 @@
          @livewire('navigation-menu')
 
         <!-- Page Heading -->
-        {{-- <header class="py-3 bg-white shadow-sm d-flex border-bottom">
-            <div class="container">
-                {{ $header }}
-            </div>
-        </header> --}}
+        @isset($header)
+            <header class="py-3 bg-white shadow-sm d-flex border-bottom">
+                <div class="container">
+                    {{ $header }}
+                </div>
+            </header>
+        @endisset
 
         <!-- Page Content -->
         {{-- <main class="container my-5"> --}}
