@@ -65,11 +65,6 @@ class OtCreate extends Component
         // $this->validate();
 
         OtCuerpoTmp::create([
-        //    'ot_numero' => 111,
-        //    'articulo_id' => 2,
-        //    'retira' => 50,
-        //    'entrega' => 1,
-
            'ot_numero' => $this->numero,
            'articulo_id' => $this->selectedArticulo,
            'prenda' => $this->prenda,
@@ -81,7 +76,7 @@ class OtCreate extends Component
         // $this->reset(['open','title','content']);
 
         // El evento solo lo escucha el componente "show-posts"
-        $this->emitTo('ot-create', 'render');
+        $this->emitTo('ot.ot-table-tmp', 'render');
 
         // El evento "alert" lo escucha todo el mundo
         // $this->emit('alert','El post se creo correctamente');

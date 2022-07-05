@@ -158,9 +158,17 @@
                     <div class="form-group col-md-2 mt-4">
                         <button wire:click='cargarOtCuerpo' class="btn btn-primary btn-sm">Agregar prenda</button>
                     </div>
+                    <div class="form-group col-md-2 mt-4">
+                        <button wire:click="$emitTo('ot.ot-table-tmp','render')" class="btn btn-secondary btn-sm">Refresh</button>
+                    </div>
                 </div>
 
-                <table id="tableOtTmp" class="table mt-3 pt-1 table-hover table-striped table-sm">
+                @livewire('ot.ot-table-tmp', ['filas' => $otCuerpo], key($selectedArticulo))
+                {{-- @livewire('edit-post', ['post' => $post], key($post->id)) --}}
+                {{-- @livewire('ot.ot-table-tmp') --}}
+
+
+                {{-- <table id="tableOtTmp" class="table mt-3 pt-1 table-hover table-striped table-sm">
                     <thead>
                         <tr>
                             <th>Numero OT</th>
@@ -180,13 +188,13 @@
                             <td>{{ $fila->retira }}</td>
                             <td>{{ $fila->entrega }}</td>
                             <td>
-                                {{-- @livewire('edit-post', ['post' => $post], key($post->id)) --}}
+                                @livewire('edit-post', ['post' => $post], key($post->id))
                             </td>
                         </tr>
                     @endforeach
 
                     </tbody>
-                </table>
+                </table> --}}
 
                 {{-- <button type="submit" class="btn btn-success">Save Contact</button> --}}
             </form>
