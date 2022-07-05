@@ -9,7 +9,7 @@ use Livewire\Component;
 
 class OtCreate extends Component
 {
-    public $clientes, $selCliente, $cliente;
+    public $clientes, $selectedCliente, $cliente;
     public $dirCliente;
 
     public $articulos, $selectedArticulo;
@@ -17,7 +17,7 @@ class OtCreate extends Component
     public $numero, $fecha_alta, $cliente_id, $estado_id, $entrega_hotel, $recibe_hotel;
     public $entrega_lavanderia, $recibe_lavanderia, $observaciones;
 
-    public $prendas, $recibe, $entrega;
+    public $prendas, $prenda, $retira, $entrega;
     public $otCuerpo;
 
     public function mount() {
@@ -26,7 +26,7 @@ class OtCreate extends Component
         $this->articulos = Articulo::all();
     }
 
-    public function updatedselCliente($value)
+    public function updatedselectedCliente($value)
     {
         $cliente = Cliente::where('id', $value)->first();
         $this->dirCliente = $cliente->calle_nombre . ' Nº ' . $cliente->calle_numero;
@@ -38,6 +38,12 @@ class OtCreate extends Component
 
         // $this->dirCliente = json_encode($this->dirCliente);
         // $this->dirCliente = 'puta direccion';
+    }
+
+    public function updatedselectedArticulo($value)
+    {
+        $prendas = Articulo::where('id', $value)->first();
+        $this->prenda = $prendas->descripcion;
     }
 
     public function render()
@@ -59,16 +65,23 @@ class OtCreate extends Component
         // $this->validate();
 
         OtCuerpoTmp::create([
+        //    'ot_numero' => 111,
+        //    'articulo_id' => 2,
+        //    'retira' => 50,
+        //    'entrega' => 1,
+
            'ot_numero' => $this->numero,
            'articulo_id' => $this->selectedArticulo,
-           'recibe' => $this->recibe,
+           'prenda' => $this->prenda,
+           'retira' => $this->retira,
            'entrega' => $this->entrega,
+
         ]);
 
         // $this->reset(['open','title','content']);
 
         // El evento solo lo escucha el componente "show-posts"
-        // $this->emitTo('show-posts', 'render');
+        $this->emitTo('ot-create', 'render');
 
         // El evento "alert" lo escucha todo el mundo
         // $this->emit('alert','El post se creo correctamente');

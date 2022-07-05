@@ -19,9 +19,6 @@
         <!-- Theme style -->
         <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
 
-        <link rel="stylesheet" href="{{ asset('css/datatables.custom.css') }}" class="rel">
-
-
         @isset($css)
             {{ $css }}
         @endisset

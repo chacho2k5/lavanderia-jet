@@ -72,7 +72,7 @@
                 <div class="form-group col-md-4">
                     <label for="">Clientes</label>
                     {{-- <div wire:ignore> --}}
-                    <select wire:model="selCliente" class="form-select">
+                    <select wire:model="selectedCliente" class="form-select">
                         <option value="0">Seleccione un cliente</option>
                         @foreach($clientes as $cliente)
                             <option value="{{ $cliente->id }}">
@@ -133,8 +133,8 @@
                         @enderror
                     </div>
                 </div>
-
-                <div class="row mt-5">
+<hr size="6">
+                <div class="row mt-3">
                     <div class="form-group col-md-4">
                         <label for="">Prendas</label>
                         {{-- <div wire:ignore> --}}
@@ -148,8 +148,8 @@
                         </select>
                     </div>
                     <div class="form-group col-md-1">
-                        <label for="">Recibe</label>
-                        <input wire:model="recibe" type="text" class="form-control form-control-sm">
+                        <label for="">Retira</label>
+                        <input wire:model="retira" type="text" class="form-control form-control-sm">
                     </div>
                     <div class="form-group col-md-1">
                         <label for="">Entrega</label>
@@ -160,9 +160,11 @@
                     </div>
                 </div>
 
-                <table id="table" class="table mt-3 pt-1 table-hover table-striped table-sm">
+                <table id="tableOtTmp" class="table mt-3 pt-1 table-hover table-striped table-sm">
                     <thead>
                         <tr>
+                            <th>Numero OT</th>
+                            <th>ID</th>
                             <th>PRENDA</th>
                             <th>RETIRO</th>
                             <th>ENTREGA</th>
@@ -173,10 +175,12 @@
                         @foreach ( $otCuerpo as $fila)
                         <tr>
                             <td>{{ $fila->ot_numero }}</td>
-                            <td>{{ $fila->title }}</td>
-                            <td>{{ $fila->content }}</td>
+                            <td>{{ $fila->articulo_id }}</td>
+                            <td>{{ $fila->prenda }}</td>
+                            <td>{{ $fila->retira }}</td>
+                            <td>{{ $fila->entrega }}</td>
                             <td>
-                                @livewire('edit-post', ['post' => $post], key($post->id))
+                                {{-- @livewire('edit-post', ['post' => $post], key($post->id)) --}}
                             </td>
                         </tr>
                     @endforeach

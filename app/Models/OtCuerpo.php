@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class OtCuerpo extends Model
 {
     use HasFactory;
+
+    protected $table = "ots_cuerpo";
 }

@@ -8,4 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class OtCuerpoTmp extends Model
 {
     use HasFactory;
+
+    protected $table = "ots_cuerpo_tmp";
+    protected $fillable = [
+        'ot_numero',
+        'articulo_id',
+        'prenda',
+        'retira',
+        'entrega'
+    ];
 }

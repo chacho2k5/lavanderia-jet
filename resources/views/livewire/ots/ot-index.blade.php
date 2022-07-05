@@ -1,5 +1,4 @@
 <div>
-    {{-- A good traveler has no fixed plans and is not intent upon arriving. --}}
     <div class="content-header">
         <div class="container-fluid">
             <div class="mb-2 row">

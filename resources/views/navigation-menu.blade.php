@@ -25,7 +25,7 @@
                     Cagegorias
                 </x-jet-nav-link>
 
-                <x-jet-nav-link href="{{ route('ots.index') }}" :active="request()->routeIs('ots.index')">
+                <x-jet-nav-link href="{{ route('ots') }}" :active="request()->routeIs('ots')">
                     Ordenes de Trabajo
                 </x-jet-nav-link>
 
