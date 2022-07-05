@@ -2,7 +2,24 @@
     {{-- A good traveler has no fixed plans and is not intent upon arriving. --}}
     <div class="content-header">
         <div class="container-fluid">
-            <div class="mb-2 row position-sticky">
+            <div class="row">
+                <div class="col-sm-8">
+                  <h3>Nueva OT</h3>
+                </div>
+                <div class="col-md-2 justify-content-md-end">
+                    <a href="{{ route('ots.index') }}" class="btn btn-secondary btn-sm" tabindex="0">
+                        <i class="fa fa-fw fa-lg fa-arrow-left"></i>
+                        Cancelar
+                    </a>
+                </div>
+                <div class="col-md-2 justify-content-md-end">
+                    <button wire:click='grabar' class="btn btn-success btn-sm" tabindex="0">
+                        <i class="fa fa-fw fa-lg fa-check-circle"></i>
+                        Grabar
+                    </button>
+                </div>
+            </div>
+            {{-- <div class="mb-2 row position-sticky">
                 <div class="col-md-8 justify-md-start">
                     Nueva Orden de Trabajo
                 </div>
@@ -16,7 +33,7 @@
                         Grabar
                     </button>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
 
@@ -117,73 +134,55 @@
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="row mt-5">
                     <div class="form-group col-md-4">
                         <label for="">Prendas</label>
                         {{-- <div wire:ignore> --}}
-                        <select wire:model="selectedPrenda" class="form-select">
+                        <select wire:model="selectedArticulo" class="form-select form-select-sm">
                             <option value="0">Seleccione una prenda</option>
-                            @foreach($prendas as $prenda)
-                                <option value="{{ $prenda->id }}">
-                                    {{ $prenda->descripcion }}
+                            @foreach($articulos as $articulo)
+                                <option value="{{ $articulo->id }}">
+                                    {{ $articulo->descripcion }}
                                 </option>
                             @endforeach
                         </select>
                     </div>
                     <div class="form-group col-md-1">
                         <label for="">Recibe</label>
-                        <input wire:model="recibe" type="text" class="form-control">
+                        <input wire:model="recibe" type="text" class="form-control form-control-sm">
                     </div>
                     <div class="form-group col-md-1">
                         <label for="">Entrega</label>
-                        <input wire:model="entrega" type="text" class="form-control">
+                        <input wire:model="entrega" type="text" class="form-control form-control-sm">
                     </div>
                     <div class="form-group col-md-2 mt-4">
-                        <button class="btn btn-success">Agregar prenda</button>
+                        <button wire:click='cargarOtCuerpo' class="btn btn-primary btn-sm">Agregar prenda</button>
                     </div>
                 </div>
 
+                <table id="table" class="table mt-3 pt-1 table-hover table-striped table-sm">
+                    <thead>
+                        <tr>
+                            <th>PRENDA</th>
+                            <th>RETIRO</th>
+                            <th>ENTREGA</th>
+                            <th width="100px">ACCIONES</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ( $otCuerpo as $fila)
+                        <tr>
+                            <td>{{ $fila->ot_numero }}</td>
+                            <td>{{ $fila->title }}</td>
+                            <td>{{ $fila->content }}</td>
+                            <td>
+                                @livewire('edit-post', ['post' => $post], key($post->id))
+                            </td>
+                        </tr>
+                    @endforeach
 
-
-                <div class="row">
-                    <div class="form-group col-md-4">
-                        <label for="">Prendas</label>
-                        {{-- <div wire:ignore> --}}
-                        <select wire:model="selectedPrenda" class="form-select">
-                            <option value="0">Seleccione una prenda</option>
-                            @foreach($prendas as $prenda)
-                                <option value="{{ $prenda->id }}">
-                                    {{ $prenda->descripcion }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group col-md-1">
-                        <label for="">Recibe</label>
-                        <input wire:model="recibe" type="text" class="form-control">
-                    </div>
-                    <div class="form-group col-md-1">
-                        <label for="">Entrega</label>
-                        <input wire:model="entrega" type="text" class="form-control">
-                    </div>
-                    <div class="form-group col-md-2 mt-4">
-                        <button class="btn btn-success">Agregar prenda</button>
-                    </div>
-                </div>
-
-
-                <div class="mt-4 row d-print-none">
-                    <div class="text-right col-12">
-                        <a href="{{ route('ots.index') }}" class="btn btn-secondary" tabindex="5">
-                            <i class="fa fa-fw fa-lg fa-arrow-left"></i>
-                            Cancelar
-                        </a>
-                        <button type="submit" class="btn btn-success" tabindex="6">
-                            <i class="fa fa-fw fa-lg fa-check-circle"></i>
-                            Grabar
-                        </button>
-                    </div>
-                </div>
+                    </tbody>
+                </table>
 
                 {{-- <button type="submit" class="btn btn-success">Save Contact</button> --}}
             </form>
