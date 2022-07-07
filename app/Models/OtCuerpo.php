@@ -10,4 +10,10 @@ class OtCuerpo extends Model
     use HasFactory;
 
     protected $table = "ots_cuerpo";
+    protected $fillable = [
+        'ot_id',
+        'articulo_id',
+        'retira',
+        'entrega',
+    ];
 }

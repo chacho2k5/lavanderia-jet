@@ -1,17 +1,21 @@
 <div>
     {{-- A good traveler has no fixed plans and is not intent upon arriving. --}}
+<form wire:submit.prevent="grabar" autocomplete="off" class="needs-validation">
     <div class="content-header">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-9">
                   <h3>Nueva OT</h3>
                 </div>
+                @if ($error ==! null)
+                    <span class="text-danger">{{ $error }}</span>
+                @endif
                 <div class="col-md-3">
                     <a href="{{ route('ots.index') }}" class="btn btn-secondary btn-sm" tabindex="0">
                         <i class="fa fa-fw fa-lg fa-arrow-left"></i>
                         Cancelar
                     </a>
-                    <button wire:click='grabar' class="btn btn-success btn-sm" tabindex="0">
+                    <button type="submit" class="btn btn-success btn-sm" tabindex="0">
                         <i class="fa fa-fw fa-lg fa-check-circle"></i>
                         Grabar
                     </button>
@@ -19,7 +23,6 @@
             </div>
         </div>
     </div>
-    <form wire:submit.prevent="grabar" autocomplete="off">
     <div class="card">
         {{-- <div class="card-header d-flex justify-content-between"> --}}
         <div class="card-header justify-content-start">
@@ -35,7 +38,7 @@
                 </div>
                 <div class="form-group col-md-auto">
                     <label for="numero" class="col-form-label-sm">Número OT</label>
-                    <input type="text" wire:model="numero" class="form-control form-control-sm">
+                    <input type="text" wire:model.lazy="numero" class="form-control form-control-sm">
                     @error('numero')
                         <span class="invalid-feedback" role="alert">
                             <span class="text-danger">{{ $message }}</span>
@@ -84,34 +87,8 @@
                         @enderror
                     </div>
                 </div> --}}
-                <div class="row">
-                    <div class="form-group col-md-4">
-                        <label for="">Prendas</label>
-                        {{-- <div wire:ignore> --}}
-                        <select wire:model="selectedArticulo" class="form-select form-select-sm">
-                            <option value="0">Seleccione una prenda</option>
-                            @foreach($articulos as $articulo)
-                                <option value="{{ $articulo->id }}">
-                                    {{ $articulo->descripcion }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group col-md-1">
-                        <label for="">Retira</label>
-                        <input wire:model="retira" type="text" class="form-control form-control-sm">
-                    </div>
-                    {{-- <div class="form-group col-md-1">
-                        <label for="">Entrega</label>
-                        <input wire:model="entrega" type="text" class="form-control form-control-sm">
-                    </div> --}}
-                    <div class="form-group col-md-2 mt-4">
-                        <button wire:click='cargarOtCuerpo' class="btn btn-primary btn-sm">Agregar prenda</button>
-                    </div>
-                </div>
-                <hr size="4">
 
-                @livewire('ot.ot-table-tmp', ['filas' => $otCuerpo], key($selectedArticulo))
+                @livewire('ot.ot-table-tmp', ['filas' => $otCuerpo, 'numero' => $numero], key($numero))
                 {{-- @livewire('edit-post', ['post' => $post], key($post->id)) --}}
                 {{-- @livewire('ot.ot-table-tmp') --}}
 

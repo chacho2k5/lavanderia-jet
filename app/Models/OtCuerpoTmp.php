@@ -11,7 +11,7 @@ class OtCuerpoTmp extends Model
 
     protected $table = "ots_cuerpo_tmp";
     protected $fillable = [
-        'ot_numero',
+        'numero',
         'articulo_id',
         'prenda',
         'retira',
