@@ -24,4 +24,10 @@ class OtTableTmp extends Component
         return view('livewire.ot.ot-table-tmp');
     }
 
+    public function destroy($id) {
+
+        $reg = OtCuerpoTmp::where('id',$id);
+        $reg->delete();
+    }
+
 }

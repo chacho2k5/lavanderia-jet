@@ -3,16 +3,14 @@
     <div class="content-header">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-sm-8">
+                <div class="col-sm-9">
                   <h3>Nueva OT</h3>
                 </div>
-                <div class="col-md-2 justify-content-md-end">
+                <div class="col-md-3">
                     <a href="{{ route('ots.index') }}" class="btn btn-secondary btn-sm" tabindex="0">
                         <i class="fa fa-fw fa-lg fa-arrow-left"></i>
                         Cancelar
                     </a>
-                </div>
-                <div class="col-md-2 justify-content-md-end">
                     <button wire:click='grabar' class="btn btn-success btn-sm" tabindex="0">
                         <i class="fa fa-fw fa-lg fa-check-circle"></i>
                         Grabar
@@ -103,10 +101,10 @@
                         <label for="">Retira</label>
                         <input wire:model="retira" type="text" class="form-control form-control-sm">
                     </div>
-                    <div class="form-group col-md-1">
+                    {{-- <div class="form-group col-md-1">
                         <label for="">Entrega</label>
                         <input wire:model="entrega" type="text" class="form-control form-control-sm">
-                    </div>
+                    </div> --}}
                     <div class="form-group col-md-2 mt-4">
                         <button wire:click='cargarOtCuerpo' class="btn btn-primary btn-sm">Agregar prenda</button>
                     </div>

@@ -1,25 +1,27 @@
 <div>
-    <table id="tableOtTmp" class="table mt-3 pt-1 table-hover table-striped table-sm">
+    <div class="table-responsive">
+    <table id="tableOtTmp" class="table mt-2 pt-1 table-hover table-striped table-sm" style="display:block; height:240px; overflow-y: scroll">
         <thead>
             <tr>
-                <th>Numero OT</th>
-                <th>ID</th>
-                <th>PRENDA</th>
-                <th>RETIRO</th>
-                <th>ENTREGA</th>
-                <th width="100px">ACCIONES</th>
+                {{-- <th>Numero OT</th>
+                <th>ID</th> --}}
+                <th class="col-md-10">PRENDA</th>
+                <th class="col-md-2">RETIRO</th>
+                {{-- <th>ENTREGA</th> --}}
+                <th>ACCIONES</th>
             </tr>
         </thead>
         <tbody>
             {{-- {{ $filas }} --}}
             @foreach ( $filas as $fila)
             <tr>
-                <td>{{ $fila->ot_numero }}</td>
-                <td>{{ $fila->articulo_id }}</td>
+                {{-- <td>{{ $fila->ot_numero }}</td>
+                <td>{{ $fila->articulo_id }}</td> --}}
                 <td>{{ $fila->prenda }}</td>
                 <td>{{ $fila->retira }}</td>
-                <td>{{ $fila->entrega }}</td>
+                {{-- <td>{{ $fila->entrega }}</td> --}}
                 <td>
+                    <button wire:click="destroy({{$fila->id}})" class="btn btn-outline-danger btn-sm">Borrar</button>
                     {{-- @livewire('edit-post', ['post' => $post], key($post->id)) --}}
                 </td>
             </tr>
@@ -27,5 +29,5 @@
 
         </tbody>
     </table>
-
+</div>
 </div>
