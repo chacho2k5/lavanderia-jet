@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Ots;
+namespace App\Http\Livewire\Ot;
 
 use App\Models\Articulo;
 use App\Models\Cliente;
@@ -48,7 +48,7 @@ class OtCreate extends Component
 
     public function render()
     {
-        return view('livewire.ots.ot-create');
+        return view('livewire.ot.ot-create');
     }
 
     public function grabar()
@@ -83,3 +83,4 @@ class OtCreate extends Component
 
     }
 }
+

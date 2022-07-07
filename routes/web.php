@@ -3,8 +3,8 @@
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\DatatableController;
-use App\Http\Livewire\Ots\OtCreate;
-use App\Http\Livewire\Ots\OtIndex;
+use App\Http\Livewire\Ot\OtCreate;
+use App\Http\Livewire\Ot\OtIndex;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,10 +22,6 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-Route::get('/ots', function () {
-    return view('ot');
-})->name('ots');
-
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
 // })->name('dashboard');
@@ -42,6 +38,10 @@ Route::get('/ots', function () {
 
 Route::resource('clientes',ClienteController::class);
 Route::resource('categorias',CategoriaController::class);
+
+Route::get('/ots/ot', function () {
+    return view('ot');
+})->name('ots.ot');
 
 Route::get('/ots/index',OtIndex::class)->name('ots.index');
 Route::get('/ots/create',OtCreate::class)->name('ots.create');

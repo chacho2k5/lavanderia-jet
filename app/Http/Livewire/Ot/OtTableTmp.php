@@ -5,10 +5,8 @@ namespace App\Http\Livewire\Ot;
 use App\Models\OtCuerpoTmp;
 use Livewire\Component;
 
-
 class OtTableTmp extends Component
 {
-
     protected $listeners = ['render'];
 
     public $filas;
@@ -25,4 +23,5 @@ class OtTableTmp extends Component
 
         return view('livewire.ot.ot-table-tmp');
     }
+
 }

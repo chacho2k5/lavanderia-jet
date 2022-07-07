@@ -9,6 +9,5 @@
         </h3>
     </x-slot> --}}
 
-   @livewire('ots.ot-index')
-
+    @livewire('ot.ot-index')
 </x-app-layout>
