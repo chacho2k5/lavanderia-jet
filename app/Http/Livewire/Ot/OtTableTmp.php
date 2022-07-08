@@ -17,6 +17,11 @@ class OtTableTmp extends Component
     public $prendas, $prenda, $retira, $entrega, $articulo_id;
     public $otCuerpo;
 
+    protected $rules = [
+        'numero' => 'required',
+        'retira' => 'required'
+    ];
+
     public function mount() {
 
         $this->filas = OtCuerpoTmp::where('numero', $this->numero)->get();
@@ -28,6 +33,7 @@ class OtTableTmp extends Component
 
     public function render()
     {
+        // $filas = OtCuerpoTmp::where('numero', $this->numero)->get();
         // $filas = OtCuerpoTmp::all();
         // $filas = OtCuerpoTmp::latest()->get();
 
@@ -36,6 +42,7 @@ class OtTableTmp extends Component
         // $filas = OtCuerpoTmp::all();
 
 
+        // return view('livewire.ot.ot-table-tmp', compact('filas'));
         return view('livewire.ot.ot-table-tmp');
     }
 
@@ -69,6 +76,8 @@ class OtTableTmp extends Component
         // ]);
         // $this->validate();
 
+        $this->validate();
+
         OtCuerpoTmp::create([
            'numero' => $this->numero,
            'articulo_id' => $this->articulo_id,
@@ -79,9 +88,7 @@ class OtTableTmp extends Component
 
         $this->reset(['selectedArticulo', 'retira']);
 
-        return view('livewire.ot.ot-create');
-        // El evento solo lo escucha el componente "show-posts"
-        // $this->emitTo('ot.ot-table-tmp', 'render');
+        $this->emitTo('ot.ot-create', 'render');
 
         // El evento "alert" lo escucha todo el mundo
         // $this->emit('alert','El post se creo correctamente');

@@ -23,6 +23,8 @@ class OtCreate extends Component
 
     public $error = null;
 
+    protected $listeners = ['render'];
+
     public function mount() {
         $this->estado_id = 1;   // esto esta dibujado, dpes hay q poner el combo
         $this->otCuerpo = OtCuerpoTmp::all();
