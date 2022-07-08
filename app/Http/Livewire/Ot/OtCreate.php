@@ -7,6 +7,7 @@ use Livewire\Component;
 use App\Models\Articulo;
 use App\Models\OtCuerpoTmp;
 use Illuminate\Support\Facades\Validator;
+use Symfony\Contracts\Service\Attribute\Required;
 
 class OtCreate extends Component
 {
@@ -23,23 +24,37 @@ class OtCreate extends Component
 
     public $error = null;
 
-    protected $listeners = ['render'];
+    // protected $listeners = ['render'];
+
+    protected function rules() {
+        return [
+            'fecha_alta' => 'required',
+            'numero' => 'required|numeric',
+            'selectedCliente' => 'required',
+            'selectedArticulo' => 'required',
+            'retira' => 'required|numeric',
+            'entrega_hotel' => 'required',
+            'recibe_lavanderia' => 'required',
+            // 'articulo_id' => 'required'
+        ];
+    }
 
     public function mount() {
         $this->estado_id = 1;   // esto esta dibujado, dpes hay q poner el combo
         $this->otCuerpo = OtCuerpoTmp::all();
         $this->clientes = Cliente::all();
         $this->articulos = Articulo::all();
-        $this->selectedArticulo = 0;
+        // $this->selectedArticulo = 0;
         $this->retira = '';
     }
 
     public function updatedselectedCliente($value)
     {
-        $cliente = Cliente::where('id', $value)->first();
-        $this->dirCliente = $cliente->calle_nombre . ' Nº ' . $cliente->calle_numero;
-        $this->cliente_id = $cliente->id;
-
+        if ($value ==! null) {
+            $cliente = Cliente::where('id', $value)->first();
+            $this->dirCliente = $cliente->calle_nombre . ' Nº ' . $cliente->calle_numero;
+            $this->cliente_id = $cliente->id;
+        }
         // $this->clientes = Cliente::where('id', $value)->get();
         // $this->dirCliente = $this->clientes->first()->id ?? null;
 
@@ -49,12 +64,14 @@ class OtCreate extends Component
         // $this->dirCliente = 'puta direccion';
     }
 
-    // public function updatedselectedArticulo($value)
-    // {
-    //     $prendas = Articulo::where('id', $value)->first();
-    //     $this->prenda = $prendas->descripcion;
-    //     $this->articulo_id = $prendas->id;
-    // }
+    public function updatedselectedArticulo($value)
+    {
+        if ($value ==! null) {
+            $prendas = Articulo::where('id', $value)->first();
+            $this->prenda = $prendas->descripcion;
+            $this->articulo_id = $prendas->id;
+        }
+    }
 
     public function render()
     {
@@ -66,7 +83,7 @@ class OtCreate extends Component
 
     }
 
-    public function cargarOtCuerpo() {
+    public function agregarItem() {
 
         // $this->validate([
         //     'numero' => 'required',
@@ -83,10 +100,10 @@ class OtCreate extends Component
         //     $this->error = "Debe ingresar el Nro. de OT";
         // }
 
-        $this->validate([
-            'numero' => 'required|numeric',
-        ]);
-        // $this->validate();
+        // $this->validate([
+        //     'numero' => 'required|numeric',
+        // ]);
+        $this->validate();
 
         OtCuerpoTmp::create([
            'numero' => $this->numero,
@@ -97,9 +114,11 @@ class OtCreate extends Component
         ]);
 
         $this->reset(['selectedArticulo', 'retira']);
+        $this->selectedArticulo = 0;
+        $this->articulo_id = 0;
 
         // El evento solo lo escucha el componente "show-posts"
-        // $this->emitTo('ot.ot-table-tmp', 'render');
+        $this->emitTo('ot.ot-table-tmp', 'render');
 
         // El evento "alert" lo escucha todo el mundo
         // $this->emit('alert','El post se creo correctamente');

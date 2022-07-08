@@ -29,25 +29,25 @@
             <div class="row">
                 <div class="form-group col-md-auto">
                     <label for="fecha_alta" class="col-form-label-sm">Fecha OT</label>
-                    <input type="date" wire:model="fecha_alta" class="form-control form-control-sm" autofocus>
-                    @error('fecha_alta')
+                    <input type="date" wire:model.lazy="fecha_alta" class="form-control form-control-sm @error('fecha_alta') is-invalid @enderror" autofocus title="Debe ingresar la fecha de la OT (dia/mes/año).">
+                    {{-- @error('fecha_alta')
                         <span class="invalid-feedback" role="alert">
                             <span class="text-danger">{{ $message }}</span>
                         </span>
-                    @enderror
+                    @enderror --}}
                 </div>
                 <div class="form-group col-md-auto">
                     <label for="numero" class="col-form-label-sm">Número OT</label>
-                    <input type="text" wire:model.lazy="numero" class="form-control form-control-sm">
-                    @error('numero')
+                    <input type="text" wire:model.lazy="numero" class="form-control form-control-sm @error('numero') is-invalid @enderror" title="Debe ingresar el Nro. de OT.">
+                    {{-- @error('numero')
                         <span class="invalid-feedback" role="alert">
                             <span class="text-danger">{{ $message }}</span>
                         </span>
-                    @enderror
+                    @enderror --}}
                 </div>
                 <div class="form-group col-md-auto">
                     <label for="" class="col-form-label-sm">Clientes</label>
-                    <select wire:model="selectedCliente" class="form-select form-select-sm">
+                    <select wire:model="selectedCliente" class="form-select form-select-sm @error('selectedCliente') is-invalid @enderror" title="Debe seleccionar un cliente.">
                         <option value="0">Seleccione un cliente</option>
                         @foreach($clientes as $cliente)
                             <option value="{{ $cliente->id }}">
@@ -87,6 +87,48 @@
                         @enderror
                     </div>
                 </div> --}}
+                <div class="row">
+                    <div class="form-group col-md-3">
+                        <label for="">Prendas</label>
+                        {{-- <div wire:ignore> --}}
+                        <select wire:model="selectedArticulo" class="form-select form-select-sm @error('selectedArticulo') is-invalid @enderror" title="Debe seleccionar una prenda para cargar en la OT.">
+                            <option value="0">Seleccione una prenda</option>
+                            @foreach($articulos as $articulo)
+                                <option value="{{ $articulo->id }}">
+                                    {{ $articulo->descripcion }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group col-md-1">
+                        <label for="">Retira</label>
+                        <input wire:model.lazy="retira" type="text" class="form-control form-control-sm @error('retira') is-invalid @enderror" title="Debe ingresar la cantidad retirada de la prenda seleccionada.">
+                        {{-- @error('retira')
+                            <span class="invalid-feedback" role="alert">
+                                <span class="text-danger">{{ $message }}</span>
+                            </span>
+                        @enderror --}}
+                    </div>
+                    <div class="form-group col-md-2 mt-4">
+                        <button wire:click.prevent='agregarItem' class="btn btn-primary btn-sm">Agregar prenda</button>
+                    </div>
+
+                    <div class="form-group col-md-6 mt-0">
+                        @if (count($errors) > 0)
+                        <div class="alert alert-danger text-danger m-0 p-0">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li><small>{{ $error }}</small></li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
+                    </div>
+
+                </div>
+
+                <hr size="4">
 
                 @livewire('ot.ot-table-tmp', ['filas' => $otCuerpo, 'numero' => $numero], key($numero))
                 {{-- @livewire('edit-post', ['post' => $post], key($post->id)) --}}
@@ -127,21 +169,21 @@
               <div class="row justify-content-between">
                 <div class="form-group col-md-5">
                     <label for="entrega_hotel" class="m-0 col-form-label-sm">Entrega Hotel</label>
-                    <input type="text" wire:model="entrega_hotel" class="form-control form-control-sm">
-                    @error('entrega_hotel')
+                    <input type="text" wire:model.lazy="entrega_hotel" class="form-control form-control-sm @error('entrega_hotel') is-invalid @enderror" title="Debe ingresar la persona que entrega las prendas.">
+                    {{-- @error('entrega_hotel')
                         <span class="invalid-feedback" role="alert">
                             <span class="text-danger">{{ $message }}</span>
                         </span>
-                    @enderror
+                    @enderror --}}
                 </div>
                 <div class="form-group col-md-5">
                     <label for="recibe_lavanderia" class="m-0 col-form-label-sm">Recibe Lavanderia</label>
-                    <input type="text" wire:model="recibe_lavanderia" class="form-control form-control-sm">
-                    @error('recibe_lavanderia')
+                    <input type="text" wire:model.lazy="recibe_lavanderia" class="form-control form-control-sm @error('recibe_lavanderia') is-invalid @enderror" title="Debe ingresar el nombre de la persona que recibe las prendas en O3 Lavanderia.">
+                    {{-- @error('recibe_lavanderia')
                         <span class="invalid-feedback" role="alert">
                             <span class="text-danger">{{ $message }}</span>
                         </span>
-                    @enderror
+                    @enderror --}}
                 </div>
             </div>
         </div>

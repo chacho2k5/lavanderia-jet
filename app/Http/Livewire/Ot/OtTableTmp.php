@@ -12,48 +12,40 @@ class OtTableTmp extends Component
 
     public $filas;
     public $numero;     //Nro. OT
-    public $articulos, $selectedArticulo;
+    // public $articulos, $selectedArticulo;
 
     public $prendas, $prenda, $retira, $entrega, $articulo_id;
     public $otCuerpo;
 
-    protected $rules = [
-        'numero' => 'required',
-        'retira' => 'required'
-    ];
+    // protected $rules = [
+    //     'numero' => 'required',
+    //     'retira' => 'required'
+    // ];
 
     public function mount() {
 
         $this->filas = OtCuerpoTmp::where('numero', $this->numero)->get();
         // $this->filas = OtCuerpoTmp::all();
-        $this->articulos = Articulo::all();
-        $this->selectedArticulo = 0;
+        // $this->articulos = Articulo::all();
+        // $this->selectedArticulo = 0;
 
     }
 
     public function render()
     {
         // $filas = OtCuerpoTmp::where('numero', $this->numero)->get();
-        // $filas = OtCuerpoTmp::all();
-        // $filas = OtCuerpoTmp::latest()->get();
-
-        // $this->filas = OtCuerpoTmp::all();
-
-        // $filas = OtCuerpoTmp::all();
-
-
         // return view('livewire.ot.ot-table-tmp', compact('filas'));
         return view('livewire.ot.ot-table-tmp');
     }
 
-    public function updatedselectedArticulo($value)
-    {
-        $prendas = Articulo::where('id', $value)->first();
-        $this->prenda = $prendas->descripcion;
-        $this->articulo_id = $prendas->id;
-    }
+    // public function updatedselectedArticulo($value)
+    // {
+    //     $prendas = Articulo::where('id', $value)->first();
+    //     $this->prenda = $prendas->descripcion;
+    //     $this->articulo_id = $prendas->id;
+    // }
 
-    public function agregar() {
+    public function agregarxxxxx() {
 
         // $this->validate([
         //     'numero' => 'required',
@@ -99,6 +91,8 @@ class OtTableTmp extends Component
 
         $reg = OtCuerpoTmp::where('id',$id);
         $reg->delete();
+
+        // session()->flash('message',"Registro borrado correctamente.");
     }
 
 }
