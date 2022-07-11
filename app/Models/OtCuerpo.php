@@ -9,6 +9,7 @@ class OtCuerpo extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
     protected $table = "ots_cuerpo";
     protected $fillable = [
         'ot_id',

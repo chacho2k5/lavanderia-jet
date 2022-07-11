@@ -15,11 +15,10 @@ return new class extends Migration
     {
         Schema::create('ots_cuerpo', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('ot_id');
-            $table->unsignedInteger('articulo_id');
-            $table->unsignedInteger('retira');
-            $table->unsignedInteger('entrega');
-            $table->timestamps();
+            $table->unsignedInteger('ot_id')->nullable();
+            $table->unsignedInteger('articulo_id')->nullable();
+            $table->unsignedInteger('retira')->nullable()->default(0);
+            $table->unsignedInteger('entrega')->nullable()->default(0);
         });
     }
 

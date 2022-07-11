@@ -15,7 +15,7 @@
                         <i class="fa fa-fw fa-lg fa-arrow-left"></i>
                         Cancelar
                     </a>
-                    <button type="submit" class="btn btn-success btn-sm" tabindex="0">
+                    <button wire:click.prevent='grabarOT' class="btn btn-success btn-sm" tabindex="0">
                         <i class="fa fa-fw fa-lg fa-check-circle"></i>
                         Grabar
                     </button>
@@ -38,7 +38,7 @@
                 </div>
                 <div class="form-group col-md-auto">
                     <label for="numero" class="col-form-label-sm">Número OT</label>
-                    <input type="text" wire:model.lazy="numero" class="form-control form-control-sm @error('numero') is-invalid @enderror" title="Debe ingresar el Nro. de OT.">
+                    <input type="text" wire:model="numero" class="form-control form-control-sm @error('numero') is-invalid @enderror" title="Debe ingresar el Nro. de OT.">
                     {{-- @error('numero')
                         <span class="invalid-feedback" role="alert">
                             <span class="text-danger">{{ $message }}</span>
@@ -63,110 +63,8 @@
                 </div>
             @endif
             </div>
-        </div>
 
-        <div class="card-body">
-                {{-- <div class="row mt-2">
-                    <div class="form-group col-md-5">
-                        <label for="entrega_lavanderia" class="form-label">Entrega Lavanderia</label>
-                        <input type="text" wire:model="entrega_lavanderia" class="form-control">
-                        @error('entrega_lavanderia')
-                            <span class="invalid-feedback" role="alert">
-                                <span class="text-danger">{{ $message }}</span>
-                            </span>
-                        @enderror
-                    </div>
-
-                    <div class="form-group col-md-5">
-                        <label for="recibe_hotel" class="form-label">Recibe Hotel</label>
-                        <input type="text" wire:model="recibe_hotel" class="form-control">
-                        @error('recibe_hotel')
-                            <span class="invalid-feedback" role="alert">
-                                <span class="text-danger">{{ $message }}</span>
-                            </span>
-                        @enderror
-                    </div>
-                </div> --}}
-                <div class="row">
-                    <div class="form-group col-md-3">
-                        <label for="">Prendas</label>
-                        {{-- <div wire:ignore> --}}
-                        <select wire:model="selectedArticulo" class="form-select form-select-sm @error('selectedArticulo') is-invalid @enderror" title="Debe seleccionar una prenda para cargar en la OT.">
-                            <option value="0">Seleccione una prenda</option>
-                            @foreach($articulos as $articulo)
-                                <option value="{{ $articulo->id }}">
-                                    {{ $articulo->descripcion }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group col-md-1">
-                        <label for="">Retira</label>
-                        <input wire:model.lazy="retira" type="text" class="form-control form-control-sm @error('retira') is-invalid @enderror" title="Debe ingresar la cantidad retirada de la prenda seleccionada.">
-                        {{-- @error('retira')
-                            <span class="invalid-feedback" role="alert">
-                                <span class="text-danger">{{ $message }}</span>
-                            </span>
-                        @enderror --}}
-                    </div>
-                    <div class="form-group col-md-2 mt-4">
-                        <button wire:click.prevent='agregarItem' class="btn btn-primary btn-sm">Agregar prenda</button>
-                    </div>
-
-                    <div class="form-group col-md-6 mt-0">
-                        @if (count($errors) > 0)
-                        <div class="alert alert-danger text-danger m-0 p-0">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li><small>{{ $error }}</small></li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
-
-                    </div>
-
-                </div>
-
-                <hr size="4">
-
-                @livewire('ot.ot-table-tmp', ['filas' => $otCuerpo, 'numero' => $numero], key($numero))
-                {{-- @livewire('edit-post', ['post' => $post], key($post->id)) --}}
-                {{-- @livewire('ot.ot-table-tmp') --}}
-
-                {{-- <table id="tableOtTmp" class="table mt-3 pt-1 table-hover table-striped table-sm">
-                    <thead>
-                        <tr>
-                            <th>Numero OT</th>
-                            <th>ID</th>
-                            <th>PRENDA</th>
-                            <th>RETIRO</th>
-                            <th>ENTREGA</th>
-                            <th width="100px">ACCIONES</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ( $otCuerpo as $fila)
-                        <tr>
-                            <td>{{ $fila->ot_numero }}</td>
-                            <td>{{ $fila->articulo_id }}</td>
-                            <td>{{ $fila->prenda }}</td>
-                            <td>{{ $fila->retira }}</td>
-                            <td>{{ $fila->entrega }}</td>
-                            <td>
-                                @livewire('edit-post', ['post' => $post], key($post->id))
-                            </td>
-                        </tr>
-                    @endforeach
-
-                    </tbody>
-                </table> --}}
-
-                {{-- <button type="submit" class="btn btn-success">Save Contact</button> --}}
-
-        </div>
-        <div class="card-footer">
-              <div class="row justify-content-between">
+            <div class="row">
                 <div class="form-group col-md-5">
                     <label for="entrega_hotel" class="m-0 col-form-label-sm">Entrega Hotel</label>
                     <input type="text" wire:model.lazy="entrega_hotel" class="form-control form-control-sm @error('entrega_hotel') is-invalid @enderror" title="Debe ingresar la persona que entrega las prendas.">
@@ -187,6 +85,67 @@
                 </div>
             </div>
         </div>
+
+        <div class="card-body">
+                <div class="row">
+                    <div class="form-group col-md-3">
+                        <label for="">Prendas</label>
+                        {{-- <div wire:ignore> --}}
+                        <select wire:model="selectedArticulo" class="form-select form-select-sm @error('selectedArticulo') is-invalid @enderror" title="Debe seleccionar una prenda para cargar en la OT.">
+                            <option value="0">Seleccione una prenda</option>
+                            @foreach($articulos as $articulo)
+                                <option value="{{ $articulo->id }}">
+                                    {{ $articulo->descripcion }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group col-md-1">
+                        <label for="">Retira</label>
+                        <input wire:model="retira" type="text" class="form-control form-control-sm @error('retira') is-invalid @enderror" title="Debe ingresar la cantidad retirada de la prenda seleccionada.">
+                        {{-- @error('retira')
+                            <span class="invalid-feedback" role="alert">
+                                <span class="text-danger">{{ $message }}</span>
+                            </span>
+                        @enderror --}}
+                    </div>
+                    <div class="form-group col-md-2 mt-4">
+                        <button wire:click.prevent='agregarItem' class="btn btn-primary btn-sm">Agregar prenda</button>
+                    </div>
+                    @if (count($errors) > 0)
+                        <div class="form-group col-md-6 mt-0">
+                            <div class="alert alert-danger text-danger m-0 p-0">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li><small>{{ $error }}</small></li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </div>
+                    @endif
+
+                    @if (session()->has('message'))
+                        <div class="alert alert-success">
+                            {{ session('message') }}
+                        </div>
+                    @endif
+
+
+                </div>
+
+                <hr size="4">
+
+                @livewire('ot.ot-table-tmp', ['filas' => $otCuerpo, 'numero' => $numero], key($numero))
+
+        </div>
+
+        {{-- <div class="card-footer">
+        </div> --}}
     </div>      {{-- End Card --}}
 </form>
+{{-- <script>
+    Livewire.on('alert', msg => {
+        alert(msg);
+    })
+    </script> --}}
 </div>

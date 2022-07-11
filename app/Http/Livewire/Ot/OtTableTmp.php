@@ -45,52 +45,14 @@ class OtTableTmp extends Component
     //     $this->articulo_id = $prendas->id;
     // }
 
-    public function agregarxxxxx() {
-
-        // $this->validate([
-        //     'numero' => 'required',
-        // ]);
-        // $this->validate();
-
-        // $validateData = Validator::make(
-        //     ['numero' => 'required'],
-        //     ['retira' => 'required']
-        // )->validate();
-
-        // if ($this->numero == null)
-        // {
-        //     $this->error = "Debe ingresar el Nro. de OT";
-        // }
-
-        // $this->validate([
-        //     'numero' => 'required|numeric',
-        //     'retira' => 'required|numeric',
-        // ]);
-        // $this->validate();
-
-        $this->validate();
-
-        OtCuerpoTmp::create([
-           'numero' => $this->numero,
-           'articulo_id' => $this->articulo_id,
-           'prenda' => $this->prenda,
-           'retira' => $this->retira,
-           'entrega' => $this->entrega,
-        ]);
-
-        $this->reset(['selectedArticulo', 'retira']);
-
-        $this->emitTo('ot.ot-create', 'render');
-
-        // El evento "alert" lo escucha todo el mundo
-        // $this->emit('alert','El post se creo correctamente');
-
-    }
-
     public function destroy($id) {
 
-        $reg = OtCuerpoTmp::where('id',$id);
-        $reg->delete();
+        OtCuerpoTmp::where('id',$id)->delete();
+
+        // $reg = OtCuerpoTmp::where('id',$id);
+        // $reg->delete();
+
+        // $deleted = Flight::where('active', 0)->delete();
 
         // session()->flash('message',"Registro borrado correctamente.");
     }
