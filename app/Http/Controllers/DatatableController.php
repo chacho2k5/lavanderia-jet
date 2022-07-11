@@ -1,11 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-<<<<<<< HEAD
-=======
 
 use App\Models\Categoria;
->>>>>>> main
 use App\Models\Cliente;
 use App\Models\Articulo;
 use Illuminate\Http\Request;
@@ -23,21 +20,12 @@ class DatatableController extends Controller
                 ->toJson();
     }
 
-<<<<<<< HEAD
-    public function articulos() {
-        // $clientes = Cliente::select('razonsocial','cuil','telefono1', 'iva_id');
-        // $clientes = Cliente::with('iva')->select('clientes.*');
-        $articulos = Articulo::with('categoria')->select('articulos.*');
-        return DataTables::of($articulos)
-                ->addColumn('actions','articulo.action')    //columna de dt y vista
-=======
     public function categorias() {
         // $clientes = Cliente::select('razonsocial','cuil','telefono1', 'iva_id');
         // $clientes = Cliente::with('iva')->select('clientes.*');
         $data = Categoria::all();
         return DataTables::of($data)
                 ->addColumn('actions','categoria.action')    //columna de dt y vista
->>>>>>> main
                 ->rawColumns(['actions'])   //es para procesar el html
                 ->toJson();
     }

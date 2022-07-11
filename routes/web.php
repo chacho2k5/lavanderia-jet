@@ -38,14 +38,8 @@ Route::get('/', function () {
 // });
 
 Route::resource('clientes',ClienteController::class);
-<<<<<<< HEAD
-Route::resource('articulos',ArticuloController::class);
-
-// Esta ruta en realidad podria ser un metodo del ArticuloController
-Route::get('dt/clientes',[DatatableController::class,'clientes'])->name('dt.clientes');
-Route::get('dt/articulos',[DatatableController::class,'articulos'])->name('dt.articulos');
-=======
 Route::resource('categorias',CategoriaController::class);
+Route::resource('articulos',ArticuloController::class);
 
 Route::get('/ots/ot', function () {
     return view('ot');
@@ -57,10 +51,10 @@ Route::get('/ots/create',OtCreate::class)->name('ots.create');
 // Esta ruta en realidad podria ser un metodo del ArticuloController
 Route::get('dt/clientes',[DatatableController::class,'clientes'])->name('dt.clientes');
 Route::get('dt/categorias',[DatatableController::class,'categorias'])->name('dt.categorias');
+Route::get('dt/articulos',[DatatableController::class,'articulos'])->name('dt.articulos');
 
 // Route::get('categorias',Categorias::class)->name('categorias');
 // Route::get('categorias/create',CategoriaShow::class)->name('categorias.create');
 // Route::get('categorias/edit',CategoriaShow::class)->name('categorias.edit');
 // Route::get('categorias',CategoriaShow::class)->name('categorias');
 
->>>>>>> main
