@@ -5,13 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Categoria extends Model
+class OtCuerpo extends Model
 {
     use HasFactory;
 
     public $timestamps = false;
+    protected $table = "ots_cuerpo";
     protected $fillable = [
-        'descripcion',
-        'factor'
+        'ot_id',
+        'articulo_id',
+        'retira',
+        'entrega',
     ];
 }

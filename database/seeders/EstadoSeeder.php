@@ -16,7 +16,6 @@ class EstadoSeeder extends Seeder
     public function run()
     {
         $estados = [
-            ['descripcion' => 'Retirado del cliente'],
             ['descripcion' => 'Ingresado'],
             ['descripcion' => 'Lavado'],
             ['descripcion' => 'Secado'],

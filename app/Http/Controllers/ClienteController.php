@@ -110,9 +110,4 @@ class ClienteController extends Controller
         // return view ('cliente.index');
     }
 
-    public function zzzzzzzzzzzzdatatable() {
-        $clientes = Cliente::select('razonsocial', 'cuil', 'telefono1', 'iva_id');
-        // $clientes = Cliente::with('Iva')->select('clientes.*');
-        return DataTables::of($clientes)->toJson();
-    }
 }

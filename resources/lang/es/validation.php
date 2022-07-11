@@ -288,6 +288,14 @@ return [
             'email' => 'Dirección de correo no valida.',
             'unique' => 'Dirección de correo existente.',
         ],
+        'numero' => [
+            'required' => 'Debe ingresar el :attribute.',
+            'numeric' => 'El :attribute de ser un valor numérico.',
+        ],
+        'retira' => [
+            'required' => 'Debe ingresar la cantidad de prendas a retirar.',
+            'numeric' => 'El campo :attribute de ser un valor numérico.',
+        ],
 
     ],
 
@@ -308,7 +316,13 @@ return [
         'telefono2' => 'Telefono',
         'razonsocial' => 'Razon Social',
         'correo' => 'Correo Electrónico',
-        'cuit' => 'CUIT'
+        'cuit' => 'CUIT',
+        'numero' => 'Numero de la OT',
+        'fecha_alta' => 'Fecha de alta OT',
+        'retira' => 'Retira',
+        'entrega_hotel' => 'Entrega en Hotel',
+        'recibe_lavanderia' => 'Recibe en Lavanderia'
+
     ],
 
 ];

@@ -16,11 +16,14 @@ class Articulo extends Model
         'categoria_id',
         'delicado'
     ];
+<<<<<<< HEAD
 
 
 
 public function categoria() {
     return $this->belongsTo(Categoria::class)->withDefault();
+=======
+>>>>>>> main
 }
 
 

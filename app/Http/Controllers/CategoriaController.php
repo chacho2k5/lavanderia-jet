@@ -14,7 +14,7 @@ class CategoriaController extends Controller
      */
     public function index()
     {
-        //
+        return view('categoria.index');
     }
 
     /**
@@ -24,7 +24,7 @@ class CategoriaController extends Controller
      */
     public function create()
     {
-        //
+        return view('categoria.create');
     }
 
     /**
@@ -35,7 +35,17 @@ class CategoriaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            // 'descripcion' => 'required|unique:categorias,descripcion|max:100',
+            'descripcion' => 'required|min:2|max:100',
+            'factor' => 'numeric'
+        ]);
+
+        Categoria::create($request->all());
+
+        return to_route('categorias.index')
+                            ->with('success','Categoria agregada exitosamente.');
+
     }
 
     /**
@@ -46,7 +56,7 @@ class CategoriaController extends Controller
      */
     public function show(Categoria $categoria)
     {
-        //
+        return view('categoria.show', compact('categoria'));
     }
 
     /**
@@ -57,7 +67,7 @@ class CategoriaController extends Controller
      */
     public function edit(Categoria $categoria)
     {
-        //
+        return view('categoria.edit', compact('categoria'));
     }
 
     /**
@@ -69,7 +79,17 @@ class CategoriaController extends Controller
      */
     public function update(Request $request, Categoria $categoria)
     {
-        //
+        $request->validate([
+            // 'descripcion' => 'required|unique:categorias,descripcion|max:100',
+            'descripcion' => 'required|min:2|max:100',
+            'factor' => 'numeric'
+        ]);
+
+        $categoria->update($request->all());
+
+        return to_route('categorias.index')
+                            ->with('success','Categoria modificada exitosamente.');
+
     }
 
     /**
@@ -80,6 +100,7 @@ class CategoriaController extends Controller
      */
     public function destroy(Categoria $categoria)
     {
-        //
+        $categoria->delete();
+        return to_route('categorias.index')->with('success','Categoria borrada.');
     }
 }

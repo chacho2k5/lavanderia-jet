@@ -5,13 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Categoria extends Model
+class Empleado extends Model
 {
     use HasFactory;
-
     public $timestamps = false;
+
     protected $fillable = [
-        'descripcion',
-        'factor'
+        'apellido',
+        'nombres',
+        'numero_documento',
+        'telefono',
+        'correo'
     ];
 }
