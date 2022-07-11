@@ -21,7 +21,7 @@
                 <td>{{ $fila->retira }}</td>
                 <td>{{ $numero }}</td>
                 <td>
-                    <button wire:click="destroy({{$fila->id}})" class="btn btn-outline-danger btn-sm">Borrar</button>
+                    <button wire:click.prevent="destroy({{$fila->id}})" class="btn btn-outline-danger btn-sm">Borrar</button>
                     {{-- @livewire('edit-post', ['post' => $post], key($post->id)) --}}
                 </td>
             </tr>

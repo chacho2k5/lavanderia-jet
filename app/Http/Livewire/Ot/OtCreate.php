@@ -24,8 +24,10 @@ class OtCreate extends Component
     public $otCuerpo;
 
     public $error = null;
+    public $msgErr = null;
+    public $cambios = false;
 
-    // protected $listeners = ['render'];
+    protected $listeners = ['render'];
 
     // Ver esto para grabar desde un array directo a una tabla #######################
     //
@@ -66,9 +68,13 @@ class OtCreate extends Component
     public function mount() {
         $this->estado_id = 1;   // esto esta dibujado, dpes hay q poner el combo
         $this->otCuerpo = OtCuerpoTmp::all();
-        $this->clientes = Cliente::all();
+        $this->clientes = Cliente::select('id','razonsocial','calle_nombre', 'calle_numero')
+                            ->orderBy('razonsocial', 'asc')
+                            ->get();
         // $this->articulos = Articulo::all();
-        $this->articulos = Articulo::select('id','descripcion')->get();
+        $this->articulos = Articulo::select('id','descripcion')
+                            ->orderBy('descripcion', 'asc')
+                            ->get();
         $this->retira = '';
     }
 
@@ -97,11 +103,13 @@ class OtCreate extends Component
         return view('livewire.ot.ot-create');
     }
 
+    public function grabar() {}
+
     public function grabarOT()
     {
         $this->validate([
             'fecha_alta' => 'required',
-            // 'numero' => 'required|numeric',
+            'numero' => 'required|numeric',
             'selectedCliente' => 'required',
             // 'selectedArticulo' => 'required',
             // 'retira' => 'ruequired|numeric',
@@ -110,46 +118,48 @@ class OtCreate extends Component
         ]);
 
         // $this->validate();
+        $rows = OtCuerpoTmp::where('numero',$this->numero)->count();
+        if ($rows == 0) {
+            $this->msgErr = 'Debe cargar las prendas de la OT.';
+            $this->emitSelf('ot.ot-create');
+        } else {
+            // Grabo los datos del encabezado de la OT
+            $id = DB::table('ots')->insertGetId([
+                'numero' => $this->numero,
+                'fecha_alta' => $this->fecha_alta,
+                'cliente_id' => $this->cliente_id,
+                'estado_id' => 1,
+                'entrega_hotel' => $this->entrega_hotel,
+                'recibe_lavanderia' => $this->recibe_lavanderia,
+            ]);
 
-        // Grabo los datos del encabezado de la OT
-        $id = DB::table('ots')->insertGetId([
-            'numero' => $this->numero,
-            'fecha_alta' => $this->fecha_alta,
-            'cliente_id' => $this->cliente_id,
-            'estado_id' => 1,
-            'entrega_hotel' => $this->entrega_hotel,
-            'recibe_lavanderia' => $this->recibe_lavanderia,
-        ]);
-
-        // Agrego el id de la OT a la tabla temporal
-        $rows = DB::table('ots_cuerpo_tmp')
-            ->where('numero',$this->numero)
+            // Agrego el id de la OT a la tabla temporal
+            $rows = DB::table('ots_cuerpo_tmp')
+            ->where('numero', $this->numero)
             ->update(['ot_id' => $id]);
 
-         // Selecciono las columnas que se deben agregar al cuerpo de la OT
-        $rs = OtCuerpoTmp::where('numero',$this->numero)
-                    ->select('ot_id','articulo_id','retira','entrega')
+            // Selecciono las columnas que se deben agregar al cuerpo de la OT
+            $rs = OtCuerpoTmp::where('numero', $this->numero)
+                    ->select('ot_id', 'articulo_id', 'retira', 'entrega')
                     ->get();
 
-        // Paso los resultados a array y dpes grabo el cuerpo de la OT
-        $rsa = $rs->toArray();
-        DB::table('ots_cuerpo')->insert($rsa);
+            // Paso los resultados a array y dpes grabo el cuerpo de la OT
+            $rsa = $rs->toArray();
+            DB::table('ots_cuerpo')->insert($rsa);
 
-        OtCuerpoTmp::where('ot_id',$id)->delete();
+            // Borro los datos de la tabla temporal del cuerpo de la OT
+            OtCuerpoTmp::where('ot_id', $id)->delete();
 
-        return to_route('ots.create');
+            return to_route('ots.create');
+        }
 
-        // $this->reset('fecha_alta', 'numero', 'selectedCliente', 'dirCliente', 'entrega_hotel', 'recibe_lavanderia');
-        // $this->reset(['selectedArticulo', 'retira', 'articulo_id']);
-        // $this->emitSelf('ot.ot-create');
-
-        // dd();
-        // session()->flash('message', $rows);
     }
 
     public function agregarItem() {
 
-         $this->validate();
+        $this->validate();
+
+        $this->msgErr = null;
 
         OtCuerpoTmp::create([
            'numero' => $this->numero,
@@ -166,6 +176,19 @@ class OtCreate extends Component
 
         // El evento "alert" lo escucha todo el mundo
         // $this->emit('alert','El post se creo correctamente');
+    }
+
+    public function cancelarOT() {
+
+        // Esto es medio trucho xq se podria hacer con los eventos de livewire o ver con alpine
+        if ($this->fecha_alta ==! null || $this->numero ==! null || $this->selectedCliente || $this->entrega_hotel || $this->recibe_lavanderia) {
+            // Aca deberia ir un alert o modal
+            $this->msgErr = "Se realizaron cambios...";
+            // Borro los datos cargados en la tabla temporal de la OT
+            OtCuerpoTmp::where('numero', $this->numero)->delete();
+        } else {
+            return to_route('ots.index');
+        }
     }
 }
 

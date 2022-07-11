@@ -11,11 +11,11 @@
                     <span class="text-danger">{{ $error }}</span>
                 @endif
                 <div class="col-md-3">
-                    <a href="{{ route('ots.index') }}" class="btn btn-secondary btn-sm" tabindex="0">
+                    <button wire:click.prevent='cancelarOT' class="btn btn-secondary" tabindex="0">
                         <i class="fa fa-fw fa-lg fa-arrow-left"></i>
                         Cancelar
-                    </a>
-                    <button wire:click.prevent='grabarOT' class="btn btn-success btn-sm" tabindex="0">
+                    </button>
+                    <button wire:click.prevent='grabarOT' class="btn btn-success" tabindex="0">
                         <i class="fa fa-fw fa-lg fa-check-circle"></i>
                         Grabar
                     </button>
@@ -112,17 +112,23 @@
                     <div class="form-group col-md-2 mt-4">
                         <button wire:click.prevent='agregarItem' class="btn btn-primary btn-sm">Agregar prenda</button>
                     </div>
-                    @if (count($errors) > 0)
+
+                    @if (count($errors) > 0 || $msgErr ==! null)
                         <div class="form-group col-md-6 mt-0">
                             <div class="alert alert-danger text-danger m-0 p-0">
                                 <ul>
+                                    @if ($msgErr ==! null)
+                                        <li><small>{{ $msgErr }}</small></li>
+                                    @endif
                                     @foreach ($errors->all() as $error)
                                         <li><small>{{ $error }}</small></li>
                                     @endforeach
+
                                 </ul>
                             </div>
                         </div>
                     @endif
+
 
                     @if (session()->has('message'))
                         <div class="alert alert-success">
