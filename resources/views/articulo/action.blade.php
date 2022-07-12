@@ -11,6 +11,7 @@
         {{-- <a href="{{ route('articulos.destroy', $id) }}" class="px-1 text-danger" data-toggle="tooltip" title='Eliminar'><i class="fas fa-trash fs-5"></i></a> --}}
         {{-- <a href="javascript:void(0)" class="px-1 text-danger" onclick="deletearticulos(event.target, {{ $id }})" data-toggle="tooltip" title='Borrar'><i class="fa fa-trash fs-5"></i></a> --}}
     </div>
+    
 </form>
 
 {{-- <div class="text-right">

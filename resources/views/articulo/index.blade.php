@@ -251,7 +251,7 @@
                     //                     "</center>"
                     // }},
                 ],
-                order: [[1, 'asc']],
+                order: [1, 'asc'],
                 // "scrollX": true
                 // "scrollY": "300px",
                 "scrollY": '45vh',

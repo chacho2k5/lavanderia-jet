@@ -20,6 +20,17 @@ class DatatableController extends Controller
                 ->toJson();
     }
 
+    public function articulos() {
+        // $clientes = Cliente::select('razonsocial','cuil','telefono1', 'iva_id');
+        // $clientes = Cliente::with('iva')->select('clientes.*');
+        $data = Articulo::all();
+        return DataTables::of($data)
+                ->addColumn('actions','articulo.action')    //columna de dt y vista
+                ->rawColumns(['actions'])   //es para procesar el html
+                ->toJson();
+    }
+
+
     public function categorias() {
         // $clientes = Cliente::select('razonsocial','cuil','telefono1', 'iva_id');
         // $clientes = Cliente::with('iva')->select('clientes.*');
