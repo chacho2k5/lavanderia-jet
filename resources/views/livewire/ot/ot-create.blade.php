@@ -1,25 +1,29 @@
 <div>
     {{-- A good traveler has no fixed plans and is not intent upon arriving. --}}
 <form wire:submit.prevent="grabar" autocomplete="off" class="needs-validation">
+    <div class="row">
+        <div class="col"></div>
+        <div class="col-md-9">
     <div class="content-header">
-        <div class="container-fluid">
+        <div class="container">
             <div class="row">
-                <div class="col-sm-9">
-                  <h3>Nueva OT</h3>
-                </div>
-                @if ($error ==! null)
-                    <span class="text-danger">{{ $error }}</span>
-                @endif
-                <div class="col-md-3">
-                    <button wire:click.prevent='cancelarOT' class="btn btn-secondary" tabindex="0">
+                <div class="col">
+                    <button wire:click.prevent='cancelarOT' class="btn btn-secondary btn-sm" tabindex="0">
                         <i class="fa fa-fw fa-lg fa-arrow-left"></i>
                         Cancelar
                     </button>
-                    <button wire:click.prevent='grabarOT' class="btn btn-success" tabindex="0">
+                    <button wire:click.prevent='grabarOT' class="btn btn-success btn-sm" tabindex="0">
                         <i class="fa fa-fw fa-lg fa-check-circle"></i>
                         Grabar
                     </button>
                 </div>
+                <div class="col col-md-auto">
+                  <h3>Nueva OT</h3>
+                </div>
+                {{-- No se en que momento o para que puse esto del error --}}
+                @if ($error ==! null)
+                    <span class="text-danger">{{ $error }}</span>
+                @endif
             </div>
         </div>
     </div>
@@ -148,6 +152,9 @@
         {{-- <div class="card-footer">
         </div> --}}
     </div>      {{-- End Card --}}
+</div>
+<div class="col"></div>
+</div>
 </form>
 {{-- <script>
     Livewire.on('alert', msg => {
