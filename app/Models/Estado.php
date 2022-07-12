@@ -13,4 +13,8 @@ class Estado extends Model
     protected $fillable = [
         'descripcion'
     ];
+
+    public function ots() {
+
+    }
 }
