@@ -23,7 +23,11 @@ class Ot extends Model
     ];
 
     public function estado() {
-        return $this->belongsTo(Estado::class,'estado_id', 'id')->withDefault();
+        return $this->belongsTo(Estado::class, 'estado_id','id')->withDefault();
+    }
+
+    public function cliente() {
+        return $this->belongsTo(Cliente::class, 'cliente_id','id')->withDefault();
     }
 
 }
