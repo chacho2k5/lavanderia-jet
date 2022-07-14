@@ -13,7 +13,7 @@ class StoreArticuloRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,10 @@ class StoreArticuloRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+                'descripcion' => ['required','between:3,100'],
+                'categoria_id' => ['nullable','digits:1'],
+                 'delicado' => ['nullable','digits:1'],
+                     
         ];
     }
 }
