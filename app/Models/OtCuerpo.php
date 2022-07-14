@@ -17,4 +17,8 @@ class OtCuerpo extends Model
         'retira',
         'entrega',
     ];
+
+    public function articulo() {
+        return $this->belongsTo(Articulo::class, 'articulo_id','id')->withDefault();
+    }
 }

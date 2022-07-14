@@ -44,7 +44,7 @@
 
         <!-- Page Content -->
         {{-- <main class="container my-5"> --}}
-        <main class="container my-2">
+        <main class="container-fluid my-2">
             {{ $slot }}
         </main>
 

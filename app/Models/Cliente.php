@@ -44,4 +44,8 @@ class Cliente extends Model
         return $this->belongsTo(Provincia::class);
     }
 
+    public function ots() {
+        return $this->hasMany(Ot::class);
+    }
+
 }

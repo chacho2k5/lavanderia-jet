@@ -22,4 +22,12 @@ class Ot extends Model
         'observaciones'
     ];
 
+    public function estado() {
+        return $this->belongsTo(Estado::class, 'estado_id','id')->withDefault();
+    }
+
+    public function cliente() {
+        return $this->belongsTo(Cliente::class, 'cliente_id','id')->withDefault();
+    }
+
 }

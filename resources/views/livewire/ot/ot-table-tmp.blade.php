@@ -6,7 +6,7 @@
                 {{-- <th>Numero OT</th>
                 <th>ID</th> --}}
                 <th class="col-md-10">PRENDA</th>
-                <th class="col-md-2">RETIRO</th>
+                <th class="col-md-2 text-center">RETIRO</th>
                 <th>ENTREGA</th>
                 <th>ACCIONES</th>
             </tr>
@@ -18,8 +18,8 @@
                 {{-- <td>{{ $fila->ot_numero }}</td>
                 <td>{{ $fila->articulo_id }}</td> --}}
                 <td>{{ $fila->prenda }}</td>
-                <td>{{ $fila->retira }}</td>
-                <td>{{ $numero }}</td>
+                <td class="text-center">{{ $fila->retira }}</td>
+                <td class="text-center">-</td>
                 <td>
                     <button wire:click.prevent="destroy({{$fila->id}})" class="btn btn-outline-danger btn-sm">Borrar</button>
                     {{-- @livewire('edit-post', ['post' => $post], key($post->id)) --}}
