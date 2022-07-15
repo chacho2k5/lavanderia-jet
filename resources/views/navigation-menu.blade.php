@@ -29,6 +29,9 @@
                     Ordenes de Trabajo
                 </x-jet-nav-link>
 
+                <x-jet-nav-link href="{{ route('estados.index') }}" :active="request()->routeIs('ots.ot')">
+                    Estados
+                </x-jet-nav-link>
             </ul>
 
             <!-- Right Side Of Navbar -->
