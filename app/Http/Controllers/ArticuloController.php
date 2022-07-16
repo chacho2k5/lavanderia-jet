@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreArticuloRequest;
 use App\Http\Requests\UpdateArticuloRequest;
 use App\Models\Articulo;
+use App\Models\Categoria;
+use Yajra\Datatables\Datatables;
 
 class ArticuloController extends Controller
 {
@@ -15,7 +17,8 @@ class ArticuloController extends Controller
      */
     public function index()
     {
-        //
+        
+        return view('articulo.index');
     }
 
     /**
@@ -25,7 +28,8 @@ class ArticuloController extends Controller
      */
     public function create()
     {
-        //
+        $categorias = Categoria::all();
+        return view('articulo.create',['categorias'=>$categorias]);
     }
 
     /**
@@ -36,7 +40,9 @@ class ArticuloController extends Controller
      */
     public function store(StoreArticuloRequest $request)
     {
-        //
+        Articulo::create($request->validated());
+        return to_route('articulos.index')
+               ->with('success','Articulo creado exitosamente');
     }
 
     /**
@@ -47,8 +53,11 @@ class ArticuloController extends Controller
      */
     public function show(Articulo $articulo)
     {
-        //
+        $categorias = Categoria::all();
+        return view('articulo.show',compact('articulo', 'categorias'));
+        
     }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -58,7 +67,8 @@ class ArticuloController extends Controller
      */
     public function edit(Articulo $articulo)
     {
-        //
+        $categorias = Categoria::all();
+        return view('articulo.edit',compact('articulo', 'categorias'));
     }
 
     /**
@@ -70,7 +80,10 @@ class ArticuloController extends Controller
      */
     public function update(UpdateArticuloRequest $request, Articulo $articulo)
     {
-        //
+        
+        $articulo->update($request->validated());
+        return to_route('articulos.index')->with('success','Articulo modificado exitosamente');
+
     }
 
     /**
@@ -81,6 +94,8 @@ class ArticuloController extends Controller
      */
     public function destroy(Articulo $articulo)
     {
-        //
+        $articulo->delete();
+        return to_route('articulos.index')->with('success','Articulo eliminado');
+        
     }
 }

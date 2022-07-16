@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Articulo extends Model
+
+
 {
     use HasFactory;
 
@@ -14,4 +16,12 @@ class Articulo extends Model
         'categoria_id',
         'delicado'
     ];
+
+
+
+public function categoria() {
+    return $this->belongsTo(Categoria::class)->withDefault();
 }
+
+
+};
