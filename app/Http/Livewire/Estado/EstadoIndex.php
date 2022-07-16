@@ -12,7 +12,8 @@ class EstadoIndex extends Component
     public $direction = 'asc';
 
     public $open_edit = false;
-    public $estado;
+    public $modelo;
+    public $readyToLoad = false;
 
     // Se escucha el evento 'render' y se ejecuta el metodo 'render'
     // protected $listeners = ['render', 'render'];
@@ -20,22 +21,34 @@ class EstadoIndex extends Component
     protected $listeners = ['render'];
 
     protected $rules = [
-        'estado.descripcion' => 'required|max:100|min:3',
-        'estado.detalle' => 'max:100|min:3',
+        'modelo.descripcion' => 'required|max:100|min:3',
+        'modelo.detalle' => 'max:100|min:3',
     ];
 
     public function mount() {
-        // $this->estado = new Estado();
+        $this->modelo = new Estado();
     }
+
+    // public function updatingSearch() {
+    //     $this->resetPage();
+    // }
 
     public function render()
     {
-        $rows = Estado::where('descripcion', 'like', '%' . $this->search . '%')
-                        ->orWhere ('detalle', 'like', '%' . $this->search . '%')
-                        ->orderBy($this->sort, $this->direction)
-                        ->get();
+        if ($this->readyToLoad) {
+            $rows = Estado::where('descripcion', 'like', '%' . $this->search . '%')
+                    ->orWhere('detalle', 'like', '%' . $this->search . '%')
+                    ->orderBy($this->sort, $this->direction)
+                    ->get();
+        } else {
+            $rows=[];
+        }
 
         return view('livewire.estado.estado-index', compact('rows'));
+    }
+
+    public function loadModelo() {
+        $this->readyToLoad = true;
     }
 
     public function order($sort) {
@@ -53,22 +66,22 @@ class EstadoIndex extends Component
     }
 
     public function edit(Estado $row) {
-        $this->estado = $row;
+        $this->modelo = $row;
 
         $this->open_edit = true;
     }
 
     public function update() {
         // $this->validate([
-        //     'estado.descripcion' => 'required|min:3|max:100',
-        //     'estado.detalle' => 'required|min:3|max:100',
+        //     'modelo.descripcion' => 'required|min:3|max:100',
+        //     'modelo.detalle' => 'required|min:3|max:100',
         // ]);
 
         $this->validate();
 
-        $this->estado->save();
+        $this->modelo->save();
 
-        // $this->reset(['openEdit','estado.descripcion','estado.detalle']);
+        // $this->reset(['openEdit','modelo.descripcion','modelo.detalle']);
         $this->reset(['open_edit']);
 
         // El evento solo lo escucha el componente "show-posts"
@@ -76,5 +89,9 @@ class EstadoIndex extends Component
 
         // El evento "alert" lo escucha todo el mundo
         // $this->emit('alert','El Estado se creo correctamente');
+    }
+
+    public function delete($id) {
+        Estado::destroy($id);
     }
 }

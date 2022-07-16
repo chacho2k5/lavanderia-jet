@@ -7,8 +7,7 @@ use Livewire\Component;
 
 class EstadoCreate extends Component
 {
-
-    public $open = false;
+    public $open_create = false;
     public $descripcion, $detalle;
 
     // Esto del "rules" no funciono
@@ -19,11 +18,11 @@ class EstadoCreate extends Component
             'detalle' => 'nullable',
     ];
 
-    protected $messages = [
-        'descripcion.required' => 'Debe ingresar el nombre del Estado.',
-        'descripcion.max:100' => 'El nombre del Estado debe tener entre 3 y 100 caracteres.',
-        'descripcion.min:3' => 'El nombre del Estado debe tener entre 3 y 100 caracteres.'
-    ];
+    // protected $messages = [
+    //     'descripcion.required' => 'Debe ingresar el nombre del Estado.',
+    //     'descripcion.max:100' => 'El nombre del Estado debe tener entre 3 y 100 caracteres.',
+    //     'descripcion.min:3' => 'El nombre del Estado debe tener entre 3 y 100 caracteres.'
+    // ];
 
     // public function updated($propertyName)
     // {
@@ -40,32 +39,33 @@ class EstadoCreate extends Component
 
     public function save() {
 
-        // $this->validate([
-        //     // 'descripcion' => 'required|max:100|min:3',
-        //     // 'detalle' => 'max:100|min:3',
-        //     'descripcion' => 'required',
-        //     'detalle' => 'nullable',
-        // ]);
+        $this->validate([
+            // 'descripcion' => 'required|max:100|min:3',
+            // 'detalle' => 'max:100|min:3',
+            'descripcion' => 'required',
+            'detalle' => 'nullable',
+        ]);
 
-        $this->validate();
+        // $this->validate();
 
         Estado::create([
             'descripcion' => $this->descripcion,
             'detalle' => $this->detalle,
         ]);
 
-        $this->reset(['open','descripcion','detalle']);
+        $this->reset(['open_create','descripcion','detalle']);
 
         // El evento solo lo escucha el componente "show-posts"
         $this->emitTo('estado.estado-index', 'render');
+        // $this->emitTo('estado.estado-index', 'render');
 
         // El evento "alert" lo escucha todo el mundo
         // $this->emit('alert','El Estado se creo correctamente');
     }
 
-    public function cancelar()
+    public function cancel()
     {
-        $this->reset(['open','descripcion','detalle']);
+        $this->reset(['open_create','descripcion','detalle']);
     }
 
     public function render()
