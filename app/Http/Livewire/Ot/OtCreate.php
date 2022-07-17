@@ -47,6 +47,8 @@ class OtCreate extends Component
     }
 
     protected $messages = [
+        'numero.required' => 'Debe ingresar el Nro. de la OT.',
+        'numero.numeric' => 'INGRESE UN VALOR NUMERICO'
         // 'invitation.email.unique.invitations' => 'The email has already been invited.',
         // 'invitation.email.unique.users' => 'An account with this email has already been registered.',
         // 'text.min' => 'Keep typing...'

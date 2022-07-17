@@ -37,7 +37,7 @@
                     <tbody>
                         @foreach ($headerOt as $header)
                             <tr wire:click="selectedOt({{ $header->id }})">
-                                <td>{{ $header->fecha_alta }}</td>
+                                <td>{{ date('d/m/Y', strtotime($header->fecha_alta)) }}</td>
                                 <td>{{ $header->cliente->razonsocial }}</td>
                                 <td scope="row">{{ $header->estado->descripcion }}</td>
                                 <td class="text-center">

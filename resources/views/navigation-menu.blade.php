@@ -21,11 +21,6 @@
                     Clientes
                 </x-jet-nav-link>
 
-                <x-jet-nav-link href="{{ route('articulos.index' ) }}" :active="request()->routeIs('articulos.index')">
-                    Articulos
-                </x-jet-nav-link>
-
-
                 <x-jet-nav-link href="{{ route('categorias.index') }}" :active="request()->routeIs('categorias.index')">
                     Cagegorias
                 </x-jet-nav-link>
@@ -33,7 +28,10 @@
                 <x-jet-nav-link href="{{ route('ots.ot') }}" :active="request()->routeIs('ots.ot')">
                     Ordenes de Trabajo
                 </x-jet-nav-link>
-           
+
+                <x-jet-nav-link href="{{ route('estados.index') }}" :active="request()->routeIs('ots.ot')">
+                    Estados
+                </x-jet-nav-link>
             </ul>
 
             <!-- Right Side Of Navbar -->
