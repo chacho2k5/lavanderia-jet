@@ -6,6 +6,8 @@ use App\Http\Controllers\ArticuloController;
 use App\Http\Controllers\DatatableController;
 use App\Http\Livewire\Ot\OtCreate;
 use App\Http\Livewire\Ot\OtIndex;
+//use App\Http\Livewire\articulo\index;
+use App\Http\Livewire\Articulos;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -47,6 +49,8 @@ Route::get('/ots/ot', function () {
 
 Route::get('/ots/index',OtIndex::class)->name('ots.index');
 Route::get('/ots/create',OtCreate::class)->name('ots.create');
+
+Route::get('/livewire/articulos/index',Articulos::class);
 
 // Esta ruta en realidad podria ser un metodo del ArticuloController
 Route::get('dt/clientes',[DatatableController::class,'clientes'])->name('dt.clientes');
