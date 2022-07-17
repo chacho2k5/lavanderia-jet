@@ -35,7 +35,8 @@
 
         <!-- Page Heading -->
         @isset($header)
-            <header class="py-3 bg-white shadow-sm d-flex border-bottom">
+            {{-- <header class="py-3 bg-white shadow-sm d-flex border-bottom"> --}}
+            <header class="py-2 h3 d-flex">
                 <div class="container">
                     {{ $header }}
                 </div>
@@ -50,6 +51,16 @@
 
         @stack('modals')
         @livewireScripts
+        <script>
+            Livewire.on('alert', function(message) {
+                alert(message);
+                // Swal.fire(
+                //     'Good job!',
+                //     message,
+                //     'success'
+                // )
+            });
+        </script>
         @stack('scripts')
 
         <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>

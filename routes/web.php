@@ -4,6 +4,7 @@ use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\ArticuloController;
 use App\Http\Controllers\DatatableController;
+use App\Http\Livewire\Estado\EstadoIndex;
 use App\Http\Livewire\Ot\OtCreate;
 use App\Http\Livewire\Ot\OtIndex;
 //use App\Http\Livewire\articulo\index;
@@ -50,7 +51,7 @@ Route::get('/ots/ot', function () {
 Route::get('/ots/index',OtIndex::class)->name('ots.index');
 Route::get('/ots/create',OtCreate::class)->name('ots.create');
 
-Route::get('/livewire/articulos/index',Articulos::class);
+Route::get('/estados/index',EstadoIndex::class)->name('estados.index');
 
 // Esta ruta en realidad podria ser un metodo del ArticuloController
 Route::get('dt/clientes',[DatatableController::class,'clientes'])->name('dt.clientes');
