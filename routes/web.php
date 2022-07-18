@@ -7,6 +7,8 @@ use App\Http\Controllers\DatatableController;
 use App\Http\Livewire\Estado\EstadoIndex;
 use App\Http\Livewire\Ot\OtCreate;
 use App\Http\Livewire\Ot\OtIndex;
+//use App\Http\Livewire\articulo\index;
+use App\Http\Livewire\Articulos;
 use Illuminate\Support\Facades\Route;
 
 /*

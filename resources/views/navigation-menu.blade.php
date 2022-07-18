@@ -21,6 +21,16 @@
                     Clientes
                 </x-jet-nav-link>
 
+                <x-jet-nav-link href="{{ route('articulos.index' ) }}" :active="request()->routeIs('articulos.index')">
+                    Articulos
+                </x-jet-nav-link>
+
+                <x-jet-nav-link href="{{ route('articulos.index' ) }}" :active="request()->routeIs('articulos.index')">
+                    Articulos2
+                </x-jet-nav-link>
+
+
+
                 <x-jet-nav-link href="{{ route('categorias.index') }}" :active="request()->routeIs('categorias.index')">
                     Cagegorias
                 </x-jet-nav-link>
