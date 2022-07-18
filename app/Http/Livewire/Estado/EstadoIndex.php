@@ -10,10 +10,23 @@ class EstadoIndex extends Component
     public $search;
     public $sort = 'descripcion';
     public $direction = 'asc';
-
-    public $open_edit = false;
-    public $modelo;
     public $readyToLoad = false;
+
+    // Conjunto de datos
+    // public Estado $registros;
+    public $registros;
+
+    // Datos para el alta
+    public $registro_id, $descripcion, $detalle;
+
+    // Datos para la modificacion
+    public $open_modal = false;
+
+    public $readOnly = null;
+
+    public $aux = 0;
+    public $action;      // edit - show
+    public $titulo_modal = "Crear nuevo ESTADO";
 
     // Se escucha el evento 'render' y se ejecuta el metodo 'render'
     // protected $listeners = ['render', 'render'];
@@ -21,30 +34,79 @@ class EstadoIndex extends Component
     protected $listeners = ['render'];
 
     protected $rules = [
-        'modelo.descripcion' => 'required|max:100|min:3',
-        'modelo.detalle' => 'max:100|min:3',
+        'descripcion' => 'required|max:100|min:3',
+        'detalle' => 'required|max:100|min:2',
     ];
 
-    public function mount() {
-        $this->modelo = new Estado();
+    protected $messages = [
+        'descripcion.required' => 'Debe ingresar un Estado',
+        'descripcion.min' => 'El Estado debe tener entre 3 y 10 caracteres',
+        'descripcion.max' => 'El Estado debe tener entre 3 y 10 caracteres',
+        'detalle.min' => 'La descripción del Estado debe tener entre 3 y 10 caracteres',
+        'detalle.min' => 'La descripción del Estado debe tener entre 3 y 10 caracteres',
+        // 'invitation.email.unique.invitations' => 'The email has already been invited.',
+        // 'invitation.email.unique.users' => 'An account with this email has already been registered.',
+    ];
+
+    // public function updated($propertyName)
+    // {
+    //     $this->validateOnly($propertyName);
+    // }
+
+    public function updated($fields)
+    {
+        $this->validateOnly($fields,[
+            'descripcion' => 'required|max:100|min:3',
+            'detalle' => 'required|max:100|min:3',
+        ]);
     }
 
-    // public function updatingSearch() {
-    //     $this->resetPage();
-    // }
+    public function grabar() {
+
+        // $this->validate([
+        //         'descripcion' => 'required|min:3|max:10',
+        //         'detalle' => 'min:3|max:6',
+        //     ]);
+
+        $this->validate();
+
+        Estado::updateOrCreate(['id' => $this->registro_id],
+        [
+            'descripcion' => $this->descripcion,
+            'detalle' => $this->detalle,
+        ]);
+
+        $this->cancel();
+
+        // El evento solo lo escucha el componente "show-posts"
+    //     // $this->emitTo('estado.estado-index', 'render');
+
+    //     // El evento "alert" lo escucha todo el mundo
+    //     // $this->emit('alert','El Estado se creo correctamente');
+
+    }
+    public function mount() {
+        // $this->registros = new Estado();
+    }
 
     public function render()
     {
-        if ($this->readyToLoad) {
-            $rows = Estado::where('descripcion', 'like', '%' . $this->search . '%')
-                    ->orWhere('detalle', 'like', '%' . $this->search . '%')
-                    ->orderBy($this->sort, $this->direction)
-                    ->get();
-        } else {
-            $rows=[];
-        }
+        $this->registros = Estado::where('descripcion', 'like', '%' . $this->search . '%')
+                ->orWhere('detalle', 'like', '%' . $this->search . '%')
+                ->orderBy($this->sort, $this->direction)
+                ->get();
 
-        return view('livewire.estado.estado-index', compact('rows'));
+        return view('livewire.estado.estado-index');
+
+        // if ($this->readyToLoad) {
+        //     $rows = Estado::where('descripcion', 'like', '%' . $this->search . '%')
+        //             ->orWhere('detalle', 'like', '%' . $this->search . '%')
+        //             ->orderBy($this->sort, $this->direction)
+        //             ->get();
+        // } else {
+        //     $rows=[];
+        // }
+        // return view('livewire.estado.estado-index', compact('rows'));
     }
 
     public function loadModelo() {
@@ -65,33 +127,39 @@ class EstadoIndex extends Component
         }
     }
 
-    public function edit(Estado $row) {
-        $this->modelo = $row;
+    public function edit_show($id, $value) {
 
-        $this->open_edit = true;
+        if ($value == 'edit') {
+            $this->titulo_modal = "Actualizar ESTADO";
+        } else {
+            $this->titulo_modal = "ESTADO";
+        }
+
+        $reg = Estado::findOrFail($id);
+        $this->registro_id = $reg->id;
+        $this->descripcion = $reg->descripcion;
+        $this->detalle = $reg->detalle;
+
+        $this->action = $value;
+        $this->open_modal = true;
     }
 
-    public function update() {
-        // $this->validate([
-        //     'modelo.descripcion' => 'required|min:3|max:100',
-        //     'modelo.detalle' => 'required|min:3|max:100',
-        // ]);
+    public function create() {
 
-        $this->validate();
+        $this->cancel();
+        $this->action = 'create';
+        $this->open_modal = true;
 
-        $this->modelo->save();
-
-        // $this->reset(['openEdit','modelo.descripcion','modelo.detalle']);
-        $this->reset(['open_edit']);
-
-        // El evento solo lo escucha el componente "show-posts"
-        // $this->emitTo('estado.estado-index', 'render');
-
-        // El evento "alert" lo escucha todo el mundo
-        // $this->emit('alert','El Estado se creo correctamente');
     }
 
     public function delete($id) {
         Estado::destroy($id);
     }
+
+    public function cancel()
+    {
+        $this->reset(['registro_id','descripcion','detalle', 'open_modal', 'titulo_modal']);
+
+    }
+
 }
