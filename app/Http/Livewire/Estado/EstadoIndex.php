@@ -53,38 +53,6 @@ class EstadoIndex extends Component
     //     $this->validateOnly($propertyName);
     // }
 
-    public function updated($fields)
-    {
-        $this->validateOnly($fields,[
-            'descripcion' => 'required|max:100|min:3',
-            'detalle' => 'required|max:100|min:3',
-        ]);
-    }
-
-    public function grabar() {
-
-        // $this->validate([
-        //         'descripcion' => 'required|min:3|max:10',
-        //         'detalle' => 'min:3|max:6',
-        //     ]);
-
-        $this->validate();
-
-        Estado::updateOrCreate(['id' => $this->registro_id],
-        [
-            'descripcion' => $this->descripcion,
-            'detalle' => $this->detalle,
-        ]);
-
-        $this->cancel();
-
-        // El evento solo lo escucha el componente "show-posts"
-    //     // $this->emitTo('estado.estado-index', 'render');
-
-    //     // El evento "alert" lo escucha todo el mundo
-    //     // $this->emit('alert','El Estado se creo correctamente');
-
-    }
     public function mount() {
         // $this->registros = new Estado();
     }
@@ -108,6 +76,14 @@ class EstadoIndex extends Component
         // }
         // return view('livewire.estado.estado-index', compact('rows'));
     }
+    public function updated($fields)
+    {
+        $this->validateOnly($fields,[
+            'descripcion' => 'required|max:100|min:3',
+            'detalle' => 'required|max:100|min:3',
+        ]);
+    }
+
 
     public function loadModelo() {
         $this->readyToLoad = true;
@@ -128,6 +104,8 @@ class EstadoIndex extends Component
     }
 
     public function edit_show($id, $value) {
+    // Muestro el modal, uso el mismo para el Ver/editar.
+    // Defino y el titulo y asigno los valores de los campos con las variables del reg. seleccionado.
 
         if ($value == 'edit') {
             $this->titulo_modal = "Actualizar ESTADO";
@@ -145,14 +123,41 @@ class EstadoIndex extends Component
     }
 
     public function create() {
-
+    // Muestro el modal para el Alta
         $this->cancel();
         $this->action = 'create';
         $this->open_modal = true;
 
     }
 
+    public function grabar() {
+    // Grabo las modificaciones y las altas
+
+        // $this->validate([
+        //         'descripcion' => 'required|min:3|max:10',
+        //         'detalle' => 'min:3|max:6',
+        //     ]);
+
+        $this->validate();
+
+        Estado::updateOrCreate(['id' => $this->registro_id],
+        [
+            'descripcion' => $this->descripcion,
+            'detalle' => $this->detalle,
+        ]);
+
+        $this->cancel();
+
+        // El evento solo lo escucha el componente "show-posts"
+    //     // $this->emitTo('estado.estado-index', 'render');
+
+    //     // El evento "alert" lo escucha todo el mundo
+    //     // $this->emit('alert','El Estado se creo correctamente');
+
+    }
+
     public function delete($id) {
+
         Estado::destroy($id);
     }
 

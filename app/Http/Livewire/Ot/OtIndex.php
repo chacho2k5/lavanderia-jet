@@ -21,7 +21,11 @@ class OtIndex extends Component
                 ->orderBy('fecha_alta','asc')
                 ->get();
 
-        $auxId = $this->headerOt->first()->value('id');
+        if (count($this->headerOt)) {
+            $auxId = $this->headerOt->first()->value('id');
+        } else {
+            $auxId = 0;
+        }
         // dd($auxId);
 
         $this->rowsOt = OtCuerpo::where('ot_id', $auxId)
