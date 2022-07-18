@@ -1,14 +1,16 @@
 <div wire:init="loadModelo">
-<x-slot name="header">
-    Tabla de Estados
-</x-slot>
+    <x-slot name="header">
+        Tabla de Estados
+    </x-slot>
     <div class="container-fluid my-2">
         <div class="content-header">
             <div class="container-fluid">
                 <div class="mb-2 row">
                     <div class="col">
-                        {{-- <a href="{{ route('estados.index') }}" class="btn btn-primary">Agregar</a> --}}
-                        @livewire('estado.estado-create')
+                        <button wire:click="create" class="btn btn-primary">
+                            <i class="fa-solid fa-circle-plus"></i>
+                            Agregar
+                        </button>
                     </div>
                     <div class="col col-md-auto">
                         <h3 class="m-0">
@@ -16,18 +18,10 @@
                         </h3>
                     </div>
                 </div>
-
-                {{-- @if ($message = Session::get('success'))
-                    <div class="alert alert-success mt-3">
-                        <span>{{ $message }}</span>
-                    </div>
-                @endif --}}
             </div>
         </div>
 
-        {{-- @if ($posts->count()) --}}
-        @if (count($rows))
-                {{-- <table id="table" class="table w-full pt-1 table-hover table-striped" style="display:block; overflow-y: scroll"> --}}
+        {{-- @if (count($registros)) --}}
             <table id="table" class="table w-full pt-1 table-hover table-striped">
                 <thead>
                     <tr>
@@ -36,15 +30,12 @@
                             Nombre
                             @if ($sort == 'descripcion')
                                 @if ($direction == 'asc')
-                                    {{-- <i class="mt-1 float-end fa-solid fa-arrow-up-a-z"></i> --}}
                                     <i class="mt-1 float-end fa-solid fa-sort-up"></i>
                                 @else
-                                    {{-- <i class="mt-1 float-end fa-solid fa-arrow-down-a-z"></i> --}}
                                     <i class="mt-1 float-end fa-solid fa-sort-down"></i>
                                 @endif
                             @else
                                 <i class="mt-1 float-end fa-solid fa-sort"></i>
-                                {{-- <i class="mt-1 float-end fa-solid fa-up-down"></i> --}}
                             @endif
                         </th>
                         <th scope="col" style="cursor: pointer;"
@@ -52,84 +43,45 @@
                             Descripción
                             @if ($sort == 'detalle')
                                 @if ($direction == 'asc')
-                                    {{-- <i class="mt-1 float-end fa-solid fa-arrow-up-a-z"></i> --}}
                                     <i class="mt-1 float-end fa-solid fa-sort-up"></i>
                                 @else
-                                    {{-- <i class="mt-1 float-end fa-solid fa-arrow-down-a-z"></i> --}}
                                     <i class="mt-1 float-end fa-solid fa-sort-down"></i>
                                 @endif
                             @else
                                 <i class="mt-1 float-end fa-solid fa-sort"></i>
-                                {{-- <i class="mt-1 float-end fa-solid fa-up-down"></i> --}}
                             @endif
                         </th>
-                        <th>Edit</th>
+                        <th scope="col">Accion</th>
                     </tr>
                     </thead>
                     <tbody>
-                        @foreach ( $rows as $row)
+                        @foreach ( $registros as $reg)
                         <tr>
-                            <td>{{ $row->descripcion }}</td>
-                            <td>{{ $row->detalle }}</td>
+                            <td>{{ $reg->descripcion }}</td>
+                            <td>{{ $reg->detalle }}</td>
                             <td>
-                                {{-- @livewire('estado.estado-edit', ['row' => $row], key($row->id)) --}}
-                                <a class="btn btn-outline-success btn-sm" wire:click="edit({{ $row }})">
+                                <button wire:click.prevent="edit_show({{ $reg->id }}, 'show')" class="btn btn-outline-success btn-sm" data-toggle="tooltip" title='Mostrar datos.'>
+                                    <i class="fa-regular fa-eye"></i>
+                                </button>
+                                <button wire:click="edit_show({{ $reg->id }}, 'edit')" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" title='Actualizar datos.'>
                                     <i class="fa-regular fa-pen-to-square"></i>
-                                </a>
-                                {{-- <a class="btn btn-outline-danger btn-sm" wire:click="delete({{ $row }})">
+                                </button>
+                                <button wire:click.prevent="delete({{ $reg->id }})" class="btn btn-outline-danger btn-sm" data-toggle="tooltip" title='Borrar'
+                                    onclick="confirm('Esta seguro de borrar? - {{ $reg->id }}') || event.stopImmediatePropagation()">
                                     <i class="fa-regular fa-trash-can"></i>
-                                </a> --}}
-                                <button wire:click.prevent="delete({{ $row->id }})" class="btn btn-outline-danger btn-sm" data-toggle="tooltip" title='Borrar'
-                                    onclick="confirm('Esta seguro de borrar? - {{ $row->id }}') || event.stopImmediatePropagation()">
-                                    <i class="fa-regular fa-trash-can"></i>
-                                    {{-- <i class="fa fa-trash fs-6"></i> --}}
                                 </button>
                             </td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
-        @else
+
+            @include('livewire.estado.edit')
+        {{-- @else
             <div class="px-6 py-4">
                 No hay coincidencias...
             </div>
-        @endif
-
-        @if (count($rows))
-            <x-jet-dialog-modal id="{{ $row->id }}" wire:model="open_edit">
-                <x-slot name="title">
-                   Actualizar ESTADO
-                </x-slot>
-
-                <x-slot name="content">
-                    <div class="mb-4">
-                        <x-jet-label value="Nombre del estado"/>
-                        <x-jet-input wire:model.lazy='modelo.descripcion' type="text" class="w-full autofocus"></x-jet-input>
-                        <x-jet-input-error for="modelo.descripcion" />
-                    </div>
-
-                    <div class="mb-4">
-                        <x-jet-label value="Detalle"/>
-                        <x-jet-input wire:model.lazy='modelo.detalle' type="text" class="w-full"></x-jet-input>
-                    <x-jet-input-error for="modelo.detalle" />
-                    </div>
-                </x-slot>
-
-                <x-slot name="footer">
-                    <x-jet-secondary-button wire:click="$set('open_edit',false)" class="btn-sm">
-                        Cancelar
-                    </x-jet-secondary-button>
-
-                    {{-- <x-jet.danger-button wire:click='save' wire:loading.remove wire:target='save'> --}}
-                    {{-- <x-jet.danger-button wire:click='save' wire:loading.class='bg-primary' wire:target='save'> --}}
-                    <x-jet-danger-button wire:click='update' wire:loading.attr='disabled' wire:target='update' class="disabled:bg-secondary btn-sm">
-                        Grabar
-                    </x-jet-danger-button>
-
-                    <span wire:loading wire:target='update'>Cargando...</span>
-                </x-slot>
-            </x-jet-dialog-modal>
-        @endif
+        @endif --}}
 
     </div>
 
