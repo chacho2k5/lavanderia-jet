@@ -1,6 +1,6 @@
 <div wire:init="loadModelo">
     <x-slot name="header">
-        Tabla de Estados
+        Tabla de Articulos
     </x-slot>
 
     <div class="container">
@@ -29,7 +29,7 @@
                     <tr>
                         <th scope="col" style="cursor: pointer;"
                             wire:click='order("descripcion")'>
-                            Nombre
+                            Descripcion
                             @if ($sort == 'descripcion')
                                 @if ($direction == 'asc')
                                     <i class="mt-1 float-end fa-solid fa-sort-up"></i>
@@ -41,26 +41,46 @@
                             @endif
                         </th>
                         <th scope="col" style="cursor: pointer;"
-                            wire:click='order("detalle")'>
-                            Descripción
-                            @if ($sort == 'detalle')
+                            wire:click='order("categoria_id")'>
+                            Categoria
+                            @if ($sort == 'factor')
                                 @if ($direction == 'asc')
                                     <i class="mt-1 float-end fa-solid fa-sort-up"></i>
                                 @else
                                     <i class="mt-1 float-end fa-solid fa-sort-down"></i>
                                 @endif
                             @else
-                                <i class="mt-1 float-end fa-solid fa-sort"></i>
-                            @endif
+                         @endif
                         </th>
-                        <th scope="col">Accion</th>
+                        <th scope="col" style="cursor: auto;">
+                            
+                            Factor
+                            
+                        </th>
+                        <th scope="col" style="cursor: pointer;"
+                            wire:click='order("delicado")'>
+                            Delicado
+                            @if ($sort == 'delicado')
+                                @if ($direction == 'asc')
+                                    <i class="mt-1 float-end fa-solid fa-sort-up"></i>
+                                @else
+                                    <i class="mt-1 float-end fa-solid fa-sort-down"></i>
+                                @endif
+                        
+                          @endif
+                        </th>
+                        <th scope="col" style="cursor: auto;">
+                        Accion
+                        </th>
                     </tr>
                     </thead>
                     <tbody>
                         @foreach ( $registros as $reg)
                         <tr>
                             <td>{{ $reg->descripcion }}</td>
-                            <td>{{ $reg->detalle }}</td>
+                            <td>{{ $reg->categoria->descripcion }}</td>
+                            <td>{{ $reg->categoria->factor}}</td>
+                            <td>{{ $reg->delicado }}</td>
                             <td>
                                 <button wire:click.prevent="edit_show({{ $reg->id }}, 'show')" class="btn btn-outline-success btn-sm" data-toggle="tooltip" title='Mostrar datos.'>
                                     <i class="fa-regular fa-eye"></i>
@@ -78,7 +98,7 @@
                 </tbody>
             </table>
 
-            @include('livewire.estado.edit')
+            @include('livewire.articulo.edit')
         {{-- @else
             <div class="px-6 py-4">
                 No hay coincidencias...

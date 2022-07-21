@@ -7,7 +7,7 @@
         @if ($action == 'show')<fieldset disabled='disabled'>@endif
 
             <x-formInputw wire:model="descripcion" name="descripcion" label="Nombre del estado" placeholder='label' autofocus />
-            <x-formInputw wire:model="detalle" name="detalle" label="Descripción" placeholder='label' autofocus />
+            <x-formInputw wire:model="factor" name="factor" label="Factor" placeholder='label' autofocus />
 
         @if ($action == 'show')</fieldset>@endif
     </x-slot>
