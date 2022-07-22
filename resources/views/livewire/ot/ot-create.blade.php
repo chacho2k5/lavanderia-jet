@@ -115,7 +115,9 @@
                     </div>
                     <div class="form-group col-md-2 mt-4">
                         <button wire:click.prevent='agregarItem' class="btn btn-primary btn-sm">Agregar prenda</button>
+                        {{ $aux }}
                     </div>
+
 
                     @if (count($errors) > 0 || $msgErr ==! null)
                         <div class="form-group col-md-6 mt-0">

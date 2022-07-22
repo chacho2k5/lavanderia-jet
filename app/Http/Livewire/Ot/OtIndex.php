@@ -11,8 +11,11 @@ class OtIndex extends Component
 {
     // public $ots = [];
     public $filas;
-    public $headerOt;
-    public $rowsOt;
+    public $headerOt;       // Cabecera OT
+    public $rowsOt;         // Cuerpo OT
+
+    public $aux;
+    public $formula;
 
     public function mount() {
         // $clientes = Cliente::with('Iva')->select('clientes.*');
@@ -26,7 +29,6 @@ class OtIndex extends Component
         } else {
             $auxId = 0;
         }
-        // dd($auxId);
 
         $this->rowsOt = OtCuerpo::where('ot_id', $auxId)
                     ->select('id', 'ot_id', 'articulo_id', 'retira', 'entrega')
@@ -45,6 +47,10 @@ class OtIndex extends Component
         $this->rowsOt = OtCuerpo::where('ot_id', $id)
                     ->select('id', 'ot_id', 'articulo_id', 'retira', 'entrega')
                     ->get();
+
+        // $this->aux = $this->rowsOt->articulo->categoria->descripcion;
+        // $this->aux = $this->rowsOt->first()->articulo->categoria->descripcion;
+
         // dd($id);
     }
 

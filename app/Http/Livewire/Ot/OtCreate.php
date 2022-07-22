@@ -27,6 +27,8 @@ class OtCreate extends Component
     public $msgErr = null;
     public $cambios = false;
 
+    public $aux;
+
     protected $listeners = ['render'];
 
     // Ver esto para grabar desde un array directo a una tabla #######################
@@ -97,6 +99,8 @@ class OtCreate extends Component
                             ->first();
             $this->prenda = $prendas->descripcion;
             $this->articulo_id = $prendas->id;
+            $this->aux = $prendas->categoria->descripcion;
+            // $this->aux = "aaaaa";
         }
     }
 
@@ -105,7 +109,30 @@ class OtCreate extends Component
         return view('livewire.ot.ot-create');
     }
 
-    public function grabar() {}
+    // public function grabar() {}
+
+    public function agregarItem() {
+
+        $this->validate();
+
+        $this->msgErr = null;
+
+        OtCuerpoTmp::create([
+           'numero' => $this->numero,
+           'articulo_id' => $this->articulo_id,
+           'prenda' => $this->prenda,
+           'retira' => $this->retira,
+           'entrega' => $this->entrega,
+        ]);
+
+        $this->reset(['selectedArticulo', 'retira', 'articulo_id']);
+
+        // El evento solo lo escucha el componente "show-posts"
+        $this->emitTo('ot.ot-table-tmp', 'render');
+
+        // El evento "alert" lo escucha todo el mundo
+        // $this->emit('alert','El post se creo correctamente');
+    }
 
     public function grabarOT()
     {
@@ -155,29 +182,6 @@ class OtCreate extends Component
             return to_route('ots.create');
         }
 
-    }
-
-    public function agregarItem() {
-
-        $this->validate();
-
-        $this->msgErr = null;
-
-        OtCuerpoTmp::create([
-           'numero' => $this->numero,
-           'articulo_id' => $this->articulo_id,
-           'prenda' => $this->prenda,
-           'retira' => $this->retira,
-           'entrega' => $this->entrega,
-        ]);
-
-        $this->reset(['selectedArticulo', 'retira', 'articulo_id']);
-
-        // El evento solo lo escucha el componente "show-posts"
-        $this->emitTo('ot.ot-table-tmp', 'render');
-
-        // El evento "alert" lo escucha todo el mundo
-        // $this->emit('alert','El post se creo correctamente');
     }
 
     public function cancelarOT() {

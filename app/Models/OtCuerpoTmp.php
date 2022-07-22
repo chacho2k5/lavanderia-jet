@@ -17,6 +17,8 @@ class OtCuerpoTmp extends Model
         'articulo_id',
         'prenda',
         'retira',
-        'entrega'
+        'entrega',
+        'factor',
+        'lavado_formula'
     ];
 }
