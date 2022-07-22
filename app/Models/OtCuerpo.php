@@ -16,6 +16,8 @@ class OtCuerpo extends Model
         'articulo_id',
         'retira',
         'entrega',
+        'factor',
+        'lavado_formula'
     ];
 
     public function articulo() {

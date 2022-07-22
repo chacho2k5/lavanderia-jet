@@ -87,6 +87,16 @@
                         </span>
                     @enderror --}}
                 </div>
+                @if ($lavado_formula || $lavado_formula_ot)
+                    <div class="form-group col-md-2">
+                        <label for="aux" class="m-0 col-form-label-sm">Tiempo planchado</label>
+                        <input type="text" wire:model="aux" class="form-control form-control-sm bg-warning fw-bold fs-6 text-md-center" title="Tiempo total de planchado.">
+                    </div>
+                @endif
+
+                {{-- <div class="col col-md-auto">
+                    <h3>{{ number_format($lavado_formula_ot,2) }}</h3>
+                </div> --}}
             </div>
         </div>
 
@@ -115,7 +125,9 @@
                     </div>
                     <div class="form-group col-md-2 mt-4">
                         <button wire:click.prevent='agregarItem' class="btn btn-primary btn-sm">Agregar prenda</button>
+                        {{-- <span>Factor: </span>{{ $aux }} --}}
                     </div>
+
 
                     @if (count($errors) > 0 || $msgErr ==! null)
                         <div class="form-group col-md-6 mt-0">

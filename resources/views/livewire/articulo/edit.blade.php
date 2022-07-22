@@ -7,21 +7,38 @@
         @if ($action == 'show')<fieldset disabled='disabled'>@endif
 
             <x-formInputw wire:model="descripcion" name="descripcion" label="Nombre" placeholder='label' autofocus />
-            <x-formInputw wire:model="categoria->descripcion" name="factor" label="Categoria" placeholder='label' autofocus />
-            <x-formInputw wire:model="categoria->factor" name="factor" label="Factor" placeholder='label' autofocus />
-            <x-formInputw wire:model="delicado " name="factor" label="Delicado" placeholder='label' autofocus />
-
-
-            <select wire:model="selectedArticulo" class="form-select form-select-sm @error('selectedArticulo') is-invalid @enderror" title="Debe seleccionar una prenda para cargar en la OT.">
-                            <option value="0">Seleccione una prenda</option>
-                            @foreach($articulos as $articulo)
-                                <option value="{{ $articulo->id }}">
-                                    {{ $articulo->descripcion }}
-                                </option>
-                            @endforeach
-                        </select>
-
+            
+            <div class="form-group col-md-3 ">
+                <label for="">Categorias</label>
+                {{-- <div wire:ignore> --}}
+                <select wire:model="selectedCategoria" class="form-select form-select-sm @error('selectedCategoria') is-invalid @enderror" title="Debe seleccionar una Categoria">
+                    <option value="0">Seleccione una Categoria</option>
+                    @foreach($categorias as $categoria)
+                        <option value="{{ $categoria->id }}">
+                            {{ $categoria->descripcion }}
+                        </option>
+                    @endforeach
+                </select>
             </div>
+            
+            <div class="form-group col-md-3 mt-3">
+                <label for="">Delicado</label>
+                {{-- <div wire:ignore> --}}
+                <select wire:model="delicado" class="form-select form-select-sm " required>
+                    <option value="0">Seleccione una Opcion</option>
+                   
+                        <option value="SI">
+                            SI
+                        </option>
+                        <option value="NO">
+                            NO
+                        </option>
+                    
+                </select>
+            </div>
+
+
+                              
 
         @if ($action == 'show')</fieldset>@endif
     </x-slot>

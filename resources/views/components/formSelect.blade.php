@@ -19,7 +19,7 @@ placeholder -> ''
 
     <select name="{{ $name }}" id="{{ $name }}" {{ $attributes->merge(['class' => 'form-select']) }}>
         @foreach ($value as $val)
-            <option value="{{ $val->id }}" @selected(old($name,$sel) == $val->id)>
+            <option value="{{ $val->id }}">
                 {{ $val->descripcion}}
             </option>
         @endforeach

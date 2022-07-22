@@ -27,6 +27,11 @@ class OtCreate extends Component
     public $msgErr = null;
     public $cambios = false;
 
+    public $aux = 0;
+    public $factor = 0;
+    public $lavado_formula = 0;
+    public $lavado_formula_ot = 0;
+
     protected $listeners = ['render'];
 
     // Ver esto para grabar desde un array directo a una tabla #######################
@@ -80,6 +85,11 @@ class OtCreate extends Component
         $this->retira = '';
     }
 
+    public function render()
+    {
+        return view('livewire.ot.ot-create');
+    }
+
     public function updatedselectedCliente($value)
     {
         if ($value ==! null) {
@@ -93,19 +103,52 @@ class OtCreate extends Component
     {
         if ($value ==! 0) {
             $prendas = Articulo::where('id', $value)
-                            ->select('id','descripcion')
+                            ->select('id','descripcion','categoria_id')
                             ->first();
             $this->prenda = $prendas->descripcion;
             $this->articulo_id = $prendas->id;
+            // $this->aux = $prendas->categoria->descripcion . ' - ' . $prendas->categoria->factor;
+            // $this->aux = ((double) $this->retira * (double) $prendas->categoria->factor);
+            // $this->aux = ((double) $prendas->categoria->factor);
+            $this->factor = (double) $prendas->categoria->factor;
+
+
+            // $this->aux = "aaaaa";
         }
     }
 
-    public function render()
-    {
-        return view('livewire.ot.ot-create');
-    }
 
-    public function grabar() {}
+    // public function grabar() {}
+
+    public function agregarItem() {
+
+        $this->validate();
+
+        $this->lavado_formula = (((double) $this->retira * (double) $this->factor) * 60) / 180;
+        $this->lavado_formula_ot = (double) $this->lavado_formula_ot + (double) $this->lavado_formula;
+        $this->aux = number_format($this->lavado_formula_ot,2);
+        // ((CANT DE FUNDAS DIVIDO 4) + CANTIDAD DE SABANAS)X 60 MINUTOS DIVIDO 180
+
+        $this->msgErr = null;
+
+        OtCuerpoTmp::create([
+           'numero' => $this->numero,
+           'articulo_id' => $this->articulo_id,
+           'prenda' => $this->prenda,
+           'retira' => $this->retira,
+           'entrega' => $this->entrega,
+           'factor' => $this->factor,
+           'lavado_formula' => $this->lavado_formula
+        ]);
+
+        $this->reset(['selectedArticulo', 'retira', 'articulo_id']);
+
+        // El evento solo lo escucha el componente "show-posts"
+        $this->emitTo('ot.ot-table-tmp', 'render');
+
+        // El evento "alert" lo escucha todo el mundo
+        // $this->emit('alert','El post se creo correctamente');
+    }
 
     public function grabarOT()
     {
@@ -133,6 +176,7 @@ class OtCreate extends Component
                 'estado_id' => 1,
                 'entrega_hotel' => $this->entrega_hotel,
                 'recibe_lavanderia' => $this->recibe_lavanderia,
+                'lavado_formula' => $this->lavado_formula,
             ]);
 
             // Agrego el id de la OT a la tabla temporal
@@ -152,32 +196,10 @@ class OtCreate extends Component
             // Borro los datos de la tabla temporal del cuerpo de la OT
             OtCuerpoTmp::where('ot_id', $id)->delete();
 
-            return to_route('ots.create');
+            // return to_route('ots.create');
+            return to_route('ots.index');
         }
 
-    }
-
-    public function agregarItem() {
-
-        $this->validate();
-
-        $this->msgErr = null;
-
-        OtCuerpoTmp::create([
-           'numero' => $this->numero,
-           'articulo_id' => $this->articulo_id,
-           'prenda' => $this->prenda,
-           'retira' => $this->retira,
-           'entrega' => $this->entrega,
-        ]);
-
-        $this->reset(['selectedArticulo', 'retira', 'articulo_id']);
-
-        // El evento solo lo escucha el componente "show-posts"
-        $this->emitTo('ot.ot-table-tmp', 'render');
-
-        // El evento "alert" lo escucha todo el mundo
-        // $this->emit('alert','El post se creo correctamente');
     }
 
     public function cancelarOT() {
