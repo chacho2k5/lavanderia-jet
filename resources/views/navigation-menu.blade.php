@@ -21,10 +21,7 @@
                     Clientes
                 </x-jet-nav-link>
 
-                <x-jet-nav-link href="{{ route('clientes2.index') }}" :active="request()->routeIs('clientes2.index')">
-                    Clientes2
-                </x-jet-nav-link>
-
+            
                 <x-jet-nav-link href="{{ route('articulos.index' ) }}" :active="request()->routeIs('articulos.index')">
                     Articulos
                 </x-jet-nav-link>
