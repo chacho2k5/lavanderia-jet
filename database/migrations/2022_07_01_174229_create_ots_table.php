@@ -24,6 +24,8 @@ return new class extends Migration
             $table->string('entrega_lavanderia',80)->nullable();
             $table->string('recibe_lavanderia',80)->nullable();
             $table->unsignedInteger('user_id')->nullable();
+            $table->double('lavado_formula')->nullable();   //Tiempo de lavado x formula
+            $table->double('lavado_real')->nullable();      //Tiempo lavado real
             $table->text('obseravaciones')->nullable();
             $table->timestamps();
         });

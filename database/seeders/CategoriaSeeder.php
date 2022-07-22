@@ -16,11 +16,12 @@ class CategoriaSeeder extends Seeder
     public function run()
     {
         $categorias = [
+            ['descripcion' => 'Alcolchados','factor' => '0'],
+            ['descripcion' => 'Alfombras','factor' => '0'],
             ['descripcion' => 'Fundas','factor' => '.25'],
+            ['descripcion' => 'Frazadas','factor' => '0'],
             ['descripcion' => 'Sábanas','factor' => '1'],
-            ['descripcion' => 'Alcolchados','factor' => '1'],
-            ['descripcion' => 'Alfombras','factor' => '2.8'],
-            ['descripcion' => 'Frazadas','factor' => '1.5'],
+
         ];
 
         foreach ($categorias as $categoria) {

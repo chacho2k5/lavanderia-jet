@@ -19,6 +19,8 @@ return new class extends Migration
             $table->unsignedInteger('articulo_id')->nullable();
             $table->unsignedInteger('retira')->nullable()->default(0);
             $table->unsignedInteger('entrega')->nullable()->default(0);
+            $table->double('factor')->nullable()->default(0);
+            $table->double('lavado_formula')->nullable()->default(0);
         });
     }
 

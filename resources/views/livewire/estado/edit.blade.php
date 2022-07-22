@@ -29,7 +29,3 @@
         @endif
     </x-slot>
 </x-jet-dialog-modal>
-
-
-
-

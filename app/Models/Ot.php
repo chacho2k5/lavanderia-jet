@@ -19,6 +19,8 @@ class Ot extends Model
         'recibe_hotel',
         'entrega_lavanderia',
         'recibe_lavanderia',
+        'lavado_formula',
+        'lavado_real',
         'observaciones'
     ];
 

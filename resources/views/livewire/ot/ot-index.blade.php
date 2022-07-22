@@ -5,6 +5,7 @@
                 <div class="col">
                     <a href="{{ route('ots.create') }}" class="btn btn-primary">Nueva OT</a>
                 </div>
+                {{ $aux }}
                 <div class="col col-md-auto">
                     <h3 class="m-0">
                         Ordenes de Trabajo
@@ -30,6 +31,7 @@
                         <tr>
                             <th>FECHA INGRESO</th>
                             <th>CLIENTE</th>
+                            <th>Nro. OT</th>
                             <th>ESTADO</th>
                             <th width="100px">Acciones</th>
                         </tr>
@@ -39,6 +41,7 @@
                             <tr wire:click="selectedOt({{ $header->id }})">
                                 <td>{{ date('d/m/Y', strtotime($header->fecha_alta)) }}</td>
                                 <td>{{ $header->cliente->razonsocial }}</td>
+                                <td>{{ $header->numero }}</td>
                                 <td scope="row">{{ $header->estado->descripcion }}</td>
                                 <td class="text-center">
                                     ----
@@ -60,7 +63,7 @@
                             <th>PRENDA</th>
                             <th class="text-center">RETIRO</th>
                             <th>ESTADO</th>
-                            {{-- <th>ESTADO </th> --}}
+                            <th>ESTADO </th>
                             {{-- <th width="100px">Acciones</th> --}}
                         </tr>
                     </thead>
@@ -70,7 +73,8 @@
                             <td class="text-left">{{ $row->articulo->descripcion }}</td>
                             <td class="text-center">{{ $row->retira }}</td>
                             <td class="text-center">{{ $row->entrega }}</td>
-                            <td class="text-center">--xx--</td>
+                            <td class="text-left">{{ $row->articulo->categoria->factor }}</td>
+                            {{-- <td class="text-center">--xx--</td> --}}
                             {{-- <td>
                                 <button wire:click.prevent="destroy({{$row->id}})" class="btn btn-outline-danger btn-sm">Borrar</button>
                             </td> --}}
