@@ -1,6 +1,6 @@
 <div wire:init="loadModelo">
     <x-slot name="header">
-        Tabla de Estados
+        Tabla de Categorias
     </x-slot>
 
     <div class="container">
@@ -29,7 +29,7 @@
                     <tr>
                         <th scope="col" style="cursor: pointer;"
                             wire:click='order("descripcion")'>
-                            Nombre
+                            Descripcion
                             @if ($sort == 'descripcion')
                                 @if ($direction == 'asc')
                                     <i class="mt-1 float-end fa-solid fa-sort-up"></i>
@@ -41,9 +41,9 @@
                             @endif
                         </th>
                         <th scope="col" style="cursor: pointer;"
-                            wire:click='order("detalle")'>
-                            Descripción
-                            @if ($sort == 'detalle')
+                            wire:click='order("factor")'>
+                            Factor
+                            @if ($sort == 'factor')
                                 @if ($direction == 'asc')
                                     <i class="mt-1 float-end fa-solid fa-sort-up"></i>
                                 @else
@@ -60,7 +60,7 @@
                         @foreach ( $registros as $reg)
                         <tr>
                             <td>{{ $reg->descripcion }}</td>
-                            <td>{{ $reg->detalle }}</td>
+                            <td>{{ $reg->factor }}</td>
                             <td>
                                 <button wire:click.prevent="edit_show({{ $reg->id }}, 'show')" class="btn btn-outline-success btn-sm" data-toggle="tooltip" title='Mostrar datos.'>
                                     <i class="fa-regular fa-eye"></i>
@@ -78,7 +78,7 @@
                 </tbody>
             </table>
 
-            @include('livewire.estado.edit')
+            @include('livewire.categoria.edit')
         {{-- @else
             <div class="px-6 py-4">
                 No hay coincidencias...

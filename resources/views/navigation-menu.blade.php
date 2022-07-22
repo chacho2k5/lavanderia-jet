@@ -42,7 +42,7 @@
                     Cambiar Estados
                 </x-jet-nav-link>
 
-                <x-jet-nav-link href="{{ route('home') }}" :active="request()->routeIs('ots.ot')">
+                <x-jet-nav-link href="{{ route('planchado') }}" :active="request()->routeIs('ots.ot')">
                     Orden Planchado
                 </x-jet-nav-link>
 
@@ -50,6 +50,7 @@
                     Ordenes de Trabajo
                 </x-jet-nav-link>
             </ul>
+
 
             <!-- Right Side Of Navbar -->
             <ul class="navbar-nav align-items-baseline">
@@ -139,8 +140,7 @@
                             </form>
                         </x-slot>
                     </x-jet-dropdown>
-                @else
-                    {{-- <a href="{{ route('login') }}" class="text-muted">Login</a>
+                @else                   {{-- <a href="{{ route('login') }}" class="text-muted">Login</a>
                     <a href="{{ route('register') }}" class="ms-4 text-muted">Register</a> --}}
                     <x-jet-nav-link href="{{ route('login' ) }}" :active="request()->routeIs('login')">
                         Login
