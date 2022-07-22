@@ -29,35 +29,32 @@
                     Articulos
                 </x-jet-nav-link>
 
+                {{-- <x-jet-nav-link href="{{ route('articulos.index' ) }}" :active="request()->routeIs('articulos.index')">
+                    Articulos2
+                </x-jet-nav-link> --}}
+
+
+                <x-jet-nav-link href="{{ route('categorias.index') }}" :active="request()->routeIs('categorias.index')">
+                    Cagegorias
+                </x-jet-nav-link>
+
+                <x-jet-nav-link href="{{ route('estados.index') }}" :active="request()->routeIs('ots.ot')">
+                    Estados
+                </x-jet-nav-link>
+
+                <x-jet-nav-link href="{{ route('home') }}" :active="request()->routeIs('ots.ot')">
+                    Cambiar Estados
+                </x-jet-nav-link>
+
+                <x-jet-nav-link href="{{ route('planchado') }}" :active="request()->routeIs('ots.ot')">
+                    Orden Planchado
+                </x-jet-nav-link>
+
                 <x-jet-nav-link href="{{ route('ots.ot') }}" :active="request()->routeIs('ots.ot')">
                     Ordenes de Trabajo
                 </x-jet-nav-link>
-
-                <x-jet-nav-link href="{{ route('estados.index') }}" :active="request()->routeIs('estados.index')">
-                    Estados
-                </x-jet-nav-link>
-                
-                <x-jet-nav-link href="{{ route('categorias.index') }}" :active="request()->routeIs('categoria.index')">
-                    Categorias
-                </x-jet-nav-link>
-
-
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
-                Dropdown
-                </a>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Something else here</a>
-                </div>
-            </li>
- 
-                                       
-               
             </ul>
-  
+
 
             <!-- Right Side Of Navbar -->
             <ul class="navbar-nav align-items-baseline">

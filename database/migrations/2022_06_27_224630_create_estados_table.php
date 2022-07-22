@@ -15,7 +15,9 @@ return new class extends Migration
     {
         Schema::create('estados', function (Blueprint $table) {
             $table->id();
+            $table->unsignedTinyInteger('orden')->unique();
             $table->string('descripcion',100)->unique();
+            $table->string('detalle',100)->nullable();
         });
     }
 

@@ -16,12 +16,14 @@ class EstadoSeeder extends Seeder
     public function run()
     {
         $estados = [
-            ['descripcion' => 'Ingresado'],
-            ['descripcion' => 'Lavado'],
-            ['descripcion' => 'Secado'],
-            ['descripcion' => 'Planchado'],
-            ['descripcion' => 'Terminado'],
-            ['descripcion' => 'Entregado'],
+            ['orden' => 1, 'descripcion' => 'Ingresado'],
+            ['orden' => 2, 'descripcion' => 'Lavado'],
+            ['orden' => 3, 'descripcion' => 'Secado'],
+            ['orden' => 4, 'descripcion' => 'Para Planchar'],
+            ['orden' => 5, 'descripcion' => 'Planchado'],
+            ['orden' => 6, 'descripcion' => 'Terminado'],
+            ['orden' => 7, 'descripcion' => 'Entregado con Pendientes'],
+            ['orden' => 8, 'descripcion' => 'Entregado'],
        ];
 
        foreach ($estados as $estado) {
