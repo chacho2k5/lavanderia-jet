@@ -1,8 +1,5 @@
 <x-app-layout>
-WELCOME
-
-@livewire('ot.ot-table-tmp')
-
+    Página de inicio
 </x-app-layout>
 {{-- <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">

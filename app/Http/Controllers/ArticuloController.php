@@ -17,7 +17,7 @@ class ArticuloController extends Controller
      */
     public function index()
     {
-        
+
         return view('articulo.index');
     }
 
@@ -55,7 +55,7 @@ class ArticuloController extends Controller
     {
         $categorias = Categoria::all();
         return view('articulo.show',compact('articulo', 'categorias'));
-        
+
     }
 
 
@@ -80,7 +80,7 @@ class ArticuloController extends Controller
      */
     public function update(UpdateArticuloRequest $request, Articulo $articulo)
     {
-        
+
         $articulo->update($request->validated());
         return to_route('articulos.index')->with('success','Articulo modificado exitosamente');
 
@@ -96,6 +96,6 @@ class ArticuloController extends Controller
     {
         $articulo->delete();
         return to_route('articulos.index')->with('success','Articulo eliminado');
-        
+
     }
 }

@@ -214,27 +214,28 @@
                 "columns": [
                     {data: 'descripcion', name: 'descripcion'},
                     {data: 'categoria.descripcion', name: 'categoria.descripcion'},
-                    {data: 'categoria.pesoespecifico', name: 'categoria.pesoespecifico'},
-                    {data: 'delicado', name: 'delicado',
-                     'render': function(data,type){
-                       
-                       if (type === 'display') {
-                           var delicado = '';
+                    {data: 'categoria.factor', name: 'categoria.factor'},
+                    {data: 'delicado', name: 'delicado'},
+                    // {data: 'delicado', name: 'delicado',
+                    //  'render': function(data,type){
 
-                           switch (data){
+                    //    if (type === 'display') {
+                    //        var delicado = '';
 
-                                   case 1: 
-                                    delicado = 'SI'; 
-                                    break;
-                                   case 0: 
-                                    delicado = 'NO'; 
-                                    break;
-                               //    default : status_name = 'Desconocido'; break;
-                           }
-                        return delicado;
-                       }
-                     }
-                    },
+                    //        switch (data){
+
+                    //                case 1:
+                    //                 delicado = 'SI';
+                    //                 break;
+                    //                case 0:
+                    //                 delicado = 'NO';
+                    //                 break;
+                    //            //    default : status_name = 'Desconocido'; break;
+                    //        }
+                    //     return delicado;
+                    //    }
+                    //  }
+                    // },
 
                     {data: 'actions', name: 'actions', searchable: false, orderable: false, className: ''},
                     // {data: null, render: function(data, type, row) {

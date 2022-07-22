@@ -61,11 +61,11 @@
                     </select>
                 </div>
                 @if ($dirCliente !== null)
-                <div class="col-md-auto">
-                    <label for="" class="col-form-label-sm">Direccion Cliente</label>
-                    <input wire:model='dirCliente' type="text" class="form-control form-control-sm" disabled>
-                </div>
-            @endif
+                    <div class="col-md-auto">
+                        <label for="" class="col-form-label-sm">Direccion Cliente</label>
+                        <input wire:model='dirCliente' type="text" class="form-control form-control-sm" disabled>
+                    </div>
+                @endif
             </div>
 
             <div class="row">
@@ -87,7 +87,7 @@
                         </span>
                     @enderror --}}
                 </div>
-                @if ($lavado_formula || $lavado_formula_ot)
+                @if ($lavado_formula_ot)
                     <div class="form-group col-md-2">
                         <label for="aux" class="m-0 col-form-label-sm">Tiempo planchado</label>
                         <input type="text" wire:model="aux" class="form-control form-control-sm bg-warning fw-bold fs-6 text-md-center" title="Tiempo total de planchado.">

@@ -52,6 +52,7 @@ Route::get('/ots/index',OtIndex::class)->name('ots.index');
 Route::get('/ots/create',OtCreate::class)->name('ots.create');
 
 Route::get('/estados/index',EstadoIndex::class)->name('estados.index');
+// Route::get('/articulos/index',Articulos::class)->name('articulos.index');
 
 // Esta ruta en realidad podria ser un metodo del ArticuloController
 Route::get('dt/clientes',[DatatableController::class,'clientes'])->name('dt.clientes');
