@@ -38,7 +38,7 @@
                     Estados
                 </x-jet-nav-link>
 
-                <x-jet-nav-link href="{{ route('home') }}" :active="request()->routeIs('ots.ot')">
+                <x-jet-nav-link href="{{ route('cambiarestados.index') }}" :active="request()->routeIs('ots.ot')">
                     Cambiar Estados
                 </x-jet-nav-link>
 

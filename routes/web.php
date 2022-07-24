@@ -9,6 +9,8 @@ use App\Http\Livewire\Ot\OtCreate;
 use App\Http\Livewire\Ot\OtIndex;
 //use App\Http\Livewire\articulo\index;
 use App\Http\Livewire\Articulos;
+use App\Http\Livewire\Cambiarestado\CambiarEstado;
+use App\Http\Livewire\Cambiarestado\CambiarEstadoIndex;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -72,5 +74,6 @@ Route::get('/ots/index',OtIndex::class)->name('ots.index');
 Route::get('/ots/create',OtCreate::class)->name('ots.create');
 
 Route::get('/estados/index',EstadoIndex::class)->name('estados.index');
+Route::get('/cambiarestados',CambiarEstadoIndex::class)->name('cambiarestados.index');
 // Route::get('/articulos/index',Articulos::class)->name('articulos.index');
 
