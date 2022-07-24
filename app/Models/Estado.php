@@ -12,7 +12,8 @@ class Estado extends Model
     public $timestamps = false;
     protected $fillable = [
         'descripcion',
-        'detalle'
+        'detalle',
+        'orden'
     ];
 
     public function ots() {

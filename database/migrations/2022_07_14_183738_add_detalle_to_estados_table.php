@@ -13,11 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('estados', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedTinyInteger('orden')->unique();
-            $table->string('descripcion',100)->unique();
-            // $table->string('detalle',100)->nullable();
+        Schema::table('estados', function (Blueprint $table) {
+            $table->string('detalle',100)->nullable();
         });
     }
 
@@ -28,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('estados');
+        Schema::table('estados', function (Blueprint $table) {
+            //
+        });
     }
 };
