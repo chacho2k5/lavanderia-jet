@@ -8,14 +8,17 @@ use Livewire\Component;
 
 class ArticuloIndex extends Component
 {
+
+  // use WithPagination; 
     public $search;
     public $sort = 'descripcion';
     public $direction = 'asc';
     public $readyToLoad = false;
-    public $categorias;
+
+    public $categorias, $categoria;
+    public $selectedCategoria;
   
     
-
     // Conjunto de datos
     // public Estado $registros;
     public $registros;
@@ -59,7 +62,7 @@ class ArticuloIndex extends Component
     // }
 
     public function mount() {
-        // $this->registros = new Estado();
+      
     }
 
     public function render()
@@ -69,22 +72,21 @@ class ArticuloIndex extends Component
                 ->orderBy($this->sort, $this->direction)
                 ->get();
 
+           // $this->registros = new Estado();
+        $this->categorias = Categoria::select('id','descripcion','factor')
+        ->orderBy('descripcion', 'asc')
+        ->get();       
+
         return view('livewire.articulo.articulo-index');
 
-        // if ($this->readyToLoad) {
-        //     $rows = Estado::where('descripcion', 'like', '%' . $this->search . '%')
-        //             ->orWhere('detalle', 'like', '%' . $this->search . '%')
-        //             ->orderBy($this->sort, $this->direction)
-        //             ->get();
-        // } else {
-        //     $rows=[];
-        // }
-        // return view('livewire.estado.estado-index', compact('rows'));
-    }
+     }
+
     public function updated($fields)
     {
         $this->validateOnly($fields,[
             'descripcion' => 'required|max:100|min:3',
+            'selectedCategoria' => 'required',
+            'delicado' => 'required',
            // 'detalle' => 'required|max:100|min:3',
         ]);
     }
@@ -139,17 +141,13 @@ class ArticuloIndex extends Component
     public function grabar() {
     // Grabo las modificaciones y las altas
 
-        // $this->validate([
-        //         'descripcion' => 'required|min:3|max:10',
-        //         'detalle' => 'min:3|max:6',
-        //     ]);
-
         $this->validate();
 
         Articulo::updateOrCreate(['id' => $this->registro_id],
         [
             'descripcion' => $this->descripcion,
-            'factor' => $this->factor,
+            'categoria_id' => $this->categoria_id,
+            'delicado' => $this->delicado,
         ]);
 
         $this->cancel();
@@ -174,13 +172,23 @@ class ArticuloIndex extends Component
     }
 
     public function updatedselectedCategoria($value)
+    
     {
-       // if ($value ==! null) {
+       if ($value ==! null) {
 
-            $categorias = Categoria::all();
-            $this->nombrecategoria = $categorias->descripcion ;
+
+            $categorias = Categoria::where('id', $value)
+                            ->select('id','descripcion', 'factor')
+                            ->first();
+            $this->categoria_descripcion = $categorias->descripcion;
             $this->categoria_id = $categorias->id;
-       // }
+
+          //  $categorias = Categoria::all();
+         //   $this->descripcion = $categorias->descripcion ;
+         //   $this->categoria_id = $categorias->id;
+        //    $this->nombrefactor= $categorias->factor ;
+            
+        }
      }
 
 }

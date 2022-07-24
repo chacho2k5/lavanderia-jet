@@ -7,6 +7,9 @@ use App\Http\Controllers\DatatableController;
 use App\Http\Livewire\Estado\EstadoIndex;
 use App\Http\Livewire\Ot\OtCreate;
 use App\Http\Livewire\Ot\OtIndex;
+use App\Http\Livewire\Articulo\ArticuloIndex;
+use App\Http\Livewire\Categoria\CategoriaIndex;
+use App\Http\Livewire\Cliente\ClienteIndex;
 //use App\Http\Livewire\articulo\index;
 use App\Http\Livewire\Articulos;
 use App\Http\Livewire\Cambiarestado\CambiarEstado;
@@ -75,5 +78,18 @@ Route::get('/ots/create',OtCreate::class)->name('ots.create');
 
 Route::get('/estados/index',EstadoIndex::class)->name('estados.index');
 Route::get('/cambiarestados',CambiarEstadoIndex::class)->name('cambiarestados.index');
+Route::get('/articulo/articulo-index',ArticuloIndex::class)->name('articulos.index');
+Route::get('/categoria/categoria-index',CategoriaIndex::class)->name('categorias.index');
+Route::get('/cliente/cliente-index',ClienteIndex::class)->name('clientes2.index');
+
+// Esta ruta en realidad podria ser un metodo del ArticuloController
+Route::get('dt/clientes',[DatatableController::class,'clientes'])->name('dt.clientes');
+Route::get('dt/categorias',[DatatableController::class,'categorias'])->name('dt.categorias');
+//Route::get('dt/articulos',[DatatableController::class,'articulos'])->name('dt.articulos');
+
+// Route::get('categorias',Categorias::class)->name('categorias');
+// Route::get('categorias/create',CategoriaShow::class)->name('categorias.create');
+// Route::get('categorias/edit',CategoriaShow::class)->name('categorias.edit');
+// Route::get('categorias',CategoriaShow::class)->name('categorias');
 // Route::get('/articulos/index',Articulos::class)->name('articulos.index');
 
