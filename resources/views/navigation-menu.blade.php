@@ -35,7 +35,7 @@
                     Cagegorias
                 </x-jet-nav-link>
 
-                <x-jet-nav-link href="{{ route('estados.index') }}" :active="request()->routeIs('ots.ot')">
+                <x-jet-nav-link href="{{ route('estados.index') }}" :active="request()->routeIs('estados.index')">
                     Estados
                 </x-jet-nav-link>
 

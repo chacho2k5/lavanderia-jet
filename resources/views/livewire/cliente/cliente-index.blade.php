@@ -71,8 +71,9 @@
                     @endforeach
                 </tbody>
             </table>
+            {{ $registros->links() }}
 
-            @include('livewire.estado.edit')
+            @include('livewire.cliente.edit')
         {{-- @else
             <div class="px-6 py-4">
                 No hay coincidencias...
