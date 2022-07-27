@@ -17,11 +17,11 @@
                     Home
                 </x-jet-nav-link>
 
-                <x-jet-nav-link href="{{ route('clientes.index') }}" :active="request()->routeIs('clientes.index')">
+                <x-jet-nav-link href="{{ route('clientes2.index') }}" :active="request()->routeIs('clientes.index')">
                     Clientes
                 </x-jet-nav-link>
 
-            
+
                 <x-jet-nav-link href="{{ route('articulos.index' ) }}" :active="request()->routeIs('articulos.index')">
                     Articulos
                 </x-jet-nav-link>

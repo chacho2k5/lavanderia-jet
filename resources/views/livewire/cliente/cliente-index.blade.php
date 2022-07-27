@@ -43,7 +43,7 @@
                         <th scope="col">Correo</th>
                         <th scope="col">Telefono</th>
                         <th scope="col">Contacto</th>
-                     
+
 
                     </tr>
                     </thead>
@@ -71,7 +71,7 @@
                     @endforeach
                 </tbody>
             </table>
-            {{ $registros->links() }}
+            {{-- {{ $registros->links() }} --}}
 
             @include('livewire.cliente.edit')
         {{-- @else

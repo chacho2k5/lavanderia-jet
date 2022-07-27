@@ -18,7 +18,14 @@ return new class extends Migration
             $table->unsignedTinyInteger('orden')->unique();
             $table->string('descripcion',100)->unique();
             $table->string('detalle',100)->nullable();
+            $table->boolean('accion')->nullable()->default(0);
         });
+        // Esto como que seria de manejo interno o bien no dejar que los usuarios
+        // modifiquen los estado
+        // 1 -> para planchar
+        // 2 -> finalizado con pendientes
+        // 3 -> finalizado finalizado
+
     }
 
     /**

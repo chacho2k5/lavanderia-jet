@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedInteger('ot_id');
             $table->unsignedInteger('estado_id');
-            $table->unsignedInteger('orden')->nullable()->default(0);
-            $table->boolean('lavado')->nullable()->default(false);
+            $table->unsignedInteger('orden_planchado')->nullable()->default(0);
+            // $table->boolean('accion')->nullable()->default(0);
             $table->date('fecha');
             $table->time('hora_inicio')->nullable();
             $table->time('hora_final')->nullable();

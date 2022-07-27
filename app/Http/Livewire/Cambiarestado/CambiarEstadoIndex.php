@@ -7,7 +7,6 @@ use App\Models\EstadoOt;
 use App\Models\Ot;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
-
 class CambiarEstadoIndex extends Component
 {
     public $search;
@@ -32,9 +31,6 @@ class CambiarEstadoIndex extends Component
     public $action;      // edit - show
     public $titulo_modal = "Crear nuevo ESTADO";
 
-    // Se escucha el evento 'render' y se ejecuta el metodo 'render'
-    // protected $listeners = ['render', 'render'];
-    // Cuando evento y metodo son iguales, se puede poner uno solo
     protected $listeners = ['render'];
 
     public function mount() {
@@ -47,11 +43,9 @@ class CambiarEstadoIndex extends Component
         $this->registros = DB::table('ots')
             ->join('estados','ots.estado_id','estados.id')
             ->join('clientes','ots.cliente_id','clientes.id')
-            ->select('ots.*','clientes.razonsocial as razonsocial','estados.id as id_estado','estados.descripcion as estado_nombre','estados.orden as estado_orden')
+            ->select('ots.*','clientes.razonsocial as razonsocial','estados.id as id_estado','estados.descripcion as estado_nombre','estados.accion as estado_accion','estados.orden as estado_orden')
             ->orderBy($this->sort, $this->direction)
             ->get();
-
-        // dd($this->registros);
 
         return view('livewire.cambiarestado.cambiar-estado-index');
 
@@ -73,9 +67,6 @@ class CambiarEstadoIndex extends Component
         //     ->update(['estado_id' => (int) $orden + 1]);
 
         // Obtengo el "id" del estado que corresponde al "orden + 1" del estado
-        // $aux_id = Estado::where('orden', (int) $orden + 1)
-        //             ->select('id')
-        //             ->get();
         $aux_id = Estado::select('id')
                     ->whereOrden((int) $orden + 1)
                     ->first();
