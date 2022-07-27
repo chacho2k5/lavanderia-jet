@@ -61,7 +61,7 @@ class CambiarEstadoIndex extends Component
         $this->readyToLoad = true;
     }
 
-    public function sumar_estado($id, $orden) {
+    public function sumar_estado($id, $orden, $estado_id) {
     //
     // Cambia al estado con el orden inmediato superior
     // . Cargo la "hora_final" del estado actual
@@ -73,22 +73,30 @@ class CambiarEstadoIndex extends Component
         //     ->update(['estado_id' => (int) $orden + 1]);
 
         // Obtengo el "id" del estado que corresponde al "orden + 1" del estado
-        $aux = Estado::where('orden', (int) $orden + 1)
-                ->first();
+        // $aux_id = Estado::where('orden', (int) $orden + 1)
+        //             ->select('id')
+        //             ->get();
+        $aux_id = Estado::select('id')
+                    ->whereOrden((int) $orden + 1)
+                    ->first();
 
         // Actualizo el campo "estado_id" en la tabla "ots"
-        Ot::where('id', $id)
-            ->update(['estado_id' => $aux->id]);
+        Ot::whereId($id)
+            ->update(['estado_id' => $aux_id->id]);
+
+
+
+        // $z = $this->registros->where('id',$id)->select('id_estado');
 
         // Cargo la "hora_final" para el evento que se cierra
         EstadoOt::where('ot_id', $id)
-            ->where('estado_id', $this->registros->id_estado)
+            ->where('estado_id', $estado_id)
             ->update(['hora_final' => date("H:i:s")]);
 
-        // Cargo el nuevo estado para la OT seleccionada
+        // Cargo el nuevo estado para la OT seleccionada para la trazabilidad
         EstadoOt::Create([
             'ot_id' => $id,
-            'estado_id' => $aux->id,
+            'estado_id' => $aux_id->id,
             'orden' => '0',
             'lavado' => false,
             'fecha' => date('Y-m-d'),

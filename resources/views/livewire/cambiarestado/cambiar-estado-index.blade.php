@@ -3,6 +3,7 @@
         Cambio de Estados
     </x-slot>
 
+
     <div class="container">
     <div class="container-fluid my-2">
         <div class="content-header">
@@ -99,7 +100,7 @@
                                     <i class="fa-regular fa-pen-to-square"></i>
                                 </button>
 
-                                <button wire:click="sumar_estado({{ $reg->id }}, {{ $reg->estado_orden }})" class="btn btn-outline-danger btn-sm" data-toggle="tooltip" title=''Cambiar estado.'
+                                <button wire:click="sumar_estado({{ $reg->id }}, {{ $reg->estado_orden }}, {{ $reg->id_estado }})" class="btn btn-outline-danger btn-sm" data-toggle="tooltip" title=''Cambiar estado.'
                                     onclick="confirm('Desea cambiar el estado ->  - {{ $reg->estado_nombre }}') || event.stopImmediatePropagation()">
                                     <i class="fa-solid fa-plus"></i>
                                 </button>
