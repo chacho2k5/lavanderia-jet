@@ -78,11 +78,12 @@ class CambiarEstadoIndex extends Component
         //             ->get();
         $aux_id = Estado::select('id')
                     ->whereOrden((int) $orden + 1)
-                    ->first();
-
+                    ->value('id');
+                    // ->first();
+// dd($aux_id);
         // Actualizo el campo "estado_id" en la tabla "ots"
         Ot::whereId($id)
-            ->update(['estado_id' => $aux_id->id]);
+            ->update(['estado_id' => $aux_id]);
 
 
 
@@ -96,7 +97,7 @@ class CambiarEstadoIndex extends Component
         // Cargo el nuevo estado para la OT seleccionada para la trazabilidad
         EstadoOt::Create([
             'ot_id' => $id,
-            'estado_id' => $aux_id->id,
+            'estado_id' => $aux_id,
             'orden' => '0',
             'lavado' => false,
             'fecha' => date('Y-m-d'),
