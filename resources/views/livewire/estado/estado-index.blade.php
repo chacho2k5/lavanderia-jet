@@ -69,7 +69,7 @@
                                     <i class="fa-regular fa-pen-to-square"></i>
                                 </button>
                                 <button wire:click.prevent="delete({{ $reg->id }})" class="btn btn-outline-danger btn-sm" data-toggle="tooltip" title='Borrar'
-                                    onclick="confirm('Esta seguro de borrar? - {{ $reg->id }}') || event.stopImmediatePropagation()">
+                                    onclick="confirm('Esta seguro de borrar? - {{ $reg->descripcion }}') || event.stopImmediatePropagation()">
                                     <i class="fa-regular fa-trash-can"></i>
                                 </button>
                             </td>

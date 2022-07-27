@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedInteger('numero');
             $table->date('fecha_alta')->nullable();
             $table->unsignedInteger('cliente_id');
-            $table->unsignedInteger('estado_id');
+            $table->unsignedInteger('estado_id');       // Estado actual
             $table->string('entrega_hotel',80)->nullable();
             $table->string('recibe_hotel',80)->nullable();
             $table->string('entrega_lavanderia',80)->nullable();

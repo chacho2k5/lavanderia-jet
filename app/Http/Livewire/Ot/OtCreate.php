@@ -5,19 +5,26 @@ namespace App\Http\Livewire\Ot;
 use App\Models\Cliente;
 use Livewire\Component;
 use App\Models\Articulo;
+use App\Models\Estado;
+use App\Models\EstadoOt;
 use App\Models\OtCuerpoTmp;
 use Illuminate\Support\Facades\DB;
+use Throwable;
 
 class OtCreate extends Component
 {
-    public $clientes, $cliente;
+    public $clientes;
+    public $cliente_id;
     public $dirCliente;
     public $selectedCliente;
 
     public $articulos;
     public $selectedArticulo;
 
-    public $numero, $fecha_alta, $cliente_id, $estado_id, $entrega_hotel, $recibe_hotel;
+    public $estados;
+    public $selectedEstado;
+
+    public $numero, $fecha_alta, $estado_id, $entrega_hotel, $recibe_hotel;
     public $entrega_lavanderia, $recibe_lavanderia, $observaciones;
 
     public $prendas, $prenda, $retira, $entrega, $articulo_id;
@@ -25,14 +32,13 @@ class OtCreate extends Component
 
     public $error = null;
     public $msgErr = null;
-    public $cambios = false;
 
     public $aux = 0;
-    public $factor = 0;
-    public $lavado_formula = 0;
-    public $lavado_formula_ot = 0;
+    public $factor = 0;                 // Factor de multiplicacion para la formula x categoria
+    public $lavado_formula = 0;         // Tiempo de lavado x formula
+    public $lavado_formula_ot = 0;      // Tiempo de lavado x formula para toda la OT
 
-    protected $listeners = ['render'];
+    protected $listeners = ['render'];  // Escucha el evento "render" disparado x otro componente
 
     // Ver esto para grabar desde un array directo a una tabla #######################
     //
@@ -79,10 +85,16 @@ class OtCreate extends Component
                             ->orderBy('razonsocial', 'asc')
                             ->get();
         // $this->articulos = Articulo::all();
-        $this->articulos = Articulo::select('id','descripcion')
+        $this->articulos = Articulo::select('id','descripcion', 'categoria_id', 'delicado')
                             ->orderBy('descripcion', 'asc')
                             ->get();
-        $this->retira = '';
+
+        $this->estados = Estado::select('id','orden', 'descripcion')
+            ->orderBy('orden', 'asc')
+            ->get();
+
+            $this->retira = '';
+            $this->selectedEstado = 1;
     }
 
     public function render()
@@ -107,24 +119,20 @@ class OtCreate extends Component
                             ->first();
             $this->prenda = $prendas->descripcion;
             $this->articulo_id = $prendas->id;
-            // $this->aux = $prendas->categoria->descripcion . ' - ' . $prendas->categoria->factor;
-            // $this->aux = ((double) $this->retira * (double) $prendas->categoria->factor);
-            // $this->aux = ((double) $prendas->categoria->factor);
-            $this->factor = (double) $prendas->categoria->factor;
-
+            $this->factor = $prendas->categoria->factor;
 
             // $this->aux = "aaaaa";
         }
     }
 
-
-    // public function grabar() {}
-
     public function agregarItem() {
 
         $this->validate();
 
+        // Calculo el tiempo de lavado segun formula para el registro
         $this->lavado_formula = (((double) $this->retira * (double) $this->factor) * 60) / 180;
+
+        // Voy calculando el tiempo total de lavado para toda la OT
         $this->lavado_formula_ot = (double) $this->lavado_formula_ot + (double) $this->lavado_formula;
         $this->aux = number_format($this->lavado_formula_ot,2);
         // ((CANT DE FUNDAS DIVIDO 4) + CANTIDAD DE SABANAS)X 60 MINUTOS DIVIDO 180
@@ -168,34 +176,50 @@ class OtCreate extends Component
             $this->msgErr = 'Debe cargar las prendas de la OT.';
             $this->emitSelf('ot.ot-create');
         } else {
-            // Grabo los datos del encabezado de la OT
-            $id = DB::table('ots')->insertGetId([
+            // El try/catch detecta errores pero no vuelve atras las operaciones sobre la DB
+            try {
+                // Grabo los datos del encabezado de la OT
+                $id = DB::table('ots')->insertGetId([
                 'numero' => $this->numero,
                 'fecha_alta' => $this->fecha_alta,
                 'cliente_id' => $this->cliente_id,
-                'estado_id' => 1,
+                'estado_id' => $this->selectedEstado,
                 'entrega_hotel' => $this->entrega_hotel,
                 'recibe_lavanderia' => $this->recibe_lavanderia,
-                'lavado_formula' => $this->lavado_formula,
+                'lavado_formula' => $this->lavado_formula_ot,
             ]);
 
-            // Agrego el id de la OT a la tabla temporal
-            $rows = DB::table('ots_cuerpo_tmp')
-            ->where('numero', $this->numero)
-            ->update(['ot_id' => $id]);
+                // Agrego el id de la OT a la tabla temporal
+                $rows = DB::table('ots_cuerpo_tmp')
+                ->where('numero', $this->numero)
+                ->update(['ot_id' => $id]);
 
-            // Selecciono las columnas que se deben agregar al cuerpo de la OT
-            $rs = OtCuerpoTmp::where('numero', $this->numero)
-                    ->select('ot_id', 'articulo_id', 'retira', 'entrega')
+                // Selecciono las columnas que se deben agregar al cuerpo de la OT
+                $rs = OtCuerpoTmp::where('numero', $this->numero)
+                    ->select('ot_id', 'articulo_id', 'retira', 'entrega', 'factor', 'lavado_formula')
                     ->get();
 
-            // Paso los resultados a array y dpes grabo el cuerpo de la OT
-            $rsa = $rs->toArray();
-            DB::table('ots_cuerpo')->insert($rsa);
+                // Paso los resultados a array y dpes grabo el cuerpo de la OT
+                $rsa = $rs->toArray();
+                DB::table('ots_cuerpo')->insert($rsa);
 
-            // Borro los datos de la tabla temporal del cuerpo de la OT
-            OtCuerpoTmp::where('ot_id', $id)->delete();
+                // Cargo la tabla "estado_ot" para la trazabilidad de los estados x OT
+                EstadoOt::Create([
+                    'ot_id' => $id,
+                    'estado_id' => '1',
+                    'orden' => '0',
+                    'lavado' => false,
+                    'fecha' => $this->fecha_alta,
+                    'hora_inicio' => date("H:i:s"),
+                    // 'hora_final'
+                    ]);
 
+                // Borro los datos de la tabla temporal del cuerpo de la OT
+                OtCuerpoTmp::where('ot_id', $id)->delete();
+            } catch (Throwable $e) {
+                $this->msgErr = "Se ha producido un error..." . $e;
+                return false;
+            }
             // return to_route('ots.create');
             return to_route('ots.index');
         }

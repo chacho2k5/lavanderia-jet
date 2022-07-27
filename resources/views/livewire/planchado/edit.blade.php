@@ -5,9 +5,19 @@
 
     <x-slot name="content">
         @if ($action == 'show')<fieldset disabled='disabled'>@endif
+            <x-formInputw wire:model="estado_nombre_anterior" name="estado_nombre_anterior" label="Estado actual" disabled/>
 
-            <x-formInputw wire:model="descripcion" name="descripcion" label="Nombre del estado" placeholder='label' autofocus />
-            <x-formInputw wire:model="detalle" name="detalle" label="Descripción" placeholder='label' autofocus />
+            <div class="form-group col-md-auto">
+                <label for="" class="col-form-label-sm">Nuevo Estado</label>
+                <select wire:model="selectedEstado" class="form-select form-select-lg" title="Seleccionar nuevo estado.">
+                    <option value="0">Seleccione un estado</option>
+                    @foreach($estados as $row)
+                        <option value="{{ $row->id }}">
+                            {{ $row->descripcion }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
 
         @if ($action == 'show')</fieldset>@endif
     </x-slot>

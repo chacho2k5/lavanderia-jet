@@ -10,6 +10,9 @@ class Ot extends Model
     use HasFactory;
 
     protected $table = "ots";
+    // El dateformat es para los timestamp
+    protected $dateformat = "d-m-Y H:i:s";
+
     protected $fillable = [
         'numero',
         'fecha_alta',

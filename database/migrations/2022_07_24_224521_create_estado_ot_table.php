@@ -13,11 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('estado_ots', function (Blueprint $table) {
+        Schema::create('estado_ot', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('ot_id');
             $table->unsignedInteger('estado_id');
-            $table->date('fecha')->nullable();
+            $table->unsignedInteger('orden')->nullable()->default(0);
+            $table->boolean('lavado')->nullable()->default(false);
+            $table->date('fecha');
             $table->time('hora_inicio')->nullable();
             $table->time('hora_final')->nullable();
             $table->timestamps();
@@ -31,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('estado_ots');
+        Schema::dropIfExists('estado_ot');
     }
 };

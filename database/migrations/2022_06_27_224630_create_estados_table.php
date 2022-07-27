@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedTinyInteger('orden')->unique();
             $table->string('descripcion',100)->unique();
-            // $table->string('detalle',100)->nullable();
+            $table->string('detalle',100)->nullable();
         });
     }
 
