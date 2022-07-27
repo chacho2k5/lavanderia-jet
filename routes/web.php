@@ -8,8 +8,8 @@ use App\Http\Livewire\Estado\EstadoIndex;
 use App\Http\Livewire\Ot\OtCreate;
 use App\Http\Livewire\Ot\OtIndex;
 use App\Http\Livewire\Articulo\ArticuloIndex;
-use App\Http\Livewire\Categoria\CategoriaIndex;
 use App\Http\Livewire\Cliente\ClienteIndex;
+use App\Http\Livewire\Categoria\CategoriaIndex;
 //use App\Http\Livewire\articulo\index;
 use App\Http\Livewire\Articulos;
 use App\Http\Livewire\Cambiarestado\CambiarEstado;
@@ -48,15 +48,15 @@ Route::get('/', function () {
 //     })->name('dashboard');
 // });
 
-Route::resource('clientes',ClienteController::class);
-Route::resource('categorias',CategoriaController::class);
-Route::resource('articulos',ArticuloController::class);
+//Route::resource('clientes',ClienteController::class);
+//Route::resource('categorias',CategoriaController::class);
+//Route::resource('articulos',ArticuloController::class);
 
 // Rutas para el DATATABLE
 // Esta ruta en realidad podria ser un metodo del ArticuloController
-Route::get('dt/clientes',[DatatableController::class,'clientes'])->name('dt.clientes');
-Route::get('dt/categorias',[DatatableController::class,'categorias'])->name('dt.categorias');
-Route::get('dt/articulos',[DatatableController::class,'articulos'])->name('dt.articulos');
+//Route::get('dt/clientes',[DatatableController::class,'clientes'])->name('dt.clientes');
+//Route::get('dt/categorias',[DatatableController::class,'categorias'])->name('dt.categorias');
+//Route::get('dt/articulos',[DatatableController::class,'articulos'])->name('dt.articulos');
 
 // *** Ver cambiar / Revisar
 // Aca cargo las rutas para los crud en livewire. cargo una plantilla previa para poder cargar cosas que

@@ -4,9 +4,14 @@ namespace App\Http\Livewire\Cliente;
 
 use App\Models\Cliente;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class ClienteIndex extends Component
 {
+
+
+    use WithPagination;
+
     public $search;
     public $sort = 'razonsocial';
     public $direction = 'asc';
@@ -36,13 +41,13 @@ class ClienteIndex extends Component
     protected $listeners = ['render'];
 
     protected $rules = [
-       // 'descripcion' => 'required|max:100|min:3',
+       'razonsocial' => 'required|max:100|min:3',
       //  'detalle' => 'required|max:100|min:2',
     ];
 
     protected $messages = [
         'razonsocial.required' => 'Debe ingresar una Razon Social',
-      //  'descripcion.min' => 'El Estado debe tener entre 3 y 10 caracteres',
+        'razonsocial.min' =>  'la Razon Social debe tener entre 3 y 100 caracteres',
       //  'descripcion.max' => 'El Estado debe tener entre 3 y 10 caracteres',
       //  'detalle.min' => 'La descripción del Estado debe tener entre 3 y 10 caracteres',
       //  'detalle.min' => 'La descripción del Estado debe tener entre 3 y 10 caracteres',
@@ -61,12 +66,14 @@ class ClienteIndex extends Component
 
     public function render()
     {
-        $this->registros = Cliente::where('razonsocial', 'like', '%' . $this->search . '%')
+        $this->registros = Cliente:: where('razonsocial', 'like', '%' . $this->search . '%')
                 ->orWhere('cuit', 'like', '%' . $this->search . '%')
                 ->orderBy($this->sort, $this->direction)
                 ->get();
 
-        return view('livewire.cliente.cliente-index');
+        return view('livewire.cliente.cliente-index',[
+            'registros' => Cliente::paginate(10)
+        ]);
 
         // if ($this->readyToLoad) {
         //     $rows = Estado::where('descripcion', 'like', '%' . $this->search . '%')
@@ -81,7 +88,7 @@ class ClienteIndex extends Component
     public function updated($fields)
     {
         $this->validateOnly($fields,[
-        //    'descripcion' => 'required|max:100|min:3',
+            'razonsocial' => 'required|max:100|min:3',
          //   'detalle' => 'required|max:100|min:3',
         ]);
     }
