@@ -63,8 +63,8 @@ class PlanchadoIndex extends Component
 
     public function mount() {
         // $this->registros = new Estado();
-        $this->estados = Estado::orderBy('orden', 'asc')
-            ->get();
+        // $this->estados = Estado::orderBy('orden', 'asc')
+        //     ->get();
     }
 
     public function render()
@@ -77,7 +77,8 @@ class PlanchadoIndex extends Component
         //     ->orderBy($this->sort, $this->direction)
         //     ->get();
 
-        $aux = Ot::all();
+        // $aux = Ot::all();
+
         // foreach ($aux as $key) {
         //     echo $key;
         // }
@@ -87,7 +88,7 @@ class PlanchadoIndex extends Component
         //         ->where('evento',1)
         //         ->select('estados.*','ots.numero')
         //         ->get();
-        dd($aux);
+        // dd($aux);
 
         return view('livewire.planchado.planchado-index');
 

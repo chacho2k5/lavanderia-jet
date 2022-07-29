@@ -83,25 +83,25 @@
                     </tr>
                     </thead>
                     <tbody>
-                        @foreach ( $registros as $reg)
+                        {{-- @foreach ( $registros as $reg) --}}
                         <tr>
-                            <td>{{ date('d/m/Y', strtotime($reg->fecha_alta)) }}</td>
+                            {{-- <td>{{ date('d/m/Y', strtotime($reg->fecha_alta)) }}</td>
                             <td>{{ $reg->numero }}</td>
                             <td>{{ $reg->razonsocial }}</td>
-                            <td>{{ $reg->estado_nombre }}</td>
+                            <td>{{ $reg->estado_nombre }}</td> --}}
                             <td>
                                 {{-- <button wire:click.prevent="edit_show({{ $reg->id }}, {{ $reg->estado_orden }}, {{ $reg->estado_nombre }}, 'show')" class="btn btn-outline-success btn-sm" data-toggle="tooltip" title='Mostrar detalle OT.'> --}}
-                                <button wire:click.prevent="edit_show({{ $reg->id }}, 'show')" class="btn btn-outline-success btn-sm" data-toggle="tooltip" title='Mostrar detalle OT.'>
+                                {{-- <button wire:click.prevent="edit_show({{ $reg->id }}, 'show')" class="btn btn-outline-success btn-sm" data-toggle="tooltip" title='Mostrar detalle OT.'>
                                     <i class="fa-regular fa-eye"></i>
-                                </button>
+                                </button> --}}
                                 {{-- <button wire:click="edit_show({{ $reg->id }}, {{ $reg->estado_orden }}, {{ $reg->estado_nombre }}, 'edit')" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" title='Cambiar estado.'> --}}
-                                <button wire:click="edit_show({{ $reg->id }}, 'edit')" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" title='Cambiar estado.'>
+                                {{-- <button wire:click="edit_show({{ $reg->id }}, 'edit')" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" title='Cambiar estado.'>
                                     <i class="fa-solid fa-arrow-up"></i>
-                                </button>
+                                </button> --}}
 
-                                <button wire:click="sumar_estado({{ $reg->id }}, {{ $reg->estado_orden }})" class="btn btn-outline-danger btn-sm" data-toggle="tooltip" title='Cambiar estado.'>
+                                {{-- <button wire:click="sumar_estado({{ $reg->id }}, {{ $reg->estado_orden }})" class="btn btn-outline-danger btn-sm" data-toggle="tooltip" title='Cambiar estado.'>
                                     <i class="fa-solid fa-arrow-down"></i>
-                                </button>
+                                </button> --}}
 
                                 {{-- <button wire:click.prevent="delete({{ $reg->id }})" class="btn btn-outline-danger btn-sm" data-toggle="tooltip" title='Borrar'
                                     onclick="confirm('Esta seguro de borrar? - {{ $reg->id }}') || event.stopImmediatePropagation()">
@@ -109,11 +109,11 @@
                                 </button> --}}
                             </td>
                         </tr>
-                    @endforeach
+                    {{-- @endforeach --}}
                 </tbody>
             </table>
-
-            @include('livewire.cambiarestado.edit')
+{{--
+            @include('livewire.cambiarestado.edit') --}}
         {{-- @else
             <div class="px-6 py-4">
                 No hay coincidencias...
