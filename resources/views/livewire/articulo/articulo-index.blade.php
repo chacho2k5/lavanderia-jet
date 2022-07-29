@@ -98,7 +98,19 @@
                 </tbody>
             </table>
 
-            @include('livewire.articulo.edit')
+             
+            @include('livewire.articulo.edit')        
+            <div class="pagination justify-content-end">
+
+                <!--php artisan vendor:publish --tag=laravel-pagination 
+                esto pagina-->
+                {{ $registros->links() }}
+          </div>
+         
+
+
+
+
         {{-- @else
             <div class="px-6 py-4">
                 No hay coincidencias...

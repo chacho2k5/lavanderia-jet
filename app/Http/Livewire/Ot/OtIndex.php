@@ -29,7 +29,7 @@ class OtIndex extends Component
                             ->orderBy('razonsocial', 'asc')
                             ->get();
 
-        $this->headerOt = Ot::select('id','fecha_alta','numero','cliente_id','estado_id','entrega_hotel','recibe_hotel','entrega_lavanderia','recibe_lavanderia')
+        $this->headerOt = Ot::select('id','fecha_alta','numero','cliente_id','estado_id','entrega_hotel','recibe_hotel','entrega_lavanderia','recibe_lavanderia','lavado_formula','lavado_real')
                 ->orderBy('fecha_alta','asc')
                 ->get();
 
@@ -56,6 +56,14 @@ class OtIndex extends Component
             $this->dirCliente = $cliente->calle_nombre . ' Nº ' . $cliente->calle_numero;
             $this->cliente_id = $cliente->id;
         }
+     }
+
+     public function edit_show($id, $valud) {
+        dd('en desarrollo...');
+     }
+
+     public function delete($id) {
+        dd('en desarrollo...');
      }
 
     // public function selectedOt($id) {

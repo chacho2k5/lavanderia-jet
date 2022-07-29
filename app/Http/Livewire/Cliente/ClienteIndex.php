@@ -3,28 +3,33 @@
 namespace App\Http\Livewire\Cliente;
 
 use App\Models\Cliente;
+use App\Models\Iva;
 use Livewire\Component;
 use Livewire\WithPagination;
+use App\Exports\ClientesExport;
+use Maatwebsite\Excel\Facades\Excel;
+
 
 class ClienteIndex extends Component
 {
-
-
     use WithPagination;
+    protected $paginationTheme = 'bootstrap';
+   
 
-    public $search;
+    public $search = '';
+    public  $paginado = '10';
     public $sort = 'razonsocial';
     public $direction = 'asc';
     public $readyToLoad = false;
 
     // Conjunto de datos
-    // public Estado $registros;
-    public $registros;
+    // public $registros;
 
     // Datos para el alta
     public $registro_id, $razonsocial, $contacto, $cuit, $iva_id,$telefono1;
     public $telefono2, $correo, $calle_nombre, $calle_numero , $codigo_postal;
     public $fecha_alta, $observaciones;
+    public $selectedIva;
 
     // Datos para la modificacion
     public $open_modal = false;
@@ -62,28 +67,28 @@ class ClienteIndex extends Component
 
     public function mount() {
         // $this->registros = new Estado();
+        $this-> ivas= Iva::select('id','descripcion')
+                            ->orderBy('descripcion', 'asc')
+                            ->get();
     }
 
+
+     
     public function render()
     {
-        $this->registros = Cliente:: where('razonsocial', 'like', '%' . $this->search . '%')
-                ->orWhere('cuit', 'like', '%' . $this->search . '%')
-                ->orderBy($this->sort, $this->direction)
-                ->get();
+       //$this->registros = Cliente:: where('razonsocial', 'like', '%' . $this->search . '%')
+         //       ->orWhere('cuit', 'like', '%' . $this->search . '%')
+         //       ->pagination(10);
+                
+    //            return view('livewire.cliente.cliente-index');
 
-        return view('livewire.cliente.cliente-index',[
-            'registros' => Cliente::paginate(10)
-        ]);
+    return view('livewire.cliente.cliente-index', [
+        'registros' => Cliente::where('razonsocial', 'like', '%' . $this->search . '%')
+                  ->orWhere('correo', 'like', '%' . $this->search . '%')
+                  ->orderBy($this->sort, $this->direction)
+                  ->paginate(10),
+    ]);
 
-        // if ($this->readyToLoad) {
-        //     $rows = Estado::where('descripcion', 'like', '%' . $this->search . '%')
-        //             ->orWhere('detalle', 'like', '%' . $this->search . '%')
-        //             ->orderBy($this->sort, $this->direction)
-        //             ->get();
-        // } else {
-        //     $rows=[];
-        // }
-        // return view('livewire.estado.estado-index', compact('rows'));
     }
     public function updated($fields)
     {
@@ -126,7 +131,7 @@ class ClienteIndex extends Component
         $this->razonsocial = $reg->razonsocial;
         $this->contacto = $reg->contacto;
         $this->cuit = $reg->cuit;
-        $this->iva_id = $reg->iva_id;
+        //$this->iva_id = $reg->iva_id;
         $this->telefono1 = $reg->telefono1;
         $this->telefono2 = $reg->telefono2;
         $this->correo = $reg->correo;
@@ -135,6 +140,8 @@ class ClienteIndex extends Component
         $this->codigo_postal = $reg->codigo_postal;
         $this->fecha_alta = $reg->fecha_alta;
         $this->observaciones = $reg->observaciones;
+        $this->selectedIva = $reg->iva_id;
+        
 
 
         $this->action = $value;
@@ -146,6 +153,7 @@ class ClienteIndex extends Component
         $this->cancel();
         $this->action = 'create';
         $this->open_modal = true;
+        $this->selectedIva = '';
 
     }
 
@@ -206,4 +214,10 @@ class ClienteIndex extends Component
 
     }
 
+    public function exportExcel(){
+        return Excel::download(new ClientesExport, 'clientes.xlsx');
+    }
+    
 }
+
+

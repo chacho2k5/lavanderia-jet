@@ -13,6 +13,12 @@
                             <i class="fa-solid fa-circle-plus"></i>
                             Agregar
                         </button>
+
+                        <button wire:click="export" class="btn btn-primary">
+                            <i class="fa-solid fa-circle-plus"></i>
+                            Excel
+                        </button>
+                    
                     </div>
                     <div class="col col-md-auto">
                         <h3 class="m-0">
@@ -24,6 +30,7 @@
         </div>
 
         {{-- @if (count($registros)) --}}
+        <div>
             <table id="table" class="table w-full pt-1 table-hover table-striped">
                 <thead>
                     <tr>
@@ -71,10 +78,16 @@
                     @endforeach
                 </tbody>
             </table>
-            {{ $registros->links() }}
+            
+            <div class="pagination justify-content-end">
 
+                <!--php artisan vendor:publish --tag=laravel-pagination 
+                esto pagina-->
+                {{ $registros->links() }}
+            </div>
             @include('livewire.cliente.edit')
-        {{-- @else
+        </div>
+        {{-- @else       {{ $registros->links() }}    
             <div class="px-6 py-4">
                 No hay coincidencias...
             </div>

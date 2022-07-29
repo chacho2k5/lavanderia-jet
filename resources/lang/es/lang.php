@@ -15,7 +15,7 @@ return [
         'migrations' => 'Migraciones',
         'length'     => 'Longitud',
         'tables'     => 'tablas',
-    ],
+     ],
 
     /**
      * Elements/PrequelError.vue

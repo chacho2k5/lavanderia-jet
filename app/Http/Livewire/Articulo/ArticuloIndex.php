@@ -5,12 +5,15 @@ namespace App\Http\Livewire\Articulo;
 use App\Models\Articulo;
 use App\Models\Categoria;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class ArticuloIndex extends Component
 {
 
-  // use WithPagination; 
-    public $search;
+    use WithPagination; 
+    protected $paginationTheme = 'bootstrap';
+
+    public $search = '';
     public $sort = 'descripcion';
     public $direction = 'asc';
     public $readyToLoad = false;
@@ -21,10 +24,11 @@ class ArticuloIndex extends Component
     
     // Conjunto de datos
     // public Estado $registros;
-    public $registros;
+    //public $registros;
+  
 
     // Datos para el alta
-    public $registro_id, $descripcion, $categoria_id, $delicado;
+    public $registro_id, $descripcion,  $categoria_id,  $delicado;
 
     // Datos para la modificacion
     public $open_modal = false;
@@ -56,28 +60,34 @@ class ArticuloIndex extends Component
         // 'invitation.email.unique.users' => 'An account with this email has already been registered.',
     ];
 
-    // public function updated($propertyName)
-    // {
-    //     $this->validateOnly($propertyName);
-    // }
+    
 
     public function mount() {
+        $this->categorias = Categoria::select('id','descripcion')
+        ->orderBy('descripcion', 'asc')
+        ->get();
       
     }
 
     public function render()
     {
-        $this->registros = Articulo::where('descripcion', 'like', '%' . $this->search . '%')
-                ->orWhere('categoria_id', 'like', '%' . $this->search . '%')
-                ->orderBy($this->sort, $this->direction)
-                ->get();
+       $registros = Articulo::where('descripcion', 'like', '%' . $this->search . '%')
+               ->orWhere('categoria_id', 'like', '%' . $this->search . '%')
+               ->orderBy($this->sort, $this->direction)
+               ->paginate(10);
 
-           // $this->registros = new Estado();
-        $this->categorias = Categoria::select('id','descripcion','factor')
-        ->orderBy('descripcion', 'asc')
-        ->get();       
+       return view('livewire.articulo.articulo-index', ['registros' => $registros ]);
 
-        return view('livewire.articulo.articulo-index');
+
+      
+        /*
+
+            'registros' => Articulo::where('descripcion', 'like', '%' . $this->search . '%')
+               ->orWhere('categoria_id', 'like', '%' . $this->search . '%')
+               ->orderBy($this->sort, $this->direction)
+               ->paginate(10),
+        */
+
 
      }
 
@@ -125,6 +135,7 @@ class ArticuloIndex extends Component
         $this->descripcion = $reg->descripcion;
         $this->categoria_id = $reg->categoria_id;
         $this->delicado = $reg->delicado;
+        $this->selectedCategoria = $reg->categoria_id;
 
         $this->action = $value;
         $this->open_modal = true;
@@ -135,7 +146,7 @@ class ArticuloIndex extends Component
         $this->cancel();
         $this->action = 'create';
         $this->open_modal = true;
-
+        $this->selectedCategoria = '';
     }
 
     public function grabar() {
@@ -171,25 +182,16 @@ class ArticuloIndex extends Component
 
     }
 
-    public function updatedselectedCategoria($value)
-    
-    {
-       if ($value ==! null) {
-
-
-            $categorias = Categoria::where('id', $value)
-                            ->select('id','descripcion', 'factor')
-                            ->first();
-            $this->categoria_descripcion = $categorias->descripcion;
-            $this->categoria_id = $categorias->id;
-
-          //  $categorias = Categoria::all();
-         //   $this->descripcion = $categorias->descripcion ;
-         //   $this->categoria_id = $categorias->id;
-        //    $this->nombrefactor= $categorias->factor ;
-            
+    public function updatedselectedCategoria($value){
+       
+        if ($value ==! null) {
+            $categorias = Categoria::where('id', $value)->first();
+            $this->descripcion = $categorias->descripcion;
+            $this->id = $categorias->id;
+        
         }
-     }
+      
+    }
 
 }
 

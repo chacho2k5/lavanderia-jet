@@ -13,6 +13,7 @@
         "laravel/tinker": "^2.7",
         "livewire-ui/modal": "^1.0",
         "livewire/livewire": "^2.10",
+        "maatwebsite/excel": "^3.1",
         "yajra/laravel-datatables-html": "^9.0"
     },
     "require-dev": {

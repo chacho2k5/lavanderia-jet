@@ -4,17 +4,21 @@ namespace App\Http\Livewire\Estado;
 
 use App\Models\Estado;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class EstadoIndex extends Component
 {
-    public $search;
+    use WithPagination;
+    protected $paginationTheme = 'bootstrap';
+
+    public $search = '';
     public $sort = 'descripcion';
     public $direction = 'asc';
     public $readyToLoad = false;
 
     // Conjunto de datos
     // public Estado $registros;
-    public $registros;
+   // public $registros;
 
     // Datos para el alta
     public $registro_id, $descripcion, $detalle;
@@ -59,12 +63,19 @@ class EstadoIndex extends Component
 
     public function render()
     {
-        $this->registros = Estado::where('descripcion', 'like', '%' . $this->search . '%')
-                ->orWhere('detalle', 'like', '%' . $this->search . '%')
-                ->orderBy($this->sort, $this->direction)
-                ->get();
+     //   $this->registros = Estado::where('descripcion', 'like', '%' . $this->search . '%')
+     //           ->orWhere('detalle', 'like', '%' . $this->search . '%')
+      //          ->orderBy($this->sort, $this->direction)
+      //          ->paginate(4);
+//
+     //   return view('livewire.estado.estado-index');
 
-        return view('livewire.estado.estado-index');
+     return view('livewire.estado.estado-index', [
+        'registros' => Estado::where('descripcion', 'like', '%' . $this->search . '%')
+                  ->orWhere('detalle', 'like', '%' . $this->search . '%')
+                  ->orderBy($this->sort, $this->direction)
+                  ->paginate(10),
+    ]);
 
         // if ($this->readyToLoad) {
         //     $rows = Estado::where('descripcion', 'like', '%' . $this->search . '%')

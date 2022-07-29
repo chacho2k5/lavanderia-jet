@@ -78,6 +78,13 @@
                 </tbody>
             </table>
 
+            <div class="pagination justify-content-end">
+
+            <!--php artisan vendor:publish --tag=laravel-pagination 
+            esto llama al metodo link de la clase paginator y pagina -->
+            {{ $registros->links() }}
+            </div>
+
             @include('livewire.estado.edit')
         {{-- @else
             <div class="px-6 py-4">

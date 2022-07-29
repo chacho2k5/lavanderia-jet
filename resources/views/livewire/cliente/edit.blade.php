@@ -10,16 +10,28 @@
             <x-formInputw wire:model="razonsocial" name="razonsocial" label="Nombre del cliente" placeholder='label' autofocus />
             <x-formInputw wire:model="contacto" name="contacto" label="Contacto" placeholder='label' autofocus />
             <x-formInputw wire:model="cuit" name="cuit" label="Cuit" placeholder='label' autofocus />
-            <x-formInputw wire:model="iva_id" name="iva" label="Iva " placeholder='label' autofocus />
+            <div class="form-group col-md-3 ">
+                <label for="">Tipo de Iva</label>
+                {{-- <div wire:ignore> --}}
+                <select wire:model="selectedIva" class="form-select form-select-sm @error('selectedIva') is-invalid @enderror" title="Debe seleccionar un tipo de Iva">
+                    <option value="0">Seleccione tipo Iva</option>
+                    @foreach($ivas as $iva)
+                        <option value="{{ $iva->id }}">
+                            {{ $iva->descripcion }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+        
             <x-formInputw wire:model="telefono1" name="telefono1" label="Telefono_1" placeholder='label' autofocus />
             <x-formInputw wire:model="telefono2" name="telefono2" label="Telefono_2" placeholder='label' autofocus />
             <x-formInputw wire:model="correo" name="corre" label="E-mail" placeholder='label' autofocus />
             <x-formInputw wire:model="calle_nombre" name="calle_nombre" label="Direccion" placeholder='label' autofocus />
             <x-formInputw wire:model="calle_numero" name="calle_numero" label="Numero" placeholder='label' autofocus />
             <x-formInputw wire:model="codigo_postal" name="codigo_postal" label="Codigo Postal" placeholder='label' autofocus />
-            <x-formInputw wire:model="cuit" name="cuit" label="Nombre del estado" placeholder='label' autofocus />
             <x-formInputw wire:model="fecha_alta" name="fecha_alta" label="Fecha de Alta" placeholder='label' autofocus />
-
+             <x-formArea wire:model="observaciones" name="observaciones" label="Observaciones"  autofocus />
+          
         @if ($action == 'show')</fieldset>@endif
     </x-slot>
 
