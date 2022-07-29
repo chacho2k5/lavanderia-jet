@@ -18,7 +18,9 @@ return new class extends Migration
             $table->unsignedInteger('ot_id');
             $table->unsignedInteger('estado_id');
             $table->unsignedInteger('orden_planchado')->nullable()->default(0);
-            // $table->boolean('accion')->nullable()->default(0);
+            // Si evento=1 significa que esta para planchar, y asi se puede usar para
+            // cualquier otra cosa. Capaz deberia estar en Estados
+            $table->unsignedTinyInteger('evento')->nullable()->default(0);
             $table->date('fecha');
             $table->time('hora_inicio')->nullable();
             $table->time('hora_final')->nullable();

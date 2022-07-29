@@ -95,6 +95,7 @@ class OtCreate extends Component
 
             $this->retira = '';
             $this->selectedEstado = 1;
+            $this->fecha_alta = date('Y-m-d');
     }
 
     public function render()
@@ -206,9 +207,7 @@ class OtCreate extends Component
                 // Cargo la tabla "estado_ot" para la trazabilidad de los estados x OT
                 EstadoOt::Create([
                     'ot_id' => $id,
-                    'estado_id' => '1',
-                    'orden' => '0',
-                    'lavado' => false,
+                    'estado_id' => $this->selectedEstado,
                     'fecha' => $this->fecha_alta,
                     'hora_inicio' => date("H:i:s"),
                     // 'hora_final'
@@ -217,6 +216,7 @@ class OtCreate extends Component
                 // Borro los datos de la tabla temporal del cuerpo de la OT
                 OtCuerpoTmp::where('ot_id', $id)->delete();
             } catch (Throwable $e) {
+
                 $this->msgErr = "Se ha producido un error..." . $e;
                 return false;
             }

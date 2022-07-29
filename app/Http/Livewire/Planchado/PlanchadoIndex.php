@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Planchado;
 
 use App\Models\Estado;
+use App\Models\Ot;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -68,39 +69,29 @@ class PlanchadoIndex extends Component
 
     public function render()
     {
-        // $this->registros = Ot::orderBy($this->sort, $this->direction)
-        //         ->get();
-        $this->registros = DB::table('ots')
-            ->join('estados','ots.estado_id','estados.id')
-            ->join('clientes','ots.cliente_id','clientes.id')
-            ->select('ots.*','clientes.razonsocial as razonsocial','estados.descripcion as estado_nombre','estados.orden as estado_orden')
-            ->orderBy($this->sort, $this->direction)
-            ->get();
+        // $this->registros = DB::table('ots')
+        //     ->join('estados','ots.estado_id','estados.id')
+        //     ->join('clientes','ots.cliente_id','clientes.id')
+        //     ->select('ots.*','clientes.razonsocial as razonsocial','estados.descripcion as estado_nombre','estados.orden as estado_orden','estados.evento as estado_evento')
+        //     ->where('estados.evento',1)
+        //     ->orderBy($this->sort, $this->direction)
+        //     ->get();
 
-            // dd($this->registros);
-
-        // $this->registros = Estado::where('descripcion', 'like', '%' . $this->search . '%')
-        //         ->orWhere('detalle', 'like', '%' . $this->search . '%')
-        //         ->orderBy($this->sort, $this->direction)
-        //         ->get();
-
-        // if (count($this->registros)) {
-        //     $auxId = $this->registros->first()->value('id');
-        // } else {
-        //     $auxId = 0;
+        $aux = Ot::all();
+        // foreach ($aux as $key) {
+        //     echo $key;
         // }
+
+
+        // $aux = Estado::with('ots')
+        //         ->where('evento',1)
+        //         ->select('estados.*','ots.numero')
+        //         ->get();
+        dd($aux);
 
         return view('livewire.planchado.planchado-index');
 
     }
-
-    // public function updated($fields)
-    // {
-    //     $this->validateOnly($fields,[
-    //         'descripcion' => 'required|max:100|min:3',
-    //         'detalle' => 'required|max:100|min:3',
-    //     ]);
-    // }
 
     public function loadModelo() {
         $this->readyToLoad = true;

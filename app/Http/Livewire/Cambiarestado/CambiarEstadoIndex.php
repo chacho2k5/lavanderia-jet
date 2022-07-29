@@ -43,7 +43,7 @@ class CambiarEstadoIndex extends Component
         $this->registros = DB::table('ots')
             ->join('estados','ots.estado_id','estados.id')
             ->join('clientes','ots.cliente_id','clientes.id')
-            ->select('ots.*','clientes.razonsocial as razonsocial','estados.id as id_estado','estados.descripcion as estado_nombre','estados.accion as estado_accion','estados.orden as estado_orden')
+            ->select('ots.*','clientes.razonsocial as razonsocial','estados.id as id_estado','estados.descripcion as estado_nombre','estados.evento as estado_evento','estados.orden as estado_orden')
             ->orderBy($this->sort, $this->direction)
             ->get();
 
@@ -58,39 +58,31 @@ class CambiarEstadoIndex extends Component
     public function sumar_estado($id, $orden, $estado_id) {
     //
     // Cambia al estado con el orden inmediato superior
-    // . Cargo la "hora_final" del estado actual
-    // . Agrego el nuevo estado en "estado_ot"
     //
-        // Actualizo el campo "estado_id" en la tabla "ots"
-        // $rows = DB::table('ots')
-        //     ->where('id', $id)
-        //     ->update(['estado_id' => (int) $orden + 1]);
-
         // Obtengo el "id" del estado que corresponde al "orden + 1" del estado
-        $aux_id = Estado::select('id')
+        $proximo_Estado = Estado::select('id', 'evento')
                     ->whereOrden((int) $orden + 1)
-                    ->value('id');
-                    // ->first();
-// dd($aux_id);
+                    ->first();
+
         // Actualizo el campo "estado_id" en la tabla "ots"
         Ot::whereId($id)
-            ->update(['estado_id' => $aux_id]);
-
-
-
-        // $z = $this->registros->where('id',$id)->select('id_estado');
+            ->update(['estado_id' => $proximo_Estado->id]);
 
         // Cargo la "hora_final" para el evento que se cierra
         EstadoOt::where('ot_id', $id)
             ->where('estado_id', $estado_id)
             ->update(['hora_final' => date("H:i:s")]);
 
+        // if ($proximo_Estado->evento == 1) {
+
+        // } else {
+
+        // }
         // Cargo el nuevo estado para la OT seleccionada para la trazabilidad
         EstadoOt::Create([
             'ot_id' => $id,
-            'estado_id' => $aux_id,
-            'orden' => '0',
-            'lavado' => false,
+            'estado_id' => $proximo_Estado->id,
+            'orden_planchado' => 0,
             'fecha' => date('Y-m-d'),
             'hora_inicio' => date("H:i:s"),
             // 'hora_final'
@@ -107,8 +99,8 @@ class CambiarEstadoIndex extends Component
 
         $this->reset(['estado_id','estado_nombre','selectedEstado']);
 
-        $reg = $this->registros->where('id', $id)->first();
-
+        $reg = $this->registros->where('id', $id)->value('id');
+dd($reg);
         $this->registro_id = $reg['id'];
         $this->estado_nombre_anterior = $reg['estado_nombre'];
         $newOrden = (int) $reg['estado_orden'] + 1;

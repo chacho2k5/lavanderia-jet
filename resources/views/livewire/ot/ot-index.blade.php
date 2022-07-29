@@ -52,12 +52,12 @@
                         <div class="form-group col-md-auto my-4 p-1">
                             <button wire:click.prevent='aplicarFiltro' class="btn btn-info btn-sm">Aplicar Filtro</button>
                         </div>
-
+                            {{ $this->fecha_alta }}
                     </div>
                 </div>
                 <div class="card-body">
                     {{-- <table id="table" class="table w-full pt-1 table-hover table-striped" style="display:block; height:350px; overflow-y: scroll"> --}}
-                    <table id="table" class="table w-full pt-1 table-hover table-striped" style="height:350px; overflow-y: scroll">
+                    <table id="table" class="table w-full pt-1 table-hover table-striped" style="overflow-y: scroll">
                         <thead>
                             <tr>
                                 <th>FECHA OT</th>

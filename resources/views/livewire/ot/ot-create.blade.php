@@ -16,6 +16,7 @@
                         <i class="fa fa-fw fa-lg fa-check-circle"></i>
                         Grabar
                     </button>
+
                 </div>
                 <div class="col col-md-auto">
                   <h3>Nueva OT</h3>
@@ -83,6 +84,7 @@
                         </span>
                     @enderror --}}
                 </div>
+                {{ date('d-m-Y', strtotime($this->fecha_alta)) }}
                 @if ($lavado_formula_ot)
                     <div class="form-group col-md-2">
                         <label for="aux" class="m-0 col-form-label-sm">Tiempo planchado</label>
@@ -124,7 +126,6 @@
                         {{-- <span>Factor: </span>{{ $aux }} --}}
                     </div>
 
-{{ $selectedCliente }}
                     @if (count($errors) > 0 || $msgErr ==! null)
                         <div class="form-group col-md-6 mt-0">
                             <div class="alert alert-danger text-danger m-0 p-0">
@@ -140,7 +141,6 @@
                             </div>
                         </div>
                     @endif
-
 
                     @if (session()->has('message'))
                         <div class="alert alert-success">

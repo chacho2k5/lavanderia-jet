@@ -15,8 +15,8 @@ class EstadoOt extends Model
     protected $fillable = [
         'ot_id',
         'estado_id',
-        'orden',
-        'lavado',
+        'accion',
+        'orden_planchado',
         'fecha',
         'hora_inicio',
         'hora_final',

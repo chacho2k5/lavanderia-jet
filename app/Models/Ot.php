@@ -31,6 +31,11 @@ class Ot extends Model
         return $this->belongsTo(Estado::class, 'estado_id','id')->withDefault();
     }
 
+    public function estados() {
+        return $this->belongsToMany(Estado::class, 'estado_ot','ot_id','estado_id')
+                ->withPivot('orden_planchado','fecha','hora_inicio', 'hora_final');
+    }
+
     public function cliente() {
         return $this->belongsTo(Cliente::class, 'cliente_id','id')->withDefault();
     }
