@@ -13,10 +13,17 @@ class Estado extends Model
     protected $fillable = [
         'descripcion',
         'detalle',
-        'orden'
+        'orden',
+        'accion'
     ];
 
+    // public function ots() {
+    //     return $this->hasMany(Ot::class);
+    // }
+
     public function ots() {
-        return $this->hasMany(Ot::class);
+        return $this->belongsToMany(Ot::class, 'estado_ot', 'estado_id', 'ot_id')
+                ->withPivot('orden_planchado','fecha','hora_inicio', 'hora_final',);
     }
+
 }

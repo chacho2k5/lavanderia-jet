@@ -17,8 +17,17 @@ return new class extends Migration
             $table->id();
             $table->unsignedTinyInteger('orden')->unique();
             $table->string('descripcion',100)->unique();
-            // $table->string('detalle',100)->nullable();
+            $table->string('detalle',100)->nullable();
+            // Si accion=1 significa que esta para planchar, y asi se puede usar para
+            // cualquier otra cosa. Capaz deberia estar en Estados
+            $table->unsignedTinyInteger('evento')->nullable()->default(0);
         });
+        // Esto como que seria de manejo interno o bien no dejar que los usuarios
+        // modifiquen los estado
+        // 1 -> para planchar
+        // 2 -> finalizado con pendientes
+        // 3 -> finalizado finalizado
+
     }
 
     /**

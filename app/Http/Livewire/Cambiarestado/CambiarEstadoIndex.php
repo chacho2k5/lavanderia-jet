@@ -3,29 +3,24 @@
 namespace App\Http\Livewire\Cambiarestado;
 
 use App\Models\Estado;
+use App\Models\EstadoOt;
 use App\Models\Ot;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
-
 class CambiarEstadoIndex extends Component
 {
     public $search;
-    // public $sort = 'fecha_alta';
     public $sort = 'fecha_alta';
     public $direction = 'asc';
     public $readyToLoad = false;
 
     // Conjunto de datos
-    // public Estado $registros;
     public $registros;
     public $registro_id;
 
     public $estados;
     public $estado_id, $estado_nombre, $estado_nombre_anterior;
     public $selectedEstado;
-
-    // Datos para el alta
-    // public $descripcion, $detalle;
 
     // Habilita / Deshabilita el modal
     public $open_modal = false;
@@ -36,82 +31,62 @@ class CambiarEstadoIndex extends Component
     public $action;      // edit - show
     public $titulo_modal = "Crear nuevo ESTADO";
 
-    // Se escucha el evento 'render' y se ejecuta el metodo 'render'
-    // protected $listeners = ['render', 'render'];
-    // Cuando evento y metodo son iguales, se puede poner uno solo
     protected $listeners = ['render'];
 
-    // protected $rules = [
-    //     'descripcion' => 'required|max:100|min:3',
-    //     'detalle' => 'required|max:100|min:2',
-    // ];
-
-    // protected $messages = [
-    //     'descripcion.required' => 'Debe ingresar un Estado',
-    //     'descripcion.min' => 'El Estado debe tener entre 3 y 10 caracteres',
-    //     'descripcion.max' => 'El Estado debe tener entre 3 y 10 caracteres',
-    //     'detalle.min' => 'La descripción del Estado debe tener entre 3 y 10 caracteres',
-    //     'detalle.min' => 'La descripción del Estado debe tener entre 3 y 10 caracteres',
-    //     // 'invitation.email.unique.invitations' => 'The email has already been invited.',
-    //     // 'invitation.email.unique.users' => 'An account with this email has already been registered.',
-    // ];
-
-    // public function updated($propertyName)
-    // {
-    //     $this->validateOnly($propertyName);
-    // }
-
     public function mount() {
-        // $this->registros = new Estado();
         $this->estados = Estado::orderBy('orden', 'asc')
             ->get();
     }
 
     public function render()
     {
-        // $this->registros = Ot::orderBy($this->sort, $this->direction)
-        //         ->get();
         $this->registros = DB::table('ots')
             ->join('estados','ots.estado_id','estados.id')
             ->join('clientes','ots.cliente_id','clientes.id')
-            ->select('ots.*','clientes.razonsocial as razonsocial','estados.descripcion as estado_nombre','estados.orden as estado_orden')
+            ->select('ots.*','clientes.razonsocial as razonsocial','estados.id as id_estado','estados.descripcion as estado_nombre','estados.evento as estado_evento','estados.orden as estado_orden')
             ->orderBy($this->sort, $this->direction)
             ->get();
-
-            // dd($this->registros);
-
-        // $this->registros = Estado::where('descripcion', 'like', '%' . $this->search . '%')
-        //         ->orWhere('detalle', 'like', '%' . $this->search . '%')
-        //         ->orderBy($this->sort, $this->direction)
-        //         ->get();
-
-        // if (count($this->registros)) {
-        //     $auxId = $this->registros->first()->value('id');
-        // } else {
-        //     $auxId = 0;
-        // }
 
         return view('livewire.cambiarestado.cambiar-estado-index');
 
     }
 
-    // public function updated($fields)
-    // {
-    //     $this->validateOnly($fields,[
-    //         'descripcion' => 'required|max:100|min:3',
-    //         'detalle' => 'required|max:100|min:3',
-    //     ]);
-    // }
-
     public function loadModelo() {
         $this->readyToLoad = true;
     }
 
-    public function sumar_estado($id, $orden) {
+    public function sumar_estado($id, $orden, $estado_id) {
+    //
+    // Cambia al estado con el orden inmediato superior
+    //
+        // Obtengo el "id" del estado que corresponde al "orden + 1" del estado
+        $proximo_Estado = Estado::select('id', 'evento')
+                    ->whereOrden((int) $orden + 1)
+                    ->first();
 
-        $rows = DB::table('ots')
-            ->where('id', $id)
-            ->update(['estado_id' => (int) $orden + 1]);
+        // Actualizo el campo "estado_id" en la tabla "ots"
+        Ot::whereId($id)
+            ->update(['estado_id' => $proximo_Estado->id]);
+
+        // Cargo la "hora_final" para el evento que se cierra
+        EstadoOt::where('ot_id', $id)
+            ->where('estado_id', $estado_id)
+            ->update(['hora_final' => date("H:i:s")]);
+
+        // if ($proximo_Estado->evento == 1) {
+
+        // } else {
+
+        // }
+        // Cargo el nuevo estado para la OT seleccionada para la trazabilidad
+        EstadoOt::Create([
+            'ot_id' => $id,
+            'estado_id' => $proximo_Estado->id,
+            'orden_planchado' => 0,
+            'fecha' => date('Y-m-d'),
+            'hora_inicio' => date("H:i:s"),
+            // 'hora_final'
+            ]);
     }
 
     public function edit_show($id, $value) {
@@ -124,8 +99,8 @@ class CambiarEstadoIndex extends Component
 
         $this->reset(['estado_id','estado_nombre','selectedEstado']);
 
-        $reg = $this->registros->where('id', $id)->first();
-
+        $reg = $this->registros->where('id', $id)->value('id');
+dd($reg);
         $this->registro_id = $reg['id'];
         $this->estado_nombre_anterior = $reg['estado_nombre'];
         $newOrden = (int) $reg['estado_orden'] + 1;
@@ -139,48 +114,16 @@ class CambiarEstadoIndex extends Component
         $this->action = $value;
         $this->open_modal = true;
 
-        // // $newOrden = Estado::where('orden', $ordenAux)->get('id');
-        // // dd($newOrden);
-        // // $this->selectedEstado = (int) $reg->estado->orden + 1;
-
-        // $this->estado_nombre_anterior = $estado;
-        // $newOrden = (int) $orden + 1;
-        // $newEstado = Estado::where('orden', $newOrden)->first();
-        // // dd($newEstado);
-
-        // $this->estado_id = $newEstado->id;
-        // $this->nombre_estado = $newEstado->descripcion;
-
-        // $this->selectedEstado = $this->estado_id;
-
-        // // $ordenAux = (int) $reg->estado->orden + 1;
-        // // $newOrden = Estado::where('orden', $ordenAux)->get('id');
-        // // dd($newOrden);
-        // // $this->selectedEstado = (int) $reg->estado->orden + 1;
-
     }
 
     public function grabar() {
     // Grabo las modificaciones y las altas
 
-        // $this->validate([
-        //         'descripcion' => 'required|min:3|max:10',
-        //         'detalle' => 'min:3|max:6',
-        //     ]);
-
-        // $this->validate();
-
         $rows = DB::table('ots')
               ->where('id', $this->registro_id)
               ->update(['estado_id' => $this->selectedEstado]);
 
-        // Ot::upd (['id' => $this->registro_id],
-        // [
-        //     'descripcion' => $this->descripcion,
-        //     'detalle' => $this->detalle,
-        // ]);
-
-        $this->cancel();
+        $this->limpiarControles();
 
         // El evento solo lo escucha el componente "show-posts"
     //     // $this->emitTo('estado.estado-index', 'render');
@@ -194,6 +137,12 @@ class CambiarEstadoIndex extends Component
 
     //     Estado::destroy($id);
     // }
+
+    public function limpiarControles()
+    {
+        $this->reset(['estado_id','estado_nombre','selectedEstado','open_modal','titulo_modal']);
+
+    }
 
     public function cancel()
     {
@@ -214,9 +163,5 @@ class CambiarEstadoIndex extends Component
             $this->direction = 'asc';
         }
     }
-    // public function render()
-    // {
-    //     return view('livewire.cambiarestado.cambiar-estado-index');
-    // }
 
 }

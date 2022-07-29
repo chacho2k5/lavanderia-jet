@@ -21,6 +21,7 @@ return new class extends Migration
             $table->unsignedInteger('entrega')->nullable()->default(0);
             $table->double('factor')->nullable()->default(0);
             $table->double('lavado_formula')->nullable()->default(0);
+            $table->timestamps();
         });
     }
 

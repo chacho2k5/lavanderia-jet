@@ -50,7 +50,7 @@
                         <th scope="col">Correo</th>
                         <th scope="col">Telefono</th>
                         <th scope="col">Contacto</th>
-                     
+
 
                     </tr>
                     </thead>
@@ -78,8 +78,12 @@
                     @endforeach
                 </tbody>
             </table>
+<<<<<<< HEAD
             
             <div class="pagination justify-content-end">
+=======
+            {{-- {{ $registros->links() }} --}}
+>>>>>>> 823bbe9f4e3dc12aadf2f63358708a43d395b20a
 
                 <!--php artisan vendor:publish --tag=laravel-pagination 
                 esto pagina-->

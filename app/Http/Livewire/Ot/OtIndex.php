@@ -29,16 +29,21 @@ class OtIndex extends Component
                             ->orderBy('razonsocial', 'asc')
                             ->get();
 
+<<<<<<< HEAD
         $this->headerOt = Ot::select('id','fecha_alta','numero','cliente_id','estado_id','entrega_hotel','recibe_hotel','entrega_lavanderia','recibe_lavanderia','lavado_formula','lavado_real')
+=======
+        // $this->headerOt = Ot::select('id','fecha_alta','numero','cliente_id','estado_id','entrega_hotel','recibe_hotel','entrega_lavanderia','recibe_lavanderia','lavado_formula','lavado_real')
+        $this->headerOt = Ot::select('*')
+>>>>>>> 823bbe9f4e3dc12aadf2f63358708a43d395b20a
                 ->orderBy('fecha_alta','asc')
                 ->get();
 
-        if (count($this->headerOt)) {
-            $auxId = $this->headerOt->first()->value('id');
-        } else {
-            $auxId = 0;
-        }
-
+        // Esto creo que lo tenia para mostrar el detalle de la OT
+        // if (count($this->headerOt)) {
+        //     $auxId = $this->headerOt->first()->value('id');
+        // } else {
+        //     $auxId = 0;
+        // }
         // $this->rowsOt = OtCuerpo::where('ot_id', $auxId)
         //             ->select('id', 'ot_id', 'articulo_id', 'retira', 'entrega')
         //             ->get();

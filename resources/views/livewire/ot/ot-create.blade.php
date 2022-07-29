@@ -16,6 +16,7 @@
                         <i class="fa fa-fw fa-lg fa-check-circle"></i>
                         Grabar
                     </button>
+
                 </div>
                 <div class="col col-md-auto">
                   <h3>Nueva OT</h3>
@@ -30,26 +31,27 @@
     <div class="card">
         {{-- <div class="card-header d-flex justify-content-between"> --}}
         <div class="card-header justify-content-start">
-            <div class="row">
-                <div class="form-group col-md-auto">
+            <div class="row gx-3">
+                <div class="form-group col-md-2">
+                    <label for="" class="col-form-label-sm">Estados</label>
+                    <select wire:model="selectedEstado" class="form-select form-select-sm" title="Debe seleccionar un estado." disabled>
+                        {{-- <option value="0">Seleccione un Estado</option> --}}
+                        @foreach($estados as $estado)
+                            <option value="{{ $estado->id }}">
+                                {{ $estado->descripcion }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group col-md-2">
                     <label for="fecha_alta" class="col-form-label-sm">Fecha OT</label>
                     <input type="date" wire:model.lazy="fecha_alta" class="form-control form-control-sm @error('fecha_alta') is-invalid @enderror" autofocus title="Debe ingresar la fecha de la OT (dia/mes/año).">
-                    {{-- @error('fecha_alta')
-                        <span class="invalid-feedback" role="alert">
-                            <span class="text-danger">{{ $message }}</span>
-                        </span>
-                    @enderror --}}
                 </div>
-                <div class="form-group col-md-auto">
+                <div class="form-group col-md-2">
                     <label for="numero" class="col-form-label-sm">Número OT</label>
                     <input type="text" wire:model="numero" class="form-control form-control-sm @error('numero') is-invalid @enderror" title="Debe ingresar el Nro. de OT.">
-                    {{-- @error('numero')
-                        <span class="invalid-feedback" role="alert">
-                            <span class="text-danger">{{ $message }}</span>
-                        </span>
-                    @enderror --}}
                 </div>
-                <div class="form-group col-md-auto">
+                <div class="form-group col-md-3">
                     <label for="" class="col-form-label-sm">Clientes</label>
                     <select wire:model="selectedCliente" class="form-select form-select-sm @error('selectedCliente') is-invalid @enderror" title="Debe seleccionar un cliente.">
                         <option value="0">Seleccione un cliente</option>
@@ -72,11 +74,6 @@
                 <div class="form-group col-md-5">
                     <label for="entrega_hotel" class="m-0 col-form-label-sm">Entrega Hotel</label>
                     <input type="text" wire:model.lazy="entrega_hotel" class="form-control form-control-sm @error('entrega_hotel') is-invalid @enderror" title="Debe ingresar la persona que entrega las prendas.">
-                    {{-- @error('entrega_hotel')
-                        <span class="invalid-feedback" role="alert">
-                            <span class="text-danger">{{ $message }}</span>
-                        </span>
-                    @enderror --}}
                 </div>
                 <div class="form-group col-md-5">
                     <label for="recibe_lavanderia" class="m-0 col-form-label-sm">Recibe Lavanderia</label>
@@ -87,6 +84,7 @@
                         </span>
                     @enderror --}}
                 </div>
+                {{ date('d-m-Y', strtotime($this->fecha_alta)) }}
                 @if ($lavado_formula_ot)
                     <div class="form-group col-md-2">
                         <label for="aux" class="m-0 col-form-label-sm">Tiempo planchado</label>
@@ -101,7 +99,7 @@
         </div>
 
         <div class="card-body">
-                <div class="row">
+                <div class="row gx-3">
                     <div class="form-group col-md-3">
                         <label for="">Prendas</label>
                         {{-- <div wire:ignore> --}}
@@ -128,7 +126,6 @@
                         {{-- <span>Factor: </span>{{ $aux }} --}}
                     </div>
 
-
                     @if (count($errors) > 0 || $msgErr ==! null)
                         <div class="form-group col-md-6 mt-0">
                             <div class="alert alert-danger text-danger m-0 p-0">
@@ -144,7 +141,6 @@
                             </div>
                         </div>
                     @endif
-
 
                     @if (session()->has('message'))
                         <div class="alert alert-success">

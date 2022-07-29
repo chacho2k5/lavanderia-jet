@@ -52,35 +52,46 @@
                         <div class="form-group col-md-auto my-4 p-1">
                             <button wire:click.prevent='aplicarFiltro' class="btn btn-info btn-sm">Aplicar Filtro</button>
                         </div>
-
+                            {{ $this->fecha_alta }}
                     </div>
                 </div>
                 <div class="card-body">
-                    <table id="table" class="table w-full pt-1 table-hover table-striped" style="display:block; height:350px; overflow-y: scroll">
+                    {{-- <table id="table" class="table w-full pt-1 table-hover table-striped" style="display:block; height:350px; overflow-y: scroll"> --}}
+                    <table id="table" class="table w-full pt-1 table-hover table-striped" style="overflow-y: scroll">
                         <thead>
                             <tr>
                                 <th>FECHA OT</th>
-                                <th>CLIENTE</th>
                                 <th>Nro. OT</th>
+                                <th>CLIENTE</th>
+                                <th>TIEMPO PLANCHADO</th>
                                 <th>ESTADO</th>
-                                <th width="100px">ACCION</th>
+                                <th>ACCION</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($headerOt as $header)
-                                <tr wire:click="selectedOt({{ $header->id }})">
+                                <tr>
                                     <td>{{ date('d/m/Y', strtotime($header->fecha_alta)) }}</td>
-                                    <td>{{ $header->cliente->razonsocial }}</td>
                                     <td>{{ $header->numero }}</td>
+                                    <td>{{ $header->cliente->razonsocial }}</td>
+                                    <td class="text-center">{{ number_format($header->lavado_formula,2) }}</td>
                                     <td scope="row">{{ $header->estado->descripcion }}</td>
-                                    <td class="text-center">
-                                        ----
-                                        {{-- @livewire('categoria-edit', ['categoria' => $categoria], key($categoria->id)) --}}
+                                    <td class="text-center">---
+                                        {{-- <button wire:click.prevent="edit_show({{ $header->id }}, 'show')" class="btn btn-outline-success btn-sm" data-toggle="tooltip" title='Mostrar datos.'
+                                            onclick="alert('En desarrollo...') || event.stopImmediatePropagation()">
+                                            <i class="fa-regular fa-eye fs-6"></i>
+                                        </button>
+                                        <button wire:click.prevent="edit_show({{ $header->id }}, 'edit')" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" title='Actualizar datos.'
+                                            onclick="alert('En desarrollo...') || event.stopImmediatePropagation()">
+                                            <i class="fa-regular fa-pen-to-square fs-6"></i>
+                                        </button>
+                                        <button wire:click.prevent="delete({{ $header->id }})" class="btn btn-outline-danger btn-sm fs-6" data-toggle="tooltip" title='Borrar'
+                                            onclick="alert('En desarrollo...') || event.stopImmediatePropagation()">
+                                            <i class="fa-regular fa-trash-can"></i>
+                                        </button> --}}
                                     </td>
                                 </tr>
                             @endforeach
-                        </tbody>
-                    </table>
                         </tbody>
                     </table>
                 </div>

@@ -10,6 +10,9 @@ class Ot extends Model
     use HasFactory;
 
     protected $table = "ots";
+    // El dateformat es para los timestamp
+    protected $dateformat = "d-m-Y H:i:s";
+
     protected $fillable = [
         'numero',
         'fecha_alta',
@@ -26,6 +29,11 @@ class Ot extends Model
 
     public function estado() {
         return $this->belongsTo(Estado::class, 'estado_id','id')->withDefault();
+    }
+
+    public function estados() {
+        return $this->belongsToMany(Estado::class, 'estado_ot','ot_id','estado_id')
+                ->withPivot('orden_planchado','fecha','hora_inicio', 'hora_final');
     }
 
     public function cliente() {

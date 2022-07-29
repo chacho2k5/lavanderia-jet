@@ -31,7 +31,8 @@ class DatabaseSeeder extends Seeder
             ArticuloSeeder::class,
             CategoriaSeeder::class,
             EstadoSeeder::class,
-            EmpleadoSeeder::class
+            EmpleadoSeeder::class,
+            ConfiguracionesSeeder::class
         ]);
     }
 }

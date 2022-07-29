@@ -19,8 +19,8 @@ return new class extends Migration
             $table->unsignedInteger('orden_planchado')->nullable()->default(0);
             $table->double('lavado_formula')->nullable()->default(0);
             $table->date('fecha')->nullable();
-            $table->time('tiempo_inicio')->nullable();
-            $table->time('tiempo_final')->nullable();
+            $table->time('hora_inicio')->nullable();
+            $table->time('hora_final')->nullable();
             $table->timestamps();
         });
     }

@@ -13,11 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('estado_ots', function (Blueprint $table) {
+        Schema::create('estado_ot', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('ot_id');
             $table->unsignedInteger('estado_id');
-            $table->date('fecha')->nullable();
+            $table->unsignedInteger('orden_planchado')->nullable()->default(0);
+            // Si evento=1 significa que esta para planchar, y asi se puede usar para
+            // cualquier otra cosa. Capaz deberia estar en Estados
+            $table->unsignedTinyInteger('evento')->nullable()->default(0);
+            $table->date('fecha');
             $table->time('hora_inicio')->nullable();
             $table->time('hora_final')->nullable();
             $table->timestamps();
@@ -31,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('estado_ots');
+        Schema::dropIfExists('estado_ot');
     }
 };

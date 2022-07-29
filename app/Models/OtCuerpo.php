@@ -9,8 +9,11 @@ class OtCuerpo extends Model
 {
     use HasFactory;
 
-    public $timestamps = false;
+    // public $timestamps = false;
     protected $table = "ots_cuerpo";
+    // El dateformat es para los timestamp
+    protected $dateformat = "d-m-Y H:i:s";
+
     protected $fillable = [
         'ot_id',
         'articulo_id',

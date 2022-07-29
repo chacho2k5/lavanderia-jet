@@ -3,6 +3,7 @@
         Cambio de Estados
     </x-slot>
 
+
     <div class="container">
     <div class="container-fluid my-2">
         <div class="content-header">
@@ -79,7 +80,7 @@
                                 <i class="mt-1 float-end fa-solid fa-sort"></i>
                             @endif
                         </th>
-                        <th scope="col">Accion</th>
+                        <th scope="col" class="text-center">ACCION</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -89,17 +90,15 @@
                             <td>{{ $reg->numero }}</td>
                             <td>{{ $reg->razonsocial }}</td>
                             <td>{{ $reg->estado_nombre }}</td>
-                            <td>
-                                {{-- <button wire:click.prevent="edit_show({{ $reg->id }}, {{ $reg->estado_orden }}, {{ $reg->estado_nombre }}, 'show')" class="btn btn-outline-success btn-sm" data-toggle="tooltip" title='Mostrar detalle OT.'> --}}
+                            <td class="text-center">
                                 <button wire:click.prevent="edit_show({{ $reg->id }}, 'show')" class="btn btn-outline-success btn-sm" data-toggle="tooltip" title='Mostrar detalle OT.'>
                                     <i class="fa-regular fa-eye"></i>
                                 </button>
-                                {{-- <button wire:click="edit_show({{ $reg->id }}, {{ $reg->estado_orden }}, {{ $reg->estado_nombre }}, 'edit')" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" title='Cambiar estado.'> --}}
                                 <button wire:click="edit_show({{ $reg->id }}, 'edit')" class="btn btn-outline-primary btn-sm" data-toggle="tooltip" title='Cambiar estado.'>
                                     <i class="fa-regular fa-pen-to-square"></i>
                                 </button>
-
-                                <button wire:click="sumar_estado({{ $reg->id }}, {{ $reg->estado_orden }})" class="btn btn-outline-danger btn-sm" data-toggle="tooltip" title='Cambiar estado.'>
+                                <button wire:click="sumar_estado({{ $reg->id }}, {{ $reg->estado_orden }}, {{ $reg->id_estado }})" class="btn btn-outline-danger btn-sm" data-toggle="tooltip" title=''Cambiar estado.'
+                                    onclick="confirm('Desea cambiar el estado ->  - {{ $reg->estado_nombre }}') || event.stopImmediatePropagation()">
                                     <i class="fa-solid fa-plus"></i>
                                 </button>
 

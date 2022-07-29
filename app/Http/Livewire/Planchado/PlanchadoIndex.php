@@ -3,6 +3,10 @@
 namespace App\Http\Livewire\Planchado;
 
 use App\Models\Estado;
+<<<<<<< HEAD
+=======
+use App\Models\Ot;
+>>>>>>> 823bbe9f4e3dc12aadf2f63358708a43d395b20a
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -62,12 +66,18 @@ class PlanchadoIndex extends Component
 
     public function mount() {
         // $this->registros = new Estado();
+<<<<<<< HEAD
         $this->estados = Estado::orderBy('orden', 'asc')
             ->get();
+=======
+        // $this->estados = Estado::orderBy('orden', 'asc')
+        //     ->get();
+>>>>>>> 823bbe9f4e3dc12aadf2f63358708a43d395b20a
     }
 
     public function render()
     {
+<<<<<<< HEAD
         // $this->registros = Ot::orderBy($this->sort, $this->direction)
         //         ->get();
         $this->registros = DB::table('ots')
@@ -89,10 +99,33 @@ class PlanchadoIndex extends Component
         // } else {
         //     $auxId = 0;
         // }
+=======
+        // $this->registros = DB::table('ots')
+        //     ->join('estados','ots.estado_id','estados.id')
+        //     ->join('clientes','ots.cliente_id','clientes.id')
+        //     ->select('ots.*','clientes.razonsocial as razonsocial','estados.descripcion as estado_nombre','estados.orden as estado_orden','estados.evento as estado_evento')
+        //     ->where('estados.evento',1)
+        //     ->orderBy($this->sort, $this->direction)
+        //     ->get();
+
+        // $aux = Ot::all();
+
+        // foreach ($aux as $key) {
+        //     echo $key;
+        // }
+
+
+        // $aux = Estado::with('ots')
+        //         ->where('evento',1)
+        //         ->select('estados.*','ots.numero')
+        //         ->get();
+        // dd($aux);
+>>>>>>> 823bbe9f4e3dc12aadf2f63358708a43d395b20a
 
         return view('livewire.planchado.planchado-index');
 
     }
+<<<<<<< HEAD
 
     // public function updated($fields)
     // {
@@ -101,6 +134,8 @@ class PlanchadoIndex extends Component
     //         'detalle' => 'required|max:100|min:3',
     //     ]);
     // }
+=======
+>>>>>>> 823bbe9f4e3dc12aadf2f63358708a43d395b20a
 
     public function loadModelo() {
         $this->readyToLoad = true;
